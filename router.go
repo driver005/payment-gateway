@@ -1,15 +1,16 @@
 package main
 
 import (
-	"net/http"
-	"io/ioutil"
-	"gateway/dto"
 	"encoding/json"
-	"gateway/model"
-	"github.com/gorilla/mux"
-	"github.com/boltdb/bolt"
 	"fmt"
-	"gateway/constant"
+	"io/ioutil"
+	"net/http"
+
+	"github.com/boltdb/bolt"
+	"github.com/driver005/gateway/constant"
+	"github.com/driver005/gateway/dto"
+	"github.com/driver005/gateway/model"
+	"github.com/gorilla/mux"
 )
 
 var db *bolt.DB

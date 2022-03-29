@@ -1,9 +1,10 @@
-package model
+package models
 
 import (
 	"time"
-	"gateway/dto"
-	"gateway/constant"
+
+	"github.com/driver005/gateway/gateway/constant"
+	"github.com/driver005/gateway/gateway/dto"
 	"github.com/google/uuid"
 )
 

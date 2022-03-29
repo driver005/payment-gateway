@@ -15,6 +15,9 @@ func main() {
 	}
 	defer db.Close()
 
+	var sql Sql
+	
+
 	// Routes Configuration
 	router := setupRouter(db)
 

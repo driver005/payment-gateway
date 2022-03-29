@@ -1,9 +1,9 @@
-package model
+package models
 
 import (
-	"time"
-	"math/rand"
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 type Account struct {
