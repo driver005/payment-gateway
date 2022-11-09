@@ -8,7 +8,7 @@ import (
 )
 
 func TestGetEventStream(t *testing.T) {
-	events, err := c.GetEventStream(0, false, nil)
+	events, err := c.GetEventStream(0, false, "null")
 	assert.Nil(t, err)
 
 	spew.Dump(events)

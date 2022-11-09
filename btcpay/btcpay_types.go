@@ -86,6 +86,11 @@ type InvoiceUpdate struct {
 	Metadata InvoiceMetadata `json:"metadata,omitempty"`
 }
 
+type InvoiceActivatePaymentMethod struct {
+	Path    string `json:"path"`
+	Message string `json:"message"`
+}
+
 type PaymentID string
 
 type Payment struct {

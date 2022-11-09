@@ -9,6 +9,8 @@ import (
 	"github.com/driver005/gateway/handler"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/logger"
+	"github.com/julienschmidt/httprouter"
+	"github.com/ory/herodot"
 	"github.com/pkg/errors"
 )
 
@@ -31,11 +33,12 @@ type Driver interface {
 
 type Registry interface {
 	Driver
+	Writer() herodot.Writer
 
 	Init(ctx context.Context) error
 	WithLogger(l *logger.Logger) Registry
 	Handler() *handler.Handler
-	RegisterRoutes(public *helper.RouterPublic)
+	RegisterRoutes(public *httprouter.Router)
 
 	db.Provider
 

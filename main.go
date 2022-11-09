@@ -5,17 +5,16 @@ import (
 	"embed"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
+	"reflect"
+	"time"
 
 	"github.com/driver005/gateway/btcpay"
-	"github.com/driver005/gateway/ethereum"
-	"github.com/driver005/gateway/ethereum/eth"
+	"github.com/driver005/gateway/driver"
+	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/respond"
-	"github.com/driver005/gateway/wallet/config"
-	"github.com/driver005/gateway/wallet/logger"
-	ethrpc "github.com/ethereum/go-ethereum/rpc"
 	"github.com/julienschmidt/httprouter"
-	"go.uber.org/zap"
 )
 
 // opts := middleware.RedocOpts{SpecURL: "/swagger.json"}
@@ -50,89 +49,107 @@ func Webhook(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	_ = ioutil.WriteFile("./data.txt", body, 0666)
 }
 
-func newLogger() *zap.Logger {
-	return logger.NewZapLogger(&config.Logger{})
-}
-
-func newEthRPCClient() *ethrpc.Client {
-	var err error
-	rpcEthClient, err := ethereum.NewRPCClient(&config.Ethereum{})
-	if err != nil {
-		panic(err)
-	}
-	return rpcEthClient
+func TrackDerivationScheme(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	// if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
+	// 	resp.NewResponse(w).InternalServerError(helper.WithStack(err))
+	// 	return
+	// }
+	fmt.Println(r.URL.Query().Get("name"))
+	fmt.Println(reflect.TypeOf(r.URL.Query().Get("name")))
 }
 
 func main() {
-	ethe, _ := ethereum.NewEthereum(
-		newEthRPCClient(),
-		&config.Ethereum{},
-		newLogger(),
-		"eth",
-	)
+	// mux := http.NewServeMux()
+	r := driver.New(ctx)
 
-	tags := []eth.QuantityTag{
-		eth.QuantityTagLatest,
-		eth.QuantityTagPending,
-		// eth.QuantityTagEarliest,
-	}
+	public := helper.NewRouter()
+	r.RegisterRoutes(public)
+	// r.Handler().Routes(public)
 
-	type args struct {
-		addr string
-	}
-	type want struct {
-		balance uint64
-	}
-	tests := []struct {
-		name string
-		args args
-		want want
-	}{
-		{
-			name: "happy path",
-			args: args{addr: "0xEA247646137F74C38e04f3012db483d77F3dEc59"},
-			want: want{50000000000000000},
-		},
-		{
-			name: "happy path",
-			args: args{addr: "0x6B91314E559D3FB5b40f9F51582631a7b5C610ef"},
-			want: want{50000000000000000},
-		},
-		{
-			name: "happy path",
-			args: args{addr: "0x0aC5c95EB979C41CFa2C6BdF8e5515F966fEc103"},
-			want: want{50000000000000000},
-		},
-	}
-	for _, tt := range tests {
+	// n := handler.NewNbxplorer(r, "http://localhost:32838")
 
-		for _, tag := range tags {
-			balance, err := ethe.GetBalance(tt.args.addr, tag)
-
-			if err == nil {
-				fmt.Printf("quantityTag: %s, balance: %d", tag, balance.Uint64())
-			}
-		}
-
-	}
-
-	// r := driver.New(ctx)
-
-	// public := helper.NewRouterPublic()
 	// public.GET("/checkout", CreateInvoice)
 	// public.POST("/webhook", Webhook)
 
+	// public.GET("/test", TrackDerivationScheme)
+
 	// r.RegisterRoutes(public)
 
-	// // Server Configuration
+	// Server Configuration
 
-	// srv := &http.Server{
-	// 	Handler:      public,
-	// 	Addr:         "192.168.1.2:80",
-	// 	WriteTimeout: 15 * time.Second,
-	// 	ReadTimeout:  15 * time.Second,
-	// }
-	// fmt.Println("Starting server")
-	// defer srv.Close()
-	// log.Fatal(srv.ListenAndServe())
+	srv := &http.Server{
+		Handler:      public,
+		Addr:         "192.168.1.2:80",
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+	fmt.Println("Starting server")
+	defer srv.Close()
+	log.Fatal(srv.ListenAndServe())
 }
+
+// func newLogger() *zap.Logger {
+// 	return logger.NewZapLogger(&config.Logger{})
+// }
+
+// func newEthRPCClient() *ethrpc.Client {
+// 	var err error
+// 	rpcEthClient, err := ethereum.NewRPCClient(&config.Ethereum{})
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	return rpcEthClient
+// }
+// ethe, _ := ethereum.NewEthereum(
+// 	newEthRPCClient(),
+// 	&config.Ethereum{},
+// 	newLogger(),
+// 	"eth",
+// )
+
+// tags := []eth.QuantityTag{
+// 	eth.QuantityTagLatest,
+// 	eth.QuantityTagPending,
+// 	// eth.QuantityTagEarliest,
+// }
+
+// type args struct {
+// 	addr string
+// }
+// type want struct {
+// 	balance uint64
+// }
+// tests := []struct {
+// 	name string
+// 	args args
+// 	want want
+// }{
+// 	{
+// 		name: "happy path",
+// 		args: args{addr: "0xEA247646137F74C38e04f3012db483d77F3dEc59"},
+// 		want: want{50000000000000000},
+// 	},
+// 	{
+// 		name: "happy path",
+// 		args: args{addr: "0x6B91314E559D3FB5b40f9F51582631a7b5C610ef"},
+// 		want: want{50000000000000000},
+// 	},
+// 	{
+// 		name: "happy path",
+// 		args: args{addr: "0x0aC5c95EB979C41CFa2C6BdF8e5515F966fEc103"},
+// 		want: want{50000000000000000},
+// 	},
+// }
+// for _, tt := range tests {
+
+// 	for _, tag := range tags {
+// 		balance, err := ethe.GetBalance(tt.args.addr, tag)
+
+// 		if err == nil {
+// 			fmt.Printf("quantityTag: %s, balance: %d", tag, balance.Uint64())
+// 		}
+// 	}
+
+// }
+
+// r := driver.New(ctx)

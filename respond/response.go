@@ -45,6 +45,11 @@ func (resp *Response) AddHeader(key string, value string) *Response {
 	return resp
 }
 
+// Responsed returns a JSON response with a http statuscode
+func (resp *Response) Responsed(code int, v interface{}) {
+	resp.writeResponse(code, v)
+}
+
 // WriteResponse writes the HTTP response status, headers and body
 func (resp *Response) writeResponse(code int, v interface{}) error {
 	if len(resp.Headers) > 0 {

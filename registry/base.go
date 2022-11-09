@@ -7,6 +7,9 @@ import (
 	"github.com/driver005/gateway/handler"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/logger"
+	"github.com/julienschmidt/httprouter"
+	"github.com/ory/herodot"
+	"github.com/ory/hydra/x"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -21,6 +24,7 @@ type Base struct {
 	r            Registry
 	trc          trace.Tracer
 	database     database.Database
+	writer       herodot.Writer
 }
 
 func (m *Base) with(r Registry) *Base {
@@ -75,13 +79,24 @@ func (m *Base) AuditLogger() *logger.Logger {
 	return m.al
 }
 
-func (m *Base) RegisterRoutes(public *helper.RouterPublic) {
-	m.Handler().SetRoutes(public)
+func (m *Base) Writer() herodot.Writer {
+	if m.writer == nil {
+		h := herodot.NewJSONWriter(m.Logger())
+		h.ErrorEnhancer = x.ErrorEnhancer
+		m.writer = h
+	}
+	return m.writer
+}
+
+func (m *Base) RegisterRoutes(public *httprouter.Router) {
+	group := helper.NewRouteGroup(public, "/api")
+	m.Handler().NbxplorerRoutes(group)
+	m.Handler().BtcpayRoutes(group)
 }
 
 func (m *Base) Handler() *handler.Handler {
 	if m.h == nil {
-		m.h = handler.NewHandler(m.r)
+		m.h = handler.NewHandler(m.r, "localhost:32838")
 	}
 	return m.h
 }

@@ -2,6 +2,7 @@ package models
 
 import (
 	"regexp"
+	"time"
 
 	"github.com/driver005/database"
 	validation "github.com/go-ozzo/ozzo-validation"
@@ -28,6 +29,10 @@ type Currency struct {
 
 	// The native symbol used to indicate the currency.
 	SymbolNative string `json:"symbol_native"`
+
+	CreatedAt time.Time          `json:"created_at,omitempty" db:"created_at"`
+	UpdatedAt time.Time          `json:"updated_at,omitempty" db:"updated_at"`
+	DeletedAt database.DeletedAt `json:"deleted_at,omitempty" db:"deleted_at"`
 }
 
 func (c *Currency) BeforeCreate(tx *database.DB) (err error) {
@@ -46,7 +51,5 @@ func (c Currency) Validate() error {
 		validation.Field(&c.Name),
 		validation.Field(&c.Symbol),
 		validation.Field(&c.SymbolNative),
-		// validation.Field(&c.Address1Check, validation.In("pass", "fail", "unavailable", "unchecked")),
-		// validation.Field(&c.ZipCheck, validation.In("pass", "fail", "unavailable", "unchecked")),
 	)
 }

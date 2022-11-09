@@ -20,7 +20,7 @@ type Event struct {
 	Data    interface{} `json:"data"`
 }
 
-func (c *Client) GetEventStream(lastEventID int, longPolling bool, limit *int) ([]Event, error) {
+func (c *Client) GetEventStream(lastEventID int, longPolling bool, limit string) ([]Event, error) {
 	var r ErrorResponse
 	var events []Event
 	req := c.httpClient.R().
@@ -29,8 +29,8 @@ func (c *Client) GetEventStream(lastEventID int, longPolling bool, limit *int) (
 		SetQueryParam("longPolling", strconv.FormatBool(longPolling)).
 		SetError(&r)
 
-	if limit != nil {
-		req.SetQueryParam("limit", strconv.Itoa(*limit))
+	if limit != "null" {
+		req.SetQueryParam("limit", limit)
 	}
 
 	resp, err := req.Get("/events")

@@ -229,3 +229,14 @@ func (i *Invoice) UnarchiveInvoice(ctx context.Context) (*InvoiceResponse, int, 
 	}
 	return &dataRes, statusCode, nil
 }
+
+// activate an invoice payment method (if lazy payments mode is enabled)
+func (c *Client) ActivatePaymentMethod(ctx context.Context, storeID *StoreID, invoiceID *InvoiceID, paymentMethod *string) (*InvoiceActivatePaymentMethod, int, error) {
+	endpoint := fmt.Sprintf("%s/api/v1/stores/%s/invoices/%s/payment-methods/%s/activate", c.URL, *storeID, *invoiceID, *paymentMethod)
+	var dataRes InvoiceActivatePaymentMethod
+	statusCode, err := c.doRequest(ctx, endpoint, "POST", &dataRes, nil)
+	if err != nil {
+		return nil, statusCode, err
+	}
+	return &dataRes, statusCode, nil
+}

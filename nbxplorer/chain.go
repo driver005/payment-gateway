@@ -1,9 +1,5 @@
 package nbxplorer
 
-import (
-	"strconv"
-)
-
 // ChainStatus struct
 type ChainStatus struct {
 	BitcoinStatus struct {
@@ -45,9 +41,9 @@ type FeeRate struct {
 }
 
 // GetFeeRate
-func (c *Client) GetFeeRate(blockCount int) (FeeRate, error) {
+func (c *Client) GetFeeRate(blockCount string) (FeeRate, error) {
 	var feeRate FeeRate
 	var r ErrorResponse
-	_, err := c.httpClient.R().SetError(&r).SetResult(&feeRate).Get("/fees/" + strconv.Itoa(blockCount))
+	_, err := c.httpClient.R().SetError(&r).SetResult(&feeRate).Get("/fees/" + blockCount)
 	return feeRate, err
 }

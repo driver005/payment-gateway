@@ -7,6 +7,6 @@ import (
 )
 
 func TestGetFeeRate(t *testing.T) {
-	_, err := c.GetFeeRate(20)
+	_, err := c.GetFeeRate("20")
 	assert.Nil(t, err)
 }

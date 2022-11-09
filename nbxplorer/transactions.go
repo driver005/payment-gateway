@@ -52,6 +52,11 @@ func (c *Client) GetTransaction(hash string, hex bool) (Transaction, error) {
 	return tx, err
 }
 
+type BroadcastedTransaction struct {
+	ID      string  `json:"transactionId"`
+	BlockID *string `json:"blockId,omitempty"`
+}
+
 // BroadcastTransaction
 func (c *Client) BroadcastTransaction(tx []byte, testOnly bool) error {
 	var r *ErrorResponse

@@ -6,6 +6,10 @@ import (
 	"github.com/ory/x/serverx"
 )
 
+type Router struct {
+	*httprouter.Router
+}
+
 type RouterAdmin struct {
 	*httprouter.Router
 }
@@ -20,6 +24,12 @@ func (r *RouterPublic) RouterAdmin() *RouterAdmin {
 
 func (r *RouterAdmin) RouterPublic() *RouterPublic {
 	return &RouterPublic{Router: r.Router}
+}
+
+func NewRouter() *httprouter.Router {
+	router := httprouter.New()
+	router.NotFound = serverx.DefaultNotFoundHandler
+	return router
 }
 
 func NewRouterPublic() *RouterPublic {
