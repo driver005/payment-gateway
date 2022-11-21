@@ -4,6 +4,7 @@ import (
 	"regexp"
 
 	"github.com/driver005/database"
+	"github.com/driver005/gateway/core"
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
 	"github.com/gofrs/uuid"
@@ -11,11 +12,7 @@ import (
 
 // Country details
 type Country struct {
-	// The country's ID
-	Id uuid.UUID `json:"id,omitempty"`
-
-	// The country name appropriate for display.
-	DisplayName string `json:"display_name"`
+	core.Model
 
 	// The 2 character ISO code of the country in lower case
 	Iso2 string `json:"iso_2"`
@@ -23,17 +20,20 @@ type Country struct {
 	// The 2 character ISO code of the country in lower case
 	Iso3 string `json:"iso_3"`
 
-	// The normalized country name in upper case.
-	Name string `json:"name"`
-
 	// The numerical ISO code for the country.
 	NumCode string `json:"num_code"`
 
-	// // A region object. Available if the relation `region` is expanded.
-	// Region *map[string]interface{} `json:"region,omitempty"`
+	// The normalized country name in upper case.
+	Name string `json:"name"`
 
-	// // The region ID this country is associated with.
-	// RegionId *string `json:"region_id,omitempty"`
+	// The country name appropriate for display.
+	DisplayName string `json:"display_name"`
+
+	// The region ID this country is associated with.
+	RegionId uuid.NullUUID `json:"region_id" database:"default:null"`
+
+	// A region object. Available if the relation `region` is expanded.
+	Region Region `json:"region" database:"default:null"`
 }
 
 func (c *Country) BeforeCreate(tx *database.DB) (err error) {

@@ -5,8 +5,11 @@ import (
 
 	"github.com/driver005/database"
 	"github.com/driver005/database/driver/postgres"
+	"github.com/driver005/database/logger"
+	"github.com/driver005/database/schema"
 	db "github.com/driver005/gateway/database"
 	"github.com/driver005/gateway/helper"
+	"github.com/driver005/gateway/sql"
 	_ "github.com/lib/pq"
 )
 
@@ -35,17 +38,23 @@ func (m *SQL) Init(ctx context.Context) error {
 		// new db connection
 		c := postgres.New(postgres.Config{
 			DriverName: "postgres",
+			// DSN:        "postgres://postgres:postgres@127.0.0.1:5432/medusa-docker?sslmode=disable",
 			DSN: "postgres://jzyozqtc:Hdh78SBKXkvgs6-Z5fpVQAw_la4Iln__@batyr.db.elephantsql.com/jzyozqtc",
 		})
-		
-		database, err := database.Open(c, &database.Config{})
-		
+
+		database, err := database.Open(c, &database.Config{
+			NamingStrategy: schema.NamingStrategy{
+				SingularTable: true,
+			},
+			DisableForeignKeyConstraintWhenMigrating: true,
+			Logger:                                   logger.Default.LogMode(logger.Silent),
+		})
+
 		if err != nil {
 			return helper.WithStack(err)
 		}
 
-
-		m.database, err = db.NewManager(database, m.l)
+		m.database, err = sql.NewManager(database, m.l)
 
 		if err != nil {
 			return err
@@ -71,4 +80,8 @@ func (m *SQL) Context() *database.DB {
 
 func (m *SQL) Manager(ctx context.Context) *database.DB {
 	return m.database.DB(ctx)
+}
+
+func (m *SQL) ClientManager() *db.Handler {
+	return m.Db()
 }

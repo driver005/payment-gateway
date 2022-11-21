@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/driver005/database"
+	db "github.com/driver005/gateway/database"
 	"github.com/ory/herodot"
 )
 
@@ -16,6 +17,7 @@ type Handler struct {
 type Registry interface {
 	Writer() herodot.Writer
 	Manager(ctx context.Context) *database.DB
+	ClientManager() *db.Handler
 }
 
 func NewHandler(r Registry, host string) *Handler {

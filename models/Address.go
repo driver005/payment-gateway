@@ -2,9 +2,10 @@ package models
 
 import (
 	"regexp"
-	"time"
 
 	"github.com/driver005/database"
+	"github.com/driver005/gateway/core"
+
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
 	"github.com/gofrs/uuid"
@@ -12,59 +13,49 @@ import (
 
 // An address.
 type Address struct {
-	// ID of the address
-	Id uuid.UUID `json:"id,omitempty"`
+	core.Model
 
 	// Address line 1
-	Address1 *string `json:"address_1,omitempty"`
+	Address1 string `json:"address_1" database:"default:null"`
 
 	// Address line 2
-	Address2 *string `json:"address_2,omitempty"`
+	Address2 string `json:"address_2" database:"default:null"`
 
 	// City
-	City *string `json:"city,omitempty"`
+	City string `json:"city" database:"default:null"`
 
 	// Company name
-	Company *string `json:"company,omitempty"`
+	Company string `json:"company" database:"default:null"`
 
 	// A country object. Available if the relation `country` is expanded.
-	Country *map[string]interface{} `json:"country,omitempty"`
+	Country *Country `json:"country" database:"foreignKey:id;references:country_code"`
 
 	// The 2 character ISO code of the country in lower case
-	CountryCode *string `json:"country_code,omitempty"`
+	CountryCode string `json:"country_code" database:"default:null"`
 
 	// Available if the relation `customer` is expanded.
-	Customer *[]map[string]interface{} `json:"customer,omitempty"`
+	Customer *Customer `json:"customer" database:"foreignKey:id;references:customer_id"`
 
 	// ID of the customer this address belongs to
-	CustomerId *string `json:"customer_id,omitempty"`
+	CustomerId uuid.NullUUID `json:"customer_id" database:"default:null"`
 
 	// First name
-	FirstName *string `json:"first_name,omitempty"`
+	FirstName string `json:"first_name" database:"default:null"`
 
 	// Last name
-	LastName *string `json:"last_name,omitempty"`
+	LastName string `json:"last_name" database:"default:null"`
 
 	// An optional key-value map with additional details
-	Metadata *map[string]interface{} `json:"metadata,omitempty"`
+	Metadata JSONB `json:"metadata" database:"default:null"`
 
 	// Phone Number
-	Phone *string `json:"phone,omitempty"`
+	Phone string `json:"phone" database:"default:null"`
 
 	// Postal Code
-	PostalCode *string `json:"postal_code,omitempty"`
+	PostalCode string `json:"postal_code" database:"default:null"`
 
 	// Province
-	Province *string `json:"province,omitempty"`
-
-	// The date with timezone at which the resource was created.
-	CreatedAt *time.Time `json:"created_at,omitempty"`
-
-	// The date with timezone at which the resource was deleted.
-	DeletedAt *time.Time `json:"deleted_at,omitempty"`
-
-	// The date with timezone at which the resource was updated.
-	UpdatedAt *time.Time `json:"updated_at,omitempty"`
+	Province string `json:"province" database:"default:null"`
 }
 
 func (a *Address) BeforeCreate(tx *database.DB) (err error) {

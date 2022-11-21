@@ -5,9 +5,10 @@ import (
 
 	"github.com/driver005/gateway/database"
 	"github.com/driver005/gateway/handler"
-	"github.com/driver005/gateway/helper"
+	"github.com/driver005/gateway/handler/admin"
 	"github.com/driver005/gateway/logger"
-	"github.com/julienschmidt/httprouter"
+	"github.com/driver005/gateway/sql"
+	"github.com/gofiber/fiber/v2"
 	"github.com/ory/herodot"
 	"github.com/ory/hydra/x"
 	"go.opentelemetry.io/otel"
@@ -18,12 +19,14 @@ type Base struct {
 	l            *logger.Logger
 	al           *logger.Logger
 	h            *handler.Handler
+	a            *admin.Handler
 	buildVersion string
 	buildHash    string
 	buildDate    string
 	r            Registry
 	trc          trace.Tracer
-	database     database.Database
+	database     sql.Database
+	db           *database.Handler
 	writer       herodot.Writer
 }
 
@@ -88,10 +91,11 @@ func (m *Base) Writer() herodot.Writer {
 	return m.writer
 }
 
-func (m *Base) RegisterRoutes(public *httprouter.Router) {
-	group := helper.NewRouteGroup(public, "/api")
+func (m *Base) RegisterRoutes(router *fiber.App) {
+	group := router.Group("/api")
 	m.Handler().NbxplorerRoutes(group)
 	m.Handler().BtcpayRoutes(group)
+	m.Admin().Routes(group)
 }
 
 func (m *Base) Handler() *handler.Handler {
@@ -101,6 +105,24 @@ func (m *Base) Handler() *handler.Handler {
 	return m.h
 }
 
-func (m *Base) Database() database.Database {
+func (m *Base) Db() *database.Handler {
+	if m.db == nil {
+		m.db = database.NewHandler(m.r)
+	}
+	return m.db
+}
+
+func (m *Base) Admin() *admin.Handler {
+	if m.a == nil {
+		m.a = admin.NewHandler(m.r)
+	}
+	return m.a
+}
+
+func (m *Base) Database() sql.Database {
 	return m.database
+}
+
+func (m *Base) Setup() {
+	m.r.ClientManager().GenerateDefaultShippingProfile(context.Background())
 }

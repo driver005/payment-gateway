@@ -1,6 +1,8 @@
 package models
 
-import "database/sql/driver"
+import (
+	"database/sql/driver"
+)
 
 // The status of the product
 type ProductStatus string

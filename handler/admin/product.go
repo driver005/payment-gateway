@@ -1,29 +1,43 @@
 package admin
 
 import (
-	"net/http"
 	"strconv"
+	"time"
 
-	"github.com/driver005/gateway/handler"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
-	"github.com/julienschmidt/httprouter"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofrs/uuid"
 )
 
-type Product struct {
-	r handler.Registry
+func (a *Admin) GetProduct(context *fiber.Ctx) error {
+
+	Id, err := uuid.FromString(context.Params("id"))
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	m, err := a.r.ClientManager().GetProduct(context.Context(), Id)
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
-func (p *Product) ListProduct(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	var m = make([]models.Product, 0)
-	q := r.URL.Query()
-
-	page, _ := strconv.Atoi(q.Get("page"))
+func (a *Admin) ListProduct(context *fiber.Ctx) error {
+	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
 		page = 1
 	}
 
-	pageSize, _ := strconv.Atoi(q.Get("page_size"))
+	pageSize, _ := strconv.Atoi(context.Query("page_size"))
 	switch {
 	case pageSize > 100:
 		pageSize = 100
@@ -32,22 +46,142 @@ func (p *Product) ListProduct(w http.ResponseWriter, r *http.Request, ps httprou
 	}
 
 	offset := (page - 1) * pageSize
-	if err := p.r.Manager(r.Context()).Scopes(Paginate(r, offset, pageSize)).Order("id").Find(&m).Error; err != nil {
-		p.r.Writer().WriteError(w, r, helper.WithStack(err))
-		return
+
+	m, n, err := a.r.ClientManager().GetProducts(context.Context(), models.Filter{
+		Size:   pageSize,
+		Offset: offset,
+	})
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
 	}
 
-	n := p.r.Manager(r.Context()).Find(&models.Product{})
-	if n.Error != nil {
-		p.r.Writer().WriteError(w, r, helper.WithStack(n.Error))
-		return
+	helper.Header(context, context.Request().URI(), *n, pageSize, offset)
+
+	return context.Status(fiber.StatusOK).JSON(&m)
+}
+
+func (a *Admin) CreateProduct(context *fiber.Ctx) error {
+	var m models.Product
+
+	if err := context.BodyParser(&m); err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
 	}
 
-	helper.Header(w, r.URL, n.RowsAffected, pageSize, offset)
+	r, err := a.r.ClientManager().CreateProduct(context.Context(), &m)
 
-	if m == nil {
-		m = []models.Product{}
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
 	}
 
-	p.r.Writer().Write(w, r, &m)
+	return context.Status(fiber.StatusOK).JSON(&r)
+}
+
+func (a *Admin) UpdateProduct(context *fiber.Ctx) error {
+	var m models.Product
+
+	if err := context.BodyParser(&m); err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	Id, err := uuid.FromString(context.Params("id"))
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	m.Id = Id
+
+	r, err := a.r.ClientManager().UpdateProduct(context.Context(), &m)
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	return context.Status(fiber.StatusOK).JSON(r)
+}
+
+func (a *Admin) DeleteProduct(context *fiber.Ctx) error {
+	Id, err := uuid.FromString(context.Params("id"))
+	if err != nil {
+		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	r := a.r.ClientManager().DeleteProduct(context.Context(), Id)
+	if r != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": helper.WithStack(r),
+			"type":    "database_error",
+		})
+	}
+
+	return context.Status(fiber.StatusNoContent).JSON(r)
+}
+
+type PostProductsProductMetadataJSONBody struct {
+	// The metadata key
+	Key string `json:"key"`
+
+	// The metadata value
+	Value string `json:"value"`
+}
+
+func (a *Admin) CreateProductMetadata(context *fiber.Ctx) error {
+	var m models.Product
+	var o models.Product
+	var b PostProductsProductMetadataJSONBody
+
+	if err := context.BodyParser(&b); err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	ID, err := uuid.FromString(context.Params("id"))
+	if err != nil {
+		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	if err = a.r.Manager(context.Context()).Where("id = ?", ID).First(&o).Error; err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	m.Id = o.Id
+	m.Metadata = models.JSONB{
+		b.Key: b.Value,
+	}
+	m.UpdatedAt = time.Now().UTC().Round(time.Second)
+	if err := a.r.Manager(context.Context()).Model(&o).Updates(m).Error; err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+
+	return context.Status(fiber.StatusOK).JSON(&m)
 }

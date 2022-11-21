@@ -37,9 +37,9 @@ type EthDetailTX struct { // ID
 	// Hash for sent transaction
 	SentHashTX string `boil:"sent_hash_tx" json:"sent_hash_tx" toml:"sent_hash_tx" yaml:"sent_hash_tx"`
 	// updated date for unsigned transaction created
-	UnsignedUpdatedAt *time.Time `boil:"unsigned_updated_at" json:"unsigned_updated_at,omitempty" toml:"unsigned_updated_at" yaml:"unsigned_updated_at,omitempty"`
+	UnsignedUpdatedAt *time.Time `boil:"unsigned_updated_at" json:"unsigned_updated_at,omitempty" toml:"unsigned_updated_at" yaml:"unsigned_updated_at,omitempty" database:"default:null"`
 	// updated date for signed transaction sent
-	SentUpdatedAt *time.Time `boil:"sent_updated_at" json:"sent_updated_at,omitempty" toml:"sent_updated_at" yaml:"sent_updated_at,omitempty"`
+	SentUpdatedAt *time.Time `boil:"sent_updated_at" json:"sent_updated_at,omitempty" toml:"sent_updated_at" yaml:"sent_updated_at,omitempty" database:"default:null"`
 
 	R *ethDetailTXR `boil:"-" json:"-" toml:"-" yaml:"-"`
 	L ethDetailTXL  `boil:"-" json:"-" toml:"-" yaml:"-"`

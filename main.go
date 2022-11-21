@@ -4,17 +4,14 @@ import (
 	"context"
 	"embed"
 	"fmt"
-	"io/ioutil"
-	"log"
-	"net/http"
 	"reflect"
 	"time"
+	"unsafe"
 
-	"github.com/driver005/gateway/btcpay"
-	"github.com/driver005/gateway/driver"
-	"github.com/driver005/gateway/helper"
-	"github.com/driver005/gateway/respond"
-	"github.com/julienschmidt/httprouter"
+	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
+	// "github.com/gofiber/fiber/v2/middleware/csrf"
+	// "github.com/gofiber/fiber/v2/middleware/limiter"
 )
 
 // opts := middleware.RedocOpts{SpecURL: "/swagger.json"}
@@ -28,42 +25,228 @@ var migrations embed.FS
 
 var ctx = context.Background()
 
-func CreateInvoice(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	handler := btcpay.NewHandler()
-	handler.SetClient("https://testnet.demo.btcpayserver.org", "d0b9689840047ed7b0737d9e981ab5e83c1b9d35")
-	handler.SetStoreID()
+// func CreateInvoice(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+// 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+// 	handler := btcpay.NewHandler()
+// 	handler.SetClient("https://testnet.demo.btcpayserver.org", "d0b9689840047ed7b0737d9e981ab5e83c1b9d35")
+// 	handler.SetStoreID()
 
-	invoice := handler.CreateInvoice()
+// 	invoice := handler.CreateInvoice()
 
-	respond.NewResponse(w).Ok(invoice)
+// 	respond.NewResponse(w).Ok(invoice)
+// }
+
+// func Webhook(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+// 	// if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
+// 	// 	resp.NewResponse(w).InternalServerError(helper.WithStack(err))
+// 	// 	return
+// 	// }
+// 	body, _ := ioutil.ReadAll(r.Body)
+// 	fmt.Println(string(body))
+// 	_ = ioutil.WriteFile("./data.txt", body, 0666)
+// }
+
+// func TrackDerivationScheme(c *gin.Context) {
+// 	// if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
+// 	// 	resp.NewResponse(w).InternalServerError(helper.WithStack(err))
+// 	// 	return
+// 	// }
+// 	// fmt.Println(r.URL.Query().Get("name"))
+// 	// fmt.Println(reflect.TypeOf(r.URL.Query().Get("name")))
+// }
+
+func ParseField(fieldStruct reflect.StructField) {
+	indirectFieldType := fieldStruct.Type
+	for indirectFieldType.Kind() == reflect.Ptr {
+		indirectFieldType = indirectFieldType.Elem()
+	}
+	fieldValue := reflect.New(indirectFieldType)
+	fmt.Println(reflect.Indirect(fieldValue).Kind())
+	switch reflect.Indirect(fieldValue).Kind() {
+	case reflect.Struct:
+		fmt.Println(fieldValue.Interface())
+	}
 }
 
-func Webhook(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	// if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
-	// 	resp.NewResponse(w).InternalServerError(helper.WithStack(err))
-	// 	return
-	// }
-	body, _ := ioutil.ReadAll(r.Body)
-	fmt.Println(string(body))
-	_ = ioutil.WriteFile("./data.txt", body, 0666)
+func createQuery(q interface{}) {
+	if reflect.ValueOf(q).Kind() == reflect.Struct {
+		t := reflect.TypeOf(q).Name()
+		query := fmt.Sprintf("insert into %s values(", t)
+		v := reflect.ValueOf(q)
+		// rs := reflect.ValueOf(&q).Elem()
+		for i := 0; i < v.NumField(); i++ {
+			rf := v.Field(i)
+			fieldName := v.Type().Field(i).Name
+			switch v.Field(i).Kind() {
+			case reflect.Int:
+				if i == 0 {
+					query = fmt.Sprintf("%s%d", query, v.Field(i).Int())
+				} else {
+					query = fmt.Sprintf("%s, %d", query, v.Field(i).Int())
+				}
+			case reflect.String:
+				if i == 0 {
+					query = fmt.Sprintf("%s\"%s\"", query, v.Field(i).String())
+				} else {
+					query = fmt.Sprintf("%s, \"%s\"", query, v.Field(i).String())
+				}
+			case reflect.Struct:
+				// fmt.Println(valueField.Kind())
+				if fieldName != "Filter" {
+					createQuery(v.Field(i).Elem().Interface())
+				}
+
+				modelType := reflect.ValueOf(rf).Type()
+				for modelType.Kind() == reflect.Slice || modelType.Kind() == reflect.Array || modelType.Kind() == reflect.Ptr {
+					modelType = modelType.Elem()
+				}
+				for i := 0; i < modelType.NumField(); i++ {
+					fieldStruct := modelType.Field(i)
+					fmt.Println(fieldStruct.Name)
+					ParseField(fieldStruct)
+				}
+			case reflect.Pointer:
+				rf = reflect.NewAt(rf.Type(), unsafe.Pointer(rf.UnsafeAddr()))
+				// ri.Set(rf)
+				// rf.Set(ri)
+
+				fmt.Println(rf)
+			default:
+				fmt.Println("Unsupported type")
+				return
+			}
+		}
+		query = fmt.Sprintf("%s)", query)
+		fmt.Println(query)
+		return
+
+	}
+	fmt.Println("unsupported type")
+
 }
 
-func TrackDerivationScheme(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	// if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
-	// 	resp.NewResponse(w).InternalServerError(helper.WithStack(err))
-	// 	return
-	// }
-	fmt.Println(r.URL.Query().Get("name"))
-	fmt.Println(reflect.TypeOf(r.URL.Query().Get("name")))
+func DeepFields(iface interface{}) []reflect.Value {
+	fields := make([]reflect.Value, 0)
+	ifv := reflect.ValueOf(iface)
+	ift := reflect.TypeOf(iface)
+
+	for i := 0; i < ift.NumField(); i++ {
+		v := ifv.Field(i)
+
+		switch v.Kind() {
+		case reflect.Struct:
+			fields = append(fields, DeepFields(v.Interface())...)
+		default:
+			fields = append(fields, v)
+		}
+	}
+
+	return fields
+}
+
+func collectFieldNames(iface interface{}, m map[string]struct{}) {
+	t := reflect.TypeOf(iface)
+	if t.Kind() == reflect.Ptr {
+		t = t.Elem()
+	}
+	if t.Kind() != reflect.Struct {
+		return
+	}
+	for i := 0; i < t.NumField(); i++ {
+		sf := t.Field(i)
+		fieldValue := reflect.New(sf.Type)
+		fmt.Println(fieldValue)
+		m[sf.Name] = struct{}{}
+		if sf.Anonymous {
+			collectFieldNames(sf.Type, m)
+		}
+	}
 }
 
 func main() {
-	// mux := http.NewServeMux()
-	r := driver.New(ctx)
+	f := types.FilterableBatchJobProps{}
+	f.Status = models.BatchJobStatusCompleted
+	f.CreatedBy = "jshfkdfh"
+	f.CreatedAt.Gt = time.Now().UTC().Round(time.Second)
+	f.UpdatedAt.Gt = time.Now().UTC().Round(time.Second)
+	// createQuery(f)
+	fmt.Println(DeepFields(f))
 
-	public := helper.NewRouter()
-	r.RegisterRoutes(public)
+	m := make(map[string]struct{})
+	collectFieldNames(f, m)
+	for name := range m {
+		f.m
+	}
+	// r := driver.New(ctx)
+
+	// r.Setup()
+
+	// p := &models.Product{
+	// 	Title: "Shirt",
+	// }
+
+	// stmt := r.Manager(context.Background()).Session(&database.Session{DryRun: true}).Create(p)
+	// if stmt.Error != nil {
+	// 	fmt.Println(stmt.Error)
+	// }
+	// fmt.Println(stmt.Statement.SQL.String())
+	// fmt.Println(stmt.Statement.Vars)
+
+	// public := fiber.New(fiber.Config{
+	// 	ServerHeader:  "Fiber",
+	// 	AppName:       "Test App v1.0.1",
+	// 	WriteTimeout:  15 * time.Second,
+	// 	ReadTimeout:   15 * time.Second,
+	// 	StrictRouting: true,
+	// })
+
+	// public.Use(cors.New())
+	// // public.Use(csrf.New())
+	// public.Use(logger.New())
+	// // public.Use(limiter.New())
+
+	// r.RegisterRoutes(public)
+
+	// public.Listen("192.168.1.2:80")
+
+	// var m models.ShippingProfile
+
+	// if err := r.Manager(ctx).Where("type = ?", "gift_card").First(&m).Error; err != nil {
+	// 	fmt.Println(err)
+	// }
+
+	// e := r.Manager(context.Background()).Create(&models.Product{
+	// 	IsGiftcard: true,
+	// 	Title:      "test",
+	// 	ProfileId:  uuid.NullUUID{UUID: m.Id, Valid: true},
+	// })
+
+	// if pgError := e.Error.(*pq.Error); errors.Is(e.Error, pgError) {
+	// 	// switch pgError.Code {
+	// 	// case "23505":
+
+	// 	// }
+	// 	fmt.Println(pgError.Hint)
+	// 	fmt.Println(pgError.Detail)
+	// }
+
+	// conn, err := pgx.Connect(context.Background(), "postgres://jzyozqtc:Hdh78SBKXkvgs6-Z5fpVQAw_la4Iln__@batyr.db.elephantsql.com/jzyozqtc")
+	// if err != nil {
+	// 	fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
+	// 	os.Exit(1)
+	// }
+	// defer conn.Close(context.Background())
+
+	// var name string
+	// var weight int64
+	// err = conn.QueryRow(context.Background(), "select name, weight from widgets where id=$1", 42).Scan(&name, &weight)
+	// if err != nil {
+	// 	fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
+	// 	os.Exit(1)
+	// }
+
+	// fmt.Println(name, weight)
+
 	// r.Handler().Routes(public)
 
 	// n := handler.NewNbxplorer(r, "http://localhost:32838")
@@ -74,19 +257,19 @@ func main() {
 	// public.GET("/test", TrackDerivationScheme)
 
 	// r.RegisterRoutes(public)
-
-	// Server Configuration
-
-	srv := &http.Server{
-		Handler:      public,
-		Addr:         "192.168.1.2:80",
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
-	}
-	fmt.Println("Starting server")
-	defer srv.Close()
-	log.Fatal(srv.ListenAndServe())
 }
+
+// Server Configuration
+
+// srv := &http.Server{
+// 	Handler:      public,
+// 	Addr:         "192.168.1.2:80",
+// 	WriteTimeout: 15 * time.Second,
+// 	ReadTimeout:  15 * time.Second,
+// }
+// fmt.Println("Starting server")
+// defer srv.Close()
+// log.Fatal(srv.ListenAndServe())
 
 // func newLogger() *zap.Logger {
 // 	return logger.NewZapLogger(&config.Logger{})

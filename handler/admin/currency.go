@@ -1,51 +1,32 @@
 package admin
 
 import (
-	"encoding/json"
-	"net/http"
 	"strconv"
-	"time"
 
-	"github.com/driver005/database"
-	"github.com/driver005/gateway/handler"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
-	"github.com/gofrs/uuid"
-	"github.com/julienschmidt/httprouter"
+	"github.com/gofiber/fiber/v2"
 )
 
-type Currency struct {
-	r handler.Registry
-}
-
-func Paginate(r *http.Request, offset int, pageSize int) func(db *database.DB) *database.DB {
-	return func(db *database.DB) *database.DB {
-		return db.Offset(offset).Limit(pageSize)
-	}
-}
-
-func (c *Currency) GetCurrency(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	var m models.Currency
-	var id = ps.ByName("id")
-
-	if err := c.r.Manager(r.Context()).Where("id = ?", id).First(&m).Error; err != nil {
-		c.r.Writer().WriteError(w, r, helper.WithStack(err))
-		return
+func (a *Admin) GetCurrency(context *fiber.Ctx) error {
+	m, err := a.r.ClientManager().GetCurrency(context.Context(), context.Params("id"))
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
 	}
 
-	c.r.Writer().Write(w, r, &m)
+	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
-func (c *Currency) ListCurrency(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	var m = make([]models.Currency, 0)
-	q := r.URL.Query()
-
-	page, _ := strconv.Atoi(q.Get("page"))
+func (a *Admin) ListCurrency(context *fiber.Ctx) error {
+	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
 		page = 1
 	}
 
-	pageSize, _ := strconv.Atoi(q.Get("page_size"))
+	pageSize, _ := strconv.Atoi(context.Query("page_size"))
 	switch {
 	case pageSize > 100:
 		pageSize = 100
@@ -54,52 +35,77 @@ func (c *Currency) ListCurrency(w http.ResponseWriter, r *http.Request, ps httpr
 	}
 
 	offset := (page - 1) * pageSize
-	if err := c.r.Manager(r.Context()).Scopes(Paginate(r, offset, pageSize)).Order("id").Find(&m).Error; err != nil {
-		c.r.Writer().WriteError(w, r, helper.WithStack(err))
-		return
+
+	m, n, err := a.r.ClientManager().GetCurrencys(context.Context(), models.Filter{
+		Size:   pageSize,
+		Offset: offset,
+	})
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
 	}
 
-	n := c.r.Manager(r.Context()).Find(&models.Currency{})
-	if n.Error != nil {
-		c.r.Writer().WriteError(w, r, helper.WithStack(n.Error))
-		return
-	}
+	helper.Header(context, context.Request().URI(), *n, pageSize, offset)
 
-	helper.Header(w, r.URL, n.RowsAffected, pageSize, offset)
-
-	if m == nil {
-		m = []models.Currency{}
-	}
-
-	c.r.Writer().Write(w, r, &m)
+	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
-func (c *Currency) UpdateCurrency(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (a *Admin) CreateCurrency(context *fiber.Ctx) error {
 	var m models.Currency
-	var o models.Currency
-	var err error
 
-	if err := json.NewDecoder(r.Body).Decode(&m); err != nil {
-		c.r.Writer().WriteError(w, r, helper.WithStack(err))
-		return
+	if err := context.BodyParser(&m); err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
 	}
 
-	m.Id, err = uuid.FromString(ps.ByName("id"))
+	r, err := a.r.ClientManager().CreateCurrency(context.Context(), &m)
+
 	if err != nil {
-		c.r.Writer().WriteError(w, r, helper.WithStack(err))
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
 	}
 
-	if err = c.r.Manager(r.Context()).Where("id = ?", m.Id).First(&o).Error; err != nil {
-		c.r.Writer().WriteError(w, r, helper.WithStack(err))
-		return
+	return context.Status(fiber.StatusOK).JSON(&r)
+}
+
+func (a *Admin) UpdateCurrency(context *fiber.Ctx) error {
+	var m models.Currency
+
+	if err := context.BodyParser(&m); err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
 	}
 
-	m.Id = o.Id
-	m.UpdatedAt = time.Now().UTC().Round(time.Second)
-	if err := c.r.Manager(r.Context()).Model(&o).Updates(m).Error; err != nil {
-		c.r.Writer().WriteError(w, r, helper.WithStack(err))
-		return
+	m.Code = context.Params("id")
+
+	r, err := a.r.ClientManager().UpdateCurrency(context.Context(), &m)
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
 	}
 
-	c.r.Writer().Write(w, r, &m)
+	return context.Status(fiber.StatusOK).JSON(r)
+}
+
+func (a *Admin) DeleteCurrency(context *fiber.Ctx) error {
+
+	r := a.r.ClientManager().DeleteCurrency(context.Context(), context.Params("id"))
+	if r != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": helper.WithStack(r),
+			"type":    "database_error",
+		})
+	}
+
+	return context.Status(fiber.StatusNoContent).JSON(r)
 }

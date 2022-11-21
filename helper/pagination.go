@@ -3,9 +3,11 @@ package helper
 import (
 	"fmt"
 	"net/http"
-	"net/url"
 	"strconv"
 	"strings"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/valyala/fasthttp"
 )
 
 // Parse parses limit and offset from *http.Request with given limits and defaults.
@@ -66,19 +68,19 @@ func MaxItemsPerPage(max, is int) int {
 	return is
 }
 
-func header(u *url.URL, rel string, limit, offset int) string {
-	q := u.Query()
+func header(u *fasthttp.URI, rel string, limit, offset int) string {
+	q := u.QueryArgs()
 	q.Set("limit", strconv.Itoa(limit))
 	q.Set("offset", strconv.Itoa(offset))
-	u.RawQuery = q.Encode()
-	return fmt.Sprintf("<%s>; rel=\"%s\"", u.String(), rel)
+	// u.RawQuery = q.String()
+	return fmt.Sprintf("<%s>; rel=\"%s\"", q.String(), rel)
 }
 
 // Header adds an http header for pagination using a responsewriter where backwards compatibility is required.
 // The header will contain links any combination of the first, last, next, or previous (prev) pages in a paginated list (given a limit and an offset, and optionally a total).
 // If total is not set, then no "last" page will be calculated.
 // If no limit is provided, then it will default to 1.
-func Header(w http.ResponseWriter, u *url.URL, pageSize int64, limit, offset int) {
+func Header(c *fiber.Ctx, u *fasthttp.URI, pageSize int64, limit, offset int) {
 	total := int(pageSize)
 	if offset < 0 {
 		offset = 0
@@ -88,7 +90,7 @@ func Header(w http.ResponseWriter, u *url.URL, pageSize int64, limit, offset int
 		limit = 1
 	}
 
-	w.Header().Set("X-Total-Count", strconv.Itoa(total))
+	c.Set("X-Total-Count", strconv.Itoa(total))
 
 	// lastOffset will either equal the offset required to contain the remainder,
 	// or the limit.
@@ -102,7 +104,7 @@ func Header(w http.ResponseWriter, u *url.URL, pageSize int64, limit, offset int
 	// Check for last page
 	if offset >= lastOffset {
 		if total == 0 {
-			w.Header().Set("Link", strings.Join([]string{
+			c.Set("Link", strings.Join([]string{
 				header(u, "first", limit, 0),
 				header(u, "next", limit, ((offset/limit)+1)*limit),
 				header(u, "prev", limit, ((offset/limit)-1)*limit),
@@ -111,11 +113,11 @@ func Header(w http.ResponseWriter, u *url.URL, pageSize int64, limit, offset int
 		}
 
 		if total < limit {
-			w.Header().Set("link", header(u, "first", total, 0))
+			c.Set("link", header(u, "first", total, 0))
 			return
 		}
 
-		w.Header().Set("Link", strings.Join([]string{
+		c.Set("Link", strings.Join([]string{
 			header(u, "first", limit, 0),
 			header(u, "prev", limit, lastOffset-limit),
 		}, ","))
@@ -123,14 +125,14 @@ func Header(w http.ResponseWriter, u *url.URL, pageSize int64, limit, offset int
 	}
 
 	if offset < limit {
-		w.Header().Set("Link", strings.Join([]string{
+		c.Set("Link", strings.Join([]string{
 			header(u, "next", limit, limit),
 			header(u, "last", limit, lastOffset),
 		}, ","))
 		return
 	}
 
-	w.Header().Set("Link", strings.Join([]string{
+	c.Set("Link", strings.Join([]string{
 		header(u, "first", limit, 0),
 		header(u, "next", limit, ((offset/limit)+1)*limit),
 		header(u, "prev", limit, ((offset/limit)-1)*limit),

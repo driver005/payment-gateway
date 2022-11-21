@@ -6,11 +6,24 @@ import (
 	"github.com/driver005/database"
 )
 
-type (
-	Database interface {
-		DB(ctx context.Context) *database.DB
+type Handler struct {
+	r Registry
+}
+
+func (h *Handler) remove() {
+
+}
+
+type Registry interface {
+	Manager(ctx context.Context) *database.DB
+}
+
+func Paginate(offset int, pageSize int) func(db *database.DB) *database.DB {
+	return func(db *database.DB) *database.DB {
+		return db.Offset(offset).Limit(pageSize)
 	}
-	Provider interface {
-		Database() Database
-	}
-)
+}
+
+func NewHandler(r Registry) *Handler {
+	return &Handler{r: r}
+}
