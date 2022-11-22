@@ -4,11 +4,10 @@ import (
 	"context"
 	"embed"
 	"fmt"
-	"reflect"
 	"time"
-	"unsafe"
 
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/service"
 	"github.com/driver005/gateway/types"
 	// "github.com/gofiber/fiber/v2/middleware/csrf"
 	// "github.com/gofiber/fiber/v2/middleware/limiter"
@@ -55,128 +54,188 @@ var ctx = context.Background()
 // 	// fmt.Println(reflect.TypeOf(r.URL.Query().Get("name")))
 // }
 
-func ParseField(fieldStruct reflect.StructField) {
-	indirectFieldType := fieldStruct.Type
-	for indirectFieldType.Kind() == reflect.Ptr {
-		indirectFieldType = indirectFieldType.Elem()
-	}
-	fieldValue := reflect.New(indirectFieldType)
-	fmt.Println(reflect.Indirect(fieldValue).Kind())
-	switch reflect.Indirect(fieldValue).Kind() {
-	case reflect.Struct:
-		fmt.Println(fieldValue.Interface())
-	}
-}
+// func ParseField(fieldStruct reflect.StructField) {
+// 	indirectFieldType := fieldStruct.Type
+// 	for indirectFieldType.Kind() == reflect.Ptr {
+// 		indirectFieldType = indirectFieldType.Elem()
+// 	}
+// 	fieldValue := reflect.New(indirectFieldType)
+// 	fmt.Println(reflect.Indirect(fieldValue).Kind())
+// 	switch reflect.Indirect(fieldValue).Kind() {
+// 	case reflect.Struct:
+// 		fmt.Println(fieldValue.Interface())
+// 	}
+// }
 
-func createQuery(q interface{}) {
-	if reflect.ValueOf(q).Kind() == reflect.Struct {
-		t := reflect.TypeOf(q).Name()
-		query := fmt.Sprintf("insert into %s values(", t)
-		v := reflect.ValueOf(q)
-		// rs := reflect.ValueOf(&q).Elem()
-		for i := 0; i < v.NumField(); i++ {
-			rf := v.Field(i)
-			fieldName := v.Type().Field(i).Name
-			switch v.Field(i).Kind() {
-			case reflect.Int:
-				if i == 0 {
-					query = fmt.Sprintf("%s%d", query, v.Field(i).Int())
-				} else {
-					query = fmt.Sprintf("%s, %d", query, v.Field(i).Int())
-				}
-			case reflect.String:
-				if i == 0 {
-					query = fmt.Sprintf("%s\"%s\"", query, v.Field(i).String())
-				} else {
-					query = fmt.Sprintf("%s, \"%s\"", query, v.Field(i).String())
-				}
-			case reflect.Struct:
-				// fmt.Println(valueField.Kind())
-				if fieldName != "Filter" {
-					createQuery(v.Field(i).Elem().Interface())
-				}
+// func createQuery(q interface{}) {
+// 	if reflect.ValueOf(q).Kind() == reflect.Struct {
+// 		t := reflect.TypeOf(q).Name()
+// 		query := fmt.Sprintf("insert into %s values(", t)
+// 		v := reflect.ValueOf(q)
+// 		// rs := reflect.ValueOf(&q).Elem()
+// 		for i := 0; i < v.NumField(); i++ {
+// 			rf := v.Field(i)
+// 			fieldName := v.Type().Field(i).Name
+// 			switch v.Field(i).Kind() {
+// 			case reflect.Int:
+// 				if i == 0 {
+// 					query = fmt.Sprintf("%s%d", query, v.Field(i).Int())
+// 				} else {
+// 					query = fmt.Sprintf("%s, %d", query, v.Field(i).Int())
+// 				}
+// 			case reflect.String:
+// 				if i == 0 {
+// 					query = fmt.Sprintf("%s\"%s\"", query, v.Field(i).String())
+// 				} else {
+// 					query = fmt.Sprintf("%s, \"%s\"", query, v.Field(i).String())
+// 				}
+// 			case reflect.Struct:
+// 				// fmt.Println(valueField.Kind())
+// 				if fieldName != "Filter" {
+// 					createQuery(v.Field(i).Elem().Interface())
+// 				}
 
-				modelType := reflect.ValueOf(rf).Type()
-				for modelType.Kind() == reflect.Slice || modelType.Kind() == reflect.Array || modelType.Kind() == reflect.Ptr {
-					modelType = modelType.Elem()
-				}
-				for i := 0; i < modelType.NumField(); i++ {
-					fieldStruct := modelType.Field(i)
-					fmt.Println(fieldStruct.Name)
-					ParseField(fieldStruct)
-				}
-			case reflect.Pointer:
-				rf = reflect.NewAt(rf.Type(), unsafe.Pointer(rf.UnsafeAddr()))
-				// ri.Set(rf)
-				// rf.Set(ri)
+// 				modelType := reflect.ValueOf(rf).Type()
+// 				for modelType.Kind() == reflect.Slice || modelType.Kind() == reflect.Array || modelType.Kind() == reflect.Ptr {
+// 					modelType = modelType.Elem()
+// 				}
+// 				for i := 0; i < modelType.NumField(); i++ {
+// 					fieldStruct := modelType.Field(i)
+// 					fmt.Println(fieldStruct.Name)
+// 					ParseField(fieldStruct)
+// 				}
+// 			case reflect.Pointer:
+// 				rf = reflect.NewAt(rf.Type(), unsafe.Pointer(rf.UnsafeAddr()))
+// 				// ri.Set(rf)
+// 				// rf.Set(ri)
 
-				fmt.Println(rf)
-			default:
-				fmt.Println("Unsupported type")
-				return
-			}
-		}
-		query = fmt.Sprintf("%s)", query)
-		fmt.Println(query)
-		return
+// 				fmt.Println(rf)
+// 			default:
+// 				fmt.Println("Unsupported type")
+// 				return
+// 			}
+// 		}
+// 		query = fmt.Sprintf("%s)", query)
+// 		fmt.Println(query)
+// 		return
 
-	}
-	fmt.Println("unsupported type")
+// 	}
+// 	fmt.Println("unsupported type")
 
-}
+// }
 
-func DeepFields(iface interface{}) []reflect.Value {
-	fields := make([]reflect.Value, 0)
-	ifv := reflect.ValueOf(iface)
-	ift := reflect.TypeOf(iface)
+// func DeepFields(iface interface{}) []reflect.Value {
+// 	fields := make([]reflect.Value, 0)
+// 	ifv := reflect.ValueOf(iface)
+// 	ift := reflect.TypeOf(iface)
 
-	for i := 0; i < ift.NumField(); i++ {
-		v := ifv.Field(i)
+// 	for i := 0; i < ift.NumField(); i++ {
+// 		v := ifv.Field(i)
 
-		switch v.Kind() {
-		case reflect.Struct:
-			fields = append(fields, DeepFields(v.Interface())...)
-		default:
-			fields = append(fields, v)
-		}
-	}
+// 		switch v.Kind() {
+// 		case reflect.Struct:
+// 			fields = append(fields, DeepFields(v.Interface())...)
+// 		default:
+// 			fields = append(fields, v)
+// 		}
+// 	}
 
-	return fields
-}
+// 	return fields
+// }
 
-func collectFieldNames(iface interface{}, m map[string]struct{}) {
-	t := reflect.TypeOf(iface)
-	if t.Kind() == reflect.Ptr {
-		t = t.Elem()
-	}
-	if t.Kind() != reflect.Struct {
-		return
-	}
-	for i := 0; i < t.NumField(); i++ {
-		sf := t.Field(i)
-		fieldValue := reflect.New(sf.Type)
-		fmt.Println(fieldValue)
-		m[sf.Name] = struct{}{}
-		if sf.Anonymous {
-			collectFieldNames(sf.Type, m)
-		}
-	}
-}
+// func collectFieldNames(iface interface{}, m map[string]struct{}) {
+// 	t := reflect.TypeOf(iface)
+// 	if t.Kind() == reflect.Ptr {
+// 		t = t.Elem()
+// 	}
+// 	if t.Kind() != reflect.Struct {
+// 		return
+// 	}
+// 	for i := 0; i < t.NumField(); i++ {
+// 		sf := t.Field(i)
+// 		m[sf.Name] = struct{}{}
+// 		if sf.Anonymous {
+// 			collectFieldNames(sf.Type, m)
+// 		}
+// 	}
+// }
+
+// func BuildQuery(i []*structs.Field) string {
+// 	var query string
+// 	for _, f := range i {
+// 		name := strings.Replace(f.Tag("json"), ",omitempty", "", -1)
+// 		if f.Kind() == reflect.Struct {
+// 			if f.Name() == "Lt" {
+// 				if !f.IsZero() {
+// 					query += fmt.Sprintf(`< "%+v"`, f.Value())
+// 				}
+// 			} else if f.Name() == "Gt" {
+// 				if !f.IsZero() {
+// 					query += fmt.Sprintf(`> "%+v"`, f.Value())
+// 				}
+// 			} else if f.Name() == "Lte" {
+// 				if !f.IsZero() {
+// 					query += fmt.Sprintf(`<= "%+v"`, f.Value())
+// 				}
+// 			} else if f.Name() == "Gte" {
+// 				if !f.IsZero() {
+// 					query += fmt.Sprintf(`>= "%+v"`, f.Value())
+// 				}
+// 			} else {
+// 				if !f.IsZero() {
+// 					if f.IsEmbedded() {
+// 						query = BuildQuery(f.Fields())
+// 					} else {
+// 						if len(query) > 0 {
+// 							query += " AND "
+// 						}
+// 						query += fmt.Sprintf("%+v %+v", name, BuildQuery(f.Fields()))
+// 					}
+
+// 				}
+// 			}
+// 		} else if f.Kind() == reflect.String {
+// 			if len(query) > 0 {
+// 				query += " AND "
+// 			}
+// 			if !f.IsZero() {
+// 				query += fmt.Sprintf(`%+v = "%+v"`, name, f.Value())
+// 			}
+// 		} else if f.Kind() == reflect.Int {
+// 			if len(query) > 0 {
+// 				query += " AND "
+// 			}
+// 			if !f.IsZero() {
+// 				query += fmt.Sprintf(`%+v = %+v`, name, f.Value())
+// 			}
+// 		} else if f.Kind() == reflect.Bool {
+// 			if len(query) > 0 {
+// 				query += " AND "
+// 			}
+// 			if !f.IsZero() {
+// 				query += fmt.Sprintf(`%+v = %+v`, name, f.Value())
+// 			}
+// 		}
+// 	}
+// 	return query
+// }
 
 func main() {
 	f := types.FilterableBatchJobProps{}
 	f.Status = models.BatchJobStatusCompleted
 	f.CreatedBy = "jshfkdfh"
-	f.CreatedAt.Gt = time.Now().UTC().Round(time.Second)
+	f.CreatedAt.Gte = time.Now().UTC().Round(time.Second)
 	f.UpdatedAt.Gt = time.Now().UTC().Round(time.Second)
-	// createQuery(f)
-	fmt.Println(DeepFields(f))
+	// f.Offset = 2
 
-	m := make(map[string]struct{})
-	collectFieldNames(f, m)
-	for name := range m {
-		f.m
-	}
+	// s := structs.New(f)
+
+	fmt.Println(service.BuildQuery(f))
+	// m := make(map[string]struct{})
+	// collectFieldNames(f, m)
+	// for name := range m {
+	// 	fmt.Println(name)
+	// }
 	// r := driver.New(ctx)
 
 	// r.Setup()

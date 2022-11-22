@@ -10,6 +10,7 @@ require (
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/gobuffalo/fizz v1.14.0
+	github.com/gofiber/fiber/v2 v2.39.0
 	github.com/gofrs/uuid v4.1.0+incompatible
 	github.com/google/uuid v1.3.0
 	github.com/jon4hz/go-btcpay v0.0.0-20210623134639-114f83fe2a9b
@@ -17,6 +18,7 @@ require (
 	github.com/lib/pq v1.10.4
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.8.0
+	github.com/valyala/fasthttp v1.40.0
 	go.opentelemetry.io/otel v1.6.1
 	go.opentelemetry.io/otel/trace v1.6.1
 )
@@ -67,7 +69,6 @@ require (
 	github.com/gobuffalo/tags/v3 v3.1.2 // indirect
 	github.com/gobuffalo/validate/v3 v3.3.1 // indirect
 	github.com/goccy/go-json v0.9.7 // indirect
-	github.com/gofiber/fiber/v2 v2.39.0 // indirect
 	github.com/golang/glog v1.0.0 // indirect
 	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
@@ -161,7 +162,6 @@ require (
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	github.com/urfave/negroni v1.0.0 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.40.0 // indirect
 	github.com/valyala/fasttemplate v1.2.1 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	go.elastic.co/apm v1.14.0 // indirect
