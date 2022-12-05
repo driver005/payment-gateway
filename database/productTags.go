@@ -4,29 +4,30 @@ import (
 	"context"
 	"time"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetProductTag(ctx context.Context, id uuid.UUID) (*models.ProductTag, error) {
+func (h *Handler) GetProductTag(ctx context.Context, config core.Filter, model models.ProductTag) (*models.ProductTag, error) {
 	var m models.ProductTag
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetProductTags(ctx context.Context, filters models.Filter) ([]models.ProductTag, *int64, error) {
+func (h *Handler) GetProductTags(ctx context.Context, filters models.Filter, config core.Filter, model models.ProductTag) ([]models.ProductTag, *int64, error) {
 	var m = make([]models.ProductTag, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.ProductTag{})
+	n := h.Query(ctx, config, model).Find(&models.ProductTag{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -49,7 +50,10 @@ func (h *Handler) CreateProductTag(ctx context.Context, m *models.ProductTag) (*
 }
 
 func (h *Handler) UpdateProductTag(ctx context.Context, m *models.ProductTag) (*models.ProductTag, error) {
-	o, err := h.GetProductTag(ctx, m.Id)
+	q := models.ProductTag{}
+	q.Id = m.Id
+
+	o, err := h.GetProductTag(ctx, core.Filter{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}
@@ -71,7 +75,7 @@ func (h *Handler) DeleteProductTag(ctx context.Context, id uuid.UUID) error {
 	return nil
 }
 
-func (h *Handler) GetProductTagUsageCount(ctx context.Context) ([]models.ProductTag, *int64, error) {
+func (h *Handler) GetProductTagCount(ctx context.Context) ([]models.ProductTag, *int64, error) {
 	var m = make([]models.ProductTag, 0)
 	var count int64
 
@@ -90,7 +94,11 @@ func (h *Handler) GetProductTagsByIds(ctx context.Context, Ids []string) ([]mode
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}
-		r, err := h.GetProductTag(ctx, Id)
+
+		q := models.ProductTag{}
+		q.Id = Id
+
+		r, err := h.GetProductTag(ctx, core.Filter{}, q)
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}

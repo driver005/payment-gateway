@@ -5,21 +5,22 @@ import (
 
 	"github.com/driver005/gateway/database"
 	"github.com/driver005/gateway/handler"
-	"github.com/driver005/gateway/handler/admin"
 	"github.com/driver005/gateway/logger"
+	"github.com/driver005/gateway/repository"
+
+	// "github.com/driver005/gateway/service"
 	"github.com/driver005/gateway/sql"
 	"github.com/gofiber/fiber/v2"
-	"github.com/ory/herodot"
-	"github.com/ory/hydra/x"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/trace"
 )
 
 type Base struct {
-	l            *logger.Logger
-	al           *logger.Logger
-	h            *handler.Handler
-	a            *admin.Handler
+	l  *logger.Logger
+	al *logger.Logger
+	h  *handler.Handler
+	// a  *admin.Handler
+	// s            *service.Handler
 	buildVersion string
 	buildHash    string
 	buildDate    string
@@ -27,7 +28,7 @@ type Base struct {
 	trc          trace.Tracer
 	database     sql.Database
 	db           *database.Handler
-	writer       herodot.Writer
+	rp           repository.TransactionRepository
 }
 
 func (m *Base) with(r Registry) *Base {
@@ -82,20 +83,11 @@ func (m *Base) AuditLogger() *logger.Logger {
 	return m.al
 }
 
-func (m *Base) Writer() herodot.Writer {
-	if m.writer == nil {
-		h := herodot.NewJSONWriter(m.Logger())
-		h.ErrorEnhancer = x.ErrorEnhancer
-		m.writer = h
-	}
-	return m.writer
-}
-
 func (m *Base) RegisterRoutes(router *fiber.App) {
 	group := router.Group("/api")
 	m.Handler().NbxplorerRoutes(group)
 	m.Handler().BtcpayRoutes(group)
-	m.Admin().Routes(group)
+	// m.Admin().Routes(group)
 }
 
 func (m *Base) Handler() *handler.Handler {
@@ -112,12 +104,26 @@ func (m *Base) Db() *database.Handler {
 	return m.db
 }
 
-func (m *Base) Admin() *admin.Handler {
-	if m.a == nil {
-		m.a = admin.NewHandler(m.r)
+func (m *Base) Repository() repository.TransactionRepository {
+	if m.rp == nil {
+		m.rp = repository.NewRepositories(m.Database().DB(context.Background()))
 	}
-	return m.a
+	return m.rp
 }
+
+// func (m *Base) Admin() *admin.Handler {
+// 	if m.a == nil {
+// 		m.a = admin.NewHandler(m.r)
+// 	}
+// 	return m.a
+// }
+
+// func (m *Base) Service() *service.Handler {
+// 	if m.s == nil {
+// 		m.s = service.NewHandler(m.r)
+// 	}
+// 	return m.s
+// }
 
 func (m *Base) Database() sql.Database {
 	return m.database

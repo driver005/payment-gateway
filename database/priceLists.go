@@ -6,27 +6,28 @@ import (
 
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetPriceList(ctx context.Context, id uuid.UUID) (*models.PriceList, error) {
+func (h *Handler) GetPriceList(ctx context.Context, config types.FilterablePriceListProps, model models.PriceList) (*models.PriceList, error) {
 	var m models.PriceList
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetPriceLists(ctx context.Context, filters models.Filter) ([]models.PriceList, *int64, error) {
+func (h *Handler) GetPriceLists(ctx context.Context, filters models.Filter, config types.FilterablePriceListProps, model models.PriceList) ([]models.PriceList, *int64, error) {
 	var m = make([]models.PriceList, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.PriceList{})
+	n := h.Query(ctx, config, model).Find(&models.PriceList{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -49,7 +50,10 @@ func (h *Handler) CreatePriceList(ctx context.Context, m *models.PriceList) (*mo
 }
 
 func (h *Handler) UpdatePriceList(ctx context.Context, m *models.PriceList) (*models.PriceList, error) {
-	o, err := h.GetPriceList(ctx, m.Id)
+	q := models.PriceList{}
+	q.Id = m.Id
+
+	o, err := h.GetPriceList(ctx, types.FilterablePriceListProps{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}

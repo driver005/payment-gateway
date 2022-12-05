@@ -6,27 +6,28 @@ import (
 
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetCustomerGroup(ctx context.Context, id uuid.UUID) (*models.CustomerGroup, error) {
+func (h *Handler) GetCustomerGroup(ctx context.Context, config types.FilterableCustomerGroupProps, model models.CustomerGroup) (*models.CustomerGroup, error) {
 	var m models.CustomerGroup
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetCustomerGroups(ctx context.Context, filters models.Filter) ([]models.CustomerGroup, *int64, error) {
+func (h *Handler) GetCustomerGroups(ctx context.Context, filters models.Filter, config types.FilterableCustomerGroupProps, model models.CustomerGroup) ([]models.CustomerGroup, *int64, error) {
 	var m = make([]models.CustomerGroup, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.CustomerGroup{})
+	n := h.Query(ctx, config, model).Find(&models.CustomerGroup{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -49,7 +50,10 @@ func (h *Handler) CreateCustomerGroup(ctx context.Context, m *models.CustomerGro
 }
 
 func (h *Handler) UpdateCustomerGroup(ctx context.Context, m *models.CustomerGroup) (*models.CustomerGroup, error) {
-	o, err := h.GetCustomerGroup(ctx, m.Id)
+	q := models.CustomerGroup{}
+	q.Id = m.Id
+
+	o, err := h.GetCustomerGroup(ctx, types.FilterableCustomerGroupProps{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}
@@ -79,7 +83,11 @@ func (h *Handler) GetCustomerGroupsByIds(ctx context.Context, Ids []string) ([]m
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}
-		r, err := h.GetCustomerGroup(ctx, Id)
+
+		q := models.CustomerGroup{}
+		q.Id = Id
+
+		r, err := h.GetCustomerGroup(ctx, types.FilterableCustomerGroupProps{}, q)
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}

@@ -1,7 +1,6 @@
-package service
+package repository
 
 import (
-	"context"
 	"fmt"
 	"reflect"
 	"strings"
@@ -164,10 +163,10 @@ func BuildQuery(model interface{}) Result {
 	return MapToQuery(structs.Fields(model))
 }
 
-func (h *Handler) Query(ctx context.Context, config interface{}, model interface{}) *database.DB {
+func (r *Repositories) ToQuery(config interface{}, model interface{}) *database.DB {
 	s := BuildQuery(config)
 	m := BuildQuery(model)
-	query := h.r.Manager(ctx).Session(&database.Session{DryRun: true})
+	query := r.DB()
 
 	if m.Where != "" {
 		if len(s.Where) > 0 {

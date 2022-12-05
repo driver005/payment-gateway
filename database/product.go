@@ -7,27 +7,28 @@ import (
 
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetProduct(ctx context.Context, id uuid.UUID) (*models.Product, error) {
+func (h *Handler) GetProduct(ctx context.Context, config types.FilterableProductProps, model models.Product) (*models.Product, error) {
 	var m models.Product
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetProducts(ctx context.Context, filters models.Filter) ([]models.Product, *int64, error) {
+func (h *Handler) GetProducts(ctx context.Context, filters models.Filter, config types.FilterableProductProps, model models.Product) ([]models.Product, *int64, error) {
 	var m = make([]models.Product, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.Product{})
+	n := h.Query(ctx, config, model).Find(&models.Product{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -74,7 +75,10 @@ func (h *Handler) CreateProduct(ctx context.Context, m *models.Product) (*models
 }
 
 func (h *Handler) UpdateProduct(ctx context.Context, m *models.Product) (*models.Product, error) {
-	o, err := h.GetProduct(ctx, m.Id)
+	q := models.Product{}
+	q.Id = m.Id
+
+	o, err := h.GetProduct(ctx, types.FilterableProductProps{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}
@@ -104,7 +108,11 @@ func (h *Handler) GetProductsByIds(ctx context.Context, ProductIds []string) ([]
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}
-		r, err := h.GetProduct(ctx, Id)
+
+		q := models.Product{}
+		q.Id = Id
+
+		r, err := h.GetProduct(ctx, types.FilterableProductProps{}, q)
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}

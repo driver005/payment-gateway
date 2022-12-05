@@ -9,9 +9,9 @@ import (
 	"github.com/driver005/gateway/handler"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/logger"
+	"github.com/driver005/gateway/repository"
 	"github.com/driver005/gateway/sql"
 	"github.com/gofiber/fiber/v2"
-	"github.com/ory/herodot"
 	"github.com/pkg/errors"
 )
 
@@ -34,7 +34,6 @@ type Driver interface {
 
 type Registry interface {
 	Driver
-	Writer() herodot.Writer
 
 	Init(ctx context.Context) error
 	WithLogger(l *logger.Logger) Registry
@@ -42,6 +41,8 @@ type Registry interface {
 	RegisterRoutes(router *fiber.App)
 	Setup()
 	ClientManager() *db.Handler
+	Repository() repository.TransactionRepository
+	// Service() *service.Handler
 
 	sql.Provider
 

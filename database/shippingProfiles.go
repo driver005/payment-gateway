@@ -4,29 +4,30 @@ import (
 	"context"
 	"time"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetShippingProfile(ctx context.Context, id uuid.UUID) (*models.ShippingProfile, error) {
+func (h *Handler) GetShippingProfile(ctx context.Context, config core.Filter, model models.ShippingProfile) (*models.ShippingProfile, error) {
 	var m models.ShippingProfile
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetShippingProfiles(ctx context.Context, filters models.Filter) ([]models.ShippingProfile, *int64, error) {
+func (h *Handler) GetShippingProfiles(ctx context.Context, filters models.Filter, config core.Filter, model models.ShippingProfile) ([]models.ShippingProfile, *int64, error) {
 	var m = make([]models.ShippingProfile, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.ShippingProfile{})
+	n := h.Query(ctx, config, model).Find(&models.ShippingProfile{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -49,7 +50,10 @@ func (h *Handler) CreateShippingProfile(ctx context.Context, m *models.ShippingP
 }
 
 func (h *Handler) UpdateShippingProfile(ctx context.Context, m *models.ShippingProfile) (*models.ShippingProfile, error) {
-	o, err := h.GetShippingProfile(ctx, m.Id)
+	q := models.ShippingProfile{}
+	q.Id = m.Id
+
+	o, err := h.GetShippingProfile(ctx, core.Filter{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}

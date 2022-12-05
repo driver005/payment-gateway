@@ -4,29 +4,30 @@ import (
 	"context"
 	"time"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetGiftCard(ctx context.Context, id uuid.UUID) (*models.GiftCard, error) {
+func (h *Handler) GetGiftCard(ctx context.Context, config core.Filter, model models.GiftCard) (*models.GiftCard, error) {
 	var m models.GiftCard
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetGiftCards(ctx context.Context, filters models.Filter) ([]models.GiftCard, *int64, error) {
+func (h *Handler) GetGiftCards(ctx context.Context, filters models.Filter, config core.Filter, model models.GiftCard) ([]models.GiftCard, *int64, error) {
 	var m = make([]models.GiftCard, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.GiftCard{})
+	n := h.Query(ctx, config, model).Find(&models.GiftCard{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -49,7 +50,10 @@ func (h *Handler) CreateGiftCard(ctx context.Context, m *models.GiftCard) (*mode
 }
 
 func (h *Handler) UpdateGiftCard(ctx context.Context, m *models.GiftCard) (*models.GiftCard, error) {
-	o, err := h.GetGiftCard(ctx, m.Id)
+	q := models.GiftCard{}
+	q.Id = m.Id
+
+	o, err := h.GetGiftCard(ctx, core.Filter{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}

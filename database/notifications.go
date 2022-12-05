@@ -4,29 +4,30 @@ import (
 	"context"
 	"time"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetNotification(ctx context.Context, id uuid.UUID) (*models.Notification, error) {
+func (h *Handler) GetNotification(ctx context.Context, config core.Filter, model models.Notification) (*models.Notification, error) {
 	var m models.Notification
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetNotifications(ctx context.Context, filters models.Filter) ([]models.Notification, *int64, error) {
+func (h *Handler) GetNotifications(ctx context.Context, filters models.Filter, config core.Filter, model models.Notification) ([]models.Notification, *int64, error) {
 	var m = make([]models.Notification, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.Notification{})
+	n := h.Query(ctx, config, model).Find(&models.Notification{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -49,7 +50,10 @@ func (h *Handler) CreateNotification(ctx context.Context, m *models.Notification
 }
 
 func (h *Handler) UpdateNotification(ctx context.Context, m *models.Notification) (*models.Notification, error) {
-	o, err := h.GetNotification(ctx, m.Id)
+	q := models.Notification{}
+	q.Id = m.Id
+
+	o, err := h.GetNotification(ctx, core.Filter{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}

@@ -4,29 +4,30 @@ import (
 	"context"
 	"time"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetRegion(ctx context.Context, id uuid.UUID) (*models.Region, error) {
+func (h *Handler) GetRegion(ctx context.Context, config core.Filter, model models.Region) (*models.Region, error) {
 	var m models.Region
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetRegions(ctx context.Context, filters models.Filter) ([]models.Region, *int64, error) {
+func (h *Handler) GetRegions(ctx context.Context, filters models.Filter, config core.Filter, model models.Region) ([]models.Region, *int64, error) {
 	var m = make([]models.Region, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.Region{})
+	n := h.Query(ctx, config, model).Find(&models.Region{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -49,7 +50,10 @@ func (h *Handler) CreateRegion(ctx context.Context, m *models.Region) (*models.R
 }
 
 func (h *Handler) UpdateRegion(ctx context.Context, m *models.Region) (*models.Region, error) {
-	o, err := h.GetRegion(ctx, m.Id)
+	q := models.Region{}
+	q.Id = m.Id
+
+	o, err := h.GetRegion(ctx, core.Filter{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}

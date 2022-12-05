@@ -4,11 +4,9 @@ import (
 	"context"
 	"embed"
 	"fmt"
-	"time"
 
+	"github.com/driver005/gateway/driver"
 	"github.com/driver005/gateway/models"
-	"github.com/driver005/gateway/service"
-	"github.com/driver005/gateway/types"
 	// "github.com/gofiber/fiber/v2/middleware/csrf"
 	// "github.com/gofiber/fiber/v2/middleware/limiter"
 )
@@ -221,21 +219,29 @@ var ctx = context.Background()
 // }
 
 func main() {
-	f := types.FilterableBatchJobProps{}
-	f.Status = models.BatchJobStatusCompleted
-	f.CreatedBy = "jshfkdfh"
-	f.CreatedAt.Gte = time.Now().UTC().Round(time.Second)
-	f.UpdatedAt.Gt = time.Now().UTC().Round(time.Second)
+	r := driver.New(ctx)
+	m := models.Product{}
+
+	err := r.Repository().GetWhere(&m, "id = '6c1b336c-156a-4dcd-a124-0a143a07117c'")
+	fmt.Println(err)
+	fmt.Println(m)
+	// f := types.FilterableBatchJobProps{}
+	// f.CreatedAt.Lt = time.Now().UTC().Round(time.Second)
+	// f.UpdatedAt.Gt = time.Now().UTC().Round(time.Second)
 	// f.Offset = 2
 
-	// s := structs.New(f)
+	// id, _ := uuid.NewV4()
+	// m := models.BatchJob{}
+	// m.Id = id
 
-	fmt.Println(service.BuildQuery(f))
-	// m := make(map[string]struct{})
-	// collectFieldNames(f, m)
-	// for name := range m {
-	// 	fmt.Println(name)
-	// }
+	// r := driver.New(ctx)
+	// q := r.ClientManager().Query(ctx, f, m)
+
+	// stmt := q.Where("id = ?", "test").First(&models.BatchJob{})
+
+	// fmt.Println(stmt.Statement.SQL.String())
+	// fmt.Println(stmt.Statement.Vars...)
+
 	// r := driver.New(ctx)
 
 	// r.Setup()

@@ -4,29 +4,30 @@ import (
 	"context"
 	"time"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetNote(ctx context.Context, id uuid.UUID) (*models.Note, error) {
+func (h *Handler) GetNote(ctx context.Context, config core.Filter, model models.Note) (*models.Note, error) {
 	var m models.Note
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetNotes(ctx context.Context, filters models.Filter) ([]models.Note, *int64, error) {
+func (h *Handler) GetNotes(ctx context.Context, filters models.Filter, config core.Filter, model models.Note) ([]models.Note, *int64, error) {
 	var m = make([]models.Note, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.Note{})
+	n := h.Query(ctx, config, model).Find(&models.Note{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -49,7 +50,10 @@ func (h *Handler) CreateNote(ctx context.Context, m *models.Note) (*models.Note,
 }
 
 func (h *Handler) UpdateNote(ctx context.Context, m *models.Note) (*models.Note, error) {
-	o, err := h.GetNote(ctx, m.Id)
+	q := models.Note{}
+	q.Id = m.Id
+
+	o, err := h.GetNote(ctx, core.Filter{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}

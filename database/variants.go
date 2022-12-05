@@ -6,27 +6,28 @@ import (
 
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetProductVariant(ctx context.Context, id uuid.UUID) (*models.ProductVariant, error) {
+func (h *Handler) GetProductVariant(ctx context.Context, config types.FilterableProductVariantProps, model models.ProductVariant) (*models.ProductVariant, error) {
 	var m models.ProductVariant
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetProductVariants(ctx context.Context, filters models.Filter) ([]models.ProductVariant, *int64, error) {
+func (h *Handler) GetProductVariants(ctx context.Context, filters models.Filter, config types.FilterableProductVariantProps, model models.ProductVariant) ([]models.ProductVariant, *int64, error) {
 	var m = make([]models.ProductVariant, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.ProductVariant{})
+	n := h.Query(ctx, config, model).Find(&models.ProductVariant{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -38,14 +39,14 @@ func (h *Handler) GetProductVariants(ctx context.Context, filters models.Filter)
 	return m, &n.RowsAffected, nil
 }
 
-func (h *Handler) GetProductVariantsWithProductID(ctx context.Context, Id uuid.UUID, filters models.Filter) ([]models.ProductVariant, *int64, error) {
+func (h *Handler) GetProductVariantsWithProductID(ctx context.Context, Id uuid.UUID, filters models.Filter, config types.FilterableProductVariantProps, model models.ProductVariant) ([]models.ProductVariant, *int64, error) {
 	var m = make([]models.ProductVariant, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.ProductVariant{ProductId: uuid.NullUUID{UUID: Id, Valid: true}})
+	n := h.Query(ctx, config, model).Find(&models.ProductVariant{ProductId: uuid.NullUUID{UUID: Id, Valid: true}})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}

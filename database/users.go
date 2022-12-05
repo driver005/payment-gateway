@@ -6,27 +6,28 @@ import (
 
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofrs/uuid"
 )
 
-func (h *Handler) GetUser(ctx context.Context, id uuid.UUID) (*models.User, error) {
+func (h *Handler) GetUser(ctx context.Context, config types.FilterableUserProps, model models.User) (*models.User, error) {
 	var m models.User
 
-	if err := h.r.Manager(ctx).Where("id = ?", id).First(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).First(&m).Error; err != nil {
 		return nil, helper.ParseError(err)
 	}
 
 	return &m, nil
 }
 
-func (h *Handler) GetUsers(ctx context.Context, filters models.Filter) ([]models.User, *int64, error) {
+func (h *Handler) GetUsers(ctx context.Context, filters models.Filter, config types.FilterableUserProps, model models.User) ([]models.User, *int64, error) {
 	var m = make([]models.User, 0)
 
-	if err := h.r.Manager(ctx).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
+	if err := h.Query(ctx, config, model).Scopes(Paginate(filters.Offset, filters.Size)).Order("id").Find(&m).Error; err != nil {
 		return nil, nil, helper.ParseError(err)
 	}
 
-	n := h.r.Manager(ctx).Find(&models.User{})
+	n := h.Query(ctx, config, model).Find(&models.User{})
 	if n.Error != nil {
 		return nil, nil, helper.ParseError(n.Error)
 	}
@@ -49,7 +50,10 @@ func (h *Handler) CreateUser(ctx context.Context, m *models.User) (*models.User,
 }
 
 func (h *Handler) UpdateUser(ctx context.Context, m *models.User) (*models.User, error) {
-	o, err := h.GetUser(ctx, m.Id)
+	q := models.User{}
+	q.Id = m.Id
+
+	o, err := h.GetUser(ctx, types.FilterableUserProps{}, q)
 	if err != nil {
 		return nil, helper.ParseError(err)
 	}

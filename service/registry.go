@@ -1,9 +1,11 @@
-package database
+package service
 
 import (
 	"context"
 
 	"github.com/driver005/database"
+	db "github.com/driver005/gateway/database"
+	"github.com/driver005/gateway/repository"
 )
 
 type Handler struct {
@@ -12,12 +14,8 @@ type Handler struct {
 
 type Registry interface {
 	Manager(ctx context.Context) *database.DB
-}
-
-func Paginate(offset int, pageSize int) func(db *database.DB) *database.DB {
-	return func(db *database.DB) *database.DB {
-		return db.Offset(offset).Limit(pageSize)
-	}
+	ClientManager() *db.Handler
+	Repository() repository.TransactionRepository
 }
 
 func NewHandler(r Registry) *Handler {
