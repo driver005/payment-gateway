@@ -7,7 +7,7 @@ import (
 	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) GetProductType(ctx context.Context, config core.Filter, model models.ProductType) (*models.ProductType, error) {
@@ -79,7 +79,7 @@ func (h *Handler) GetProductTypesByIds(ctx context.Context, ProductIds []string)
 	var m = make([]models.ProductType, 0)
 
 	for _, p := range ProductIds {
-		Id, err := uuid.FromString(p)
+		Id, err := uuid.Parse(p)
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}

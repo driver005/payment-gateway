@@ -25,7 +25,7 @@ type ShippingProfile struct {
 }
 
 // func (m *ShippingProfile) BeforeCreate(tx *database.DB) (err error) {
-// 	m.Id, err = uuid.NewV4()
+// 	m.Id, err = uuid.NewUUID()
 // 	if err != nil {
 // 		return err
 // 	}

@@ -1,6 +1,6 @@
 package models
 
-import "github.com/gofrs/uuid"
+import "github.com/google/uuid"
 
 // DiscountConditionProductType - Associates a discount condition with a product type
 type DiscountConditionProductType struct {

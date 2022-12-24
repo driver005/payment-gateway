@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/driver005/database"
-	"github.com/driver005/database/types"
+	"github.com/driver005/database/clause"
 	"github.com/driver005/gateway/helper"
 	validation "github.com/go-ozzo/ozzo-validation"
 )
@@ -46,8 +46,8 @@ func (Address) DBDataType() string {
 	return "addressType"
 }
 
-func (a Address) DBValue(ctx context.Context, db *database.DB) types.Expr {
-	return types.Expr{
+func (a Address) DBValue(ctx context.Context, db *database.DB) clause.Expr {
+	return clause.Expr{
 		SQL:  "ROW(?, ?, ?, ?, ?, ?, ?, ?)::addressType",
 		Vars: []interface{}{a.City, a.Country, a.Line1, a.Line1Check, a.Line2, a.State, a.Zip, a.ZipCheck},
 	}
@@ -72,7 +72,7 @@ type Checks struct {
 	CvcCheck               string `json:"cvc_check"`
 }
 
-//Banks
+// Banks
 type ThreeDSecure struct {
 	AuthenticationFlow string `json:"authentication_flow"`
 	Result             string `json:"result"`

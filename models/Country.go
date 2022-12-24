@@ -7,7 +7,7 @@ import (
 	"github.com/driver005/gateway/core"
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // Country details
@@ -37,7 +37,7 @@ type Country struct {
 }
 
 func (c *Country) BeforeCreate(tx *database.DB) (err error) {
-	c.Id, err = uuid.NewV4()
+	c.Id, err = uuid.NewUUID()
 	if err != nil {
 		return err
 	}

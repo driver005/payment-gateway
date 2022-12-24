@@ -4,6 +4,11 @@ import (
 	"context"
 	"math/big"
 
+	"github.com/driver005/gateway/crypto/ethereum/eth"
+	"github.com/driver005/gateway/crypto/ethereum/ethtx"
+	"github.com/driver005/gateway/crypto/wallet/coin"
+	"github.com/driver005/gateway/crypto/wallet/contract"
+	models "github.com/driver005/gateway/crypto/wallet/models/rdb"
 	"github.com/ethereum/go-ethereum"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -12,12 +17,6 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/sha3"
-
-	"github.com/driver005/gateway/ethereum/eth"
-	"github.com/driver005/gateway/ethereum/ethtx"
-	"github.com/driver005/gateway/wallet/coin"
-	"github.com/driver005/gateway/wallet/contract"
-	models "github.com/driver005/gateway/wallet/models/rdb"
 )
 
 // TODO: Ethereum struct in pkg/wallet/api/ethgrp/eth/ethereum.go must be embedded to use common funcs
@@ -102,11 +101,12 @@ func (e *ERC20) GetBalance(hexAddr string, _ eth.QuantityTag) (*big.Int, error) 
 }
 
 // CreateRawTransaction creates raw transaction for watch only wallet
-// - Transferring Tokens (ERC-20)
-//   https://goethereumbook.org/en/transfer-tokens/
-// - Transfer ERC20 Tokens Using Golang
-//   https://www.youtube.com/watch?v=-Epg5Ub-fA0
-//   https://github.com/what-the-func/golang-ethereum-transfer-tokens/blob/master/main.go
+//   - Transferring Tokens (ERC-20)
+//     https://goethereumbook.org/en/transfer-tokens/
+//   - Transfer ERC20 Tokens Using Golang
+//     https://www.youtube.com/watch?v=-Epg5Ub-fA0
+//     https://github.com/what-the-func/golang-ethereum-transfer-tokens/blob/master/main.go
+//
 // Note:
 // - master address takes fee
 // - sender account delegates transfer to master address

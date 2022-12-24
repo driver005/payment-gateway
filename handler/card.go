@@ -10,7 +10,7 @@ package handler
 // 	"github.com/driver005/gateway/helper"
 // 	models "github.com/driver005/gateway/models_old"
 // 	resp "github.com/driver005/gateway/respond"
-// 	"github.com/gofrs/uuid"
+// 	"github.com/google/uuid"
 // 	"github.com/julienschmidt/httprouter"
 // )
 
@@ -47,7 +47,7 @@ package handler
 // 		return
 // 	}
 
-// 	m.ID, err = uuid.FromString(context.Params("id"))
+// 	m.ID, err = uuid.Parse(context.Params("id"))
 // 	if err != nil {
 // 		resp.NewResponse(w).InternalServerError(helper.WithStack(err))
 // 	}
@@ -124,7 +124,7 @@ package handler
 // func (h *Handler) DeleteCard(context *fiber.Ctx) error {
 // 	var id = context.Params("id")
 
-// 	ID, err := uuid.FromString(id)
+// 	ID, err := uuid.Parse(id)
 // 	if err != nil {
 // 		resp.NewResponse(w).InternalServerError(helper.WithStack(err))
 // 	}

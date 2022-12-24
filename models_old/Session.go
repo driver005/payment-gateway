@@ -4,7 +4,7 @@ import (
 	"github.com/driver005/database"
 	"github.com/go-ozzo/ozzo-validation/is"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 type Session struct {
@@ -56,7 +56,7 @@ type Session struct {
 }
 
 func (s *Session) BeforeCreate(tx *database.DB) (err error) {
-	s.ID, err = uuid.NewV4()
+	s.ID, err = uuid.NewUUID()
 	if err != nil {
 		return err
 	}

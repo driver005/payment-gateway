@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // TrackingLink - Tracking Link holds information about tracking numbers for a Fulfillment. Tracking Links can optionally contain a URL that can be visited to see the status of the shipment.

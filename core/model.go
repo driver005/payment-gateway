@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/driver005/database"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 type Model struct {
@@ -15,7 +15,7 @@ type Model struct {
 }
 
 func (a *Model) BeforeCreate(tx *database.DB) (err error) {
-	a.Id, err = uuid.NewV4()
+	a.Id, err = uuid.NewUUID()
 	if err != nil {
 		return err
 	}

@@ -1,6 +1,6 @@
 package models
 
-import "github.com/gofrs/uuid"
+import "github.com/google/uuid"
 
 // ProductTaxRate - Associates a tax rate with a product to indicate that the product is taxed in a certain way
 type ProductTaxRate struct {

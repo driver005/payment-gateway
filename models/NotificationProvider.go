@@ -1,6 +1,6 @@
 package models
 
-import "github.com/gofrs/uuid"
+import "github.com/google/uuid"
 
 // NotificationProvider - Represents a notification provider plugin and holds its installation status.
 type NotificationProvider struct {

@@ -3,7 +3,7 @@ package types
 import (
 	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/models"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 type FilterablePriceListProps struct {

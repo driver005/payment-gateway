@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // Refund - Refund represent an amount of money transfered back to the Customer for a given reason. Refunds may occur in relation to Returns, Swaps and Claims, but can also be initiated by a store operator.

@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // Product Variants represent a Product with a specific set of Product Option configurations. The maximum number of Product Variants that a Product can have is given by the number of available Product Option combinations.

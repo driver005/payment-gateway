@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 
 	// "github.com/aklinkert/go-logging"
 	"github.com/driver005/database"
@@ -43,6 +42,14 @@ func (r *Repositories) SetPreloads(preloads ...string) *Repositories {
 	r.preloads = preloads
 
 	return r
+}
+
+func (r *Repositories) HandleError(res *database.DB) error {
+	if res.Error != nil && res.Error != database.ErrRecordNotFound {
+		return helper.ParseError(res.Error)
+	}
+
+	return nil
 }
 
 func (r *Repositories) Query(target interface{}, query string, values ...interface{}) (interface{}, error) {
@@ -109,6 +116,22 @@ func (r *Repositories) SaveTx(target interface{}, tx *database.DB) (interface{},
 	return target, r.HandleError(res)
 }
 
+func (r *Repositories) Update(target interface{}) (interface{}, error) {
+	m, err := r.Get(target, nil, target)
+
+	if err != nil {
+		return nil, err
+	}
+
+	res := r.db.Model(m).Updates(target)
+
+	if res.Error != nil {
+		return nil, r.HandleError(res)
+	}
+
+	return res, nil
+}
+
 func (r *Repositories) Delete(target interface{}) error {
 	res := r.db.Delete(target)
 	return r.HandleError(res)
@@ -152,125 +175,107 @@ func (r *Repositories) Upsert(target interface{}) (interface{}, error) {
 	return target, r.HandleError(res)
 }
 
-func (r *Repositories) GetAll(target interface{}) error {
-
-	res := r.DB().
-		Unscoped().
-		Find(target)
-
-	return r.HandleError(res)
+func (r *Repositories) SoftRemove(target interface{}) error {
+	return r.Remove(target)
 }
 
-func (r *Repositories) GetBatch(target interface{}, limit, offset int) error {
+func (r *Repositories) Recover(target interface{}) (interface{}, error) {
+	res := r.db.Model(target).Update("deleted_at", nil)
 
-	res := r.DB().
-		Unscoped().
-		Limit(limit).
-		Offset(offset).
-		Find(target)
-
-	return r.HandleError(res)
-}
-
-func (r *Repositories) GetWhere(target interface{}, condition string) error {
-
-	res := r.DB().
-		Where(condition).
-		Find(target)
-
-	return r.HandleError(res)
-}
-
-func (r *Repositories) GetWhereBatch(target interface{}, condition string, limit, offset int) error {
-
-	res := r.DB().
-		Where(condition).
-		Limit(limit).
-		Offset(offset).
-		Find(target)
-
-	return r.HandleError(res)
-}
-
-func (r *Repositories) GetByField(target interface{}, field string, value interface{}) error {
-
-	res := r.DB().
-		Where(fmt.Sprintf("%v = ?", field), value).
-		Find(target)
-
-	return r.HandleError(res)
-}
-
-func (r *Repositories) GetByFields(target interface{}, filters map[string]interface{}) error {
-
-	db := r.DB()
-	for field, value := range filters {
-		db = db.Where(fmt.Sprintf("%v = ?", field), value)
+	if res.Error != nil {
+		return nil, r.HandleError(res)
 	}
 
-	res := db.Find(target)
-
-	return r.HandleError(res)
+	return res, nil
 }
 
-func (r *Repositories) GetByFieldBatch(target interface{}, field string, value interface{}, limit, offset int) error {
+func (r *Repositories) Count(target interface{}, condition FindOption) (*int64, error) {
+	var count int64
 
-	res := r.DB().
-		Where(fmt.Sprintf("%v = ?", field), value).
-		Limit(limit).
-		Offset(offset).
-		Find(target)
+	res := r.BuildFindQuery(condition).Find(&target).Count(&count)
 
-	return r.HandleError(res)
-}
-
-func (r *Repositories) GetByFieldsBatch(target interface{}, filters map[string]interface{}, limit, offset int) error {
-
-	db := r.DB()
-	for field, value := range filters {
-		db = db.Where(fmt.Sprintf("%v = ?", field), value)
+	if res.Error != nil {
+		return nil, r.HandleError(res)
 	}
 
-	res := db.
-		Limit(limit).
-		Offset(offset).
-		Find(target)
-
-	return r.HandleError(res)
+	return &count, nil
 }
 
-func (r *Repositories) GetOneByField(target interface{}, field string, value interface{}) error {
+func (r *Repositories) CountBy(target interface{}, condition string) (*int64, error) {
+	res := r.DB().Model(&target).Where(condition)
 
-	res := r.DB().
-		Where(fmt.Sprintf("%v = ?", field), value).
-		First(target)
-
-	return r.HandleOneError(res)
-}
-
-func (r *Repositories) GetOneByFields(target interface{}, filters map[string]interface{}) error {
-
-	db := r.DB()
-	for field, value := range filters {
-		db = db.Where(fmt.Sprintf("%v = ?", field), value)
+	if res.Error != nil {
+		return nil, r.HandleError(res)
 	}
 
-	res := db.First(target)
-	return r.HandleOneError(res)
+	return &res.RowsAffected, nil
 }
 
-func (r *Repositories) GetOneByID(target interface{}, id string) error {
+func (r *Repositories) Find(target interface{}, condition FindOption) (interface{}, error) {
+	res := r.BuildFindQuery(condition).Find(&target)
 
-	res := r.DB().
-		Where("id = ?", id).
-		First(target)
+	if res.Error != nil {
+		return nil, r.HandleError(res)
+	}
 
-	return r.HandleOneError(res)
+	return &target, nil
 }
 
-func (r *Repositories) HandleError(res *database.DB) error {
-	if res.Error != nil && res.Error != database.ErrRecordNotFound {
-		return helper.ParseError(res.Error)
+func (r *Repositories) FindBy(target interface{}, condition map[string]interface{}) (interface{}, error) {
+	res := r.BuildFindWhereQuery(condition).Find(&target)
+
+	if res.Error != nil {
+		return nil, r.HandleError(res)
+	}
+
+	return &target, nil
+}
+
+func (r *Repositories) FindAndCount(target interface{}, condition FindOption) (interface{}, *int64, error) {
+	res := r.BuildFindQuery(condition).Find(&target)
+
+	if res.Error != nil {
+		return nil, nil, r.HandleError(res)
+	}
+
+	return &target, &res.RowsAffected, nil
+}
+
+func (r *Repositories) FindAndCountBy(target interface{}, condition map[string]interface{}) (interface{}, *int64, error) {
+	res := r.BuildFindWhereQuery(condition).Find(&target)
+
+	if res.Error != nil {
+		return nil, nil, r.HandleError(res)
+	}
+
+	return &target, &res.RowsAffected, nil
+}
+
+func (r *Repositories) FindOne(target interface{}, condition FindOption) (interface{}, error) {
+	res := r.BuildFindQuery(condition).First(&target)
+
+	if res.Error != nil {
+		return nil, r.HandleError(res)
+	}
+
+	return &target, nil
+}
+
+func (r *Repositories) FindOneBy(target interface{}, condition map[string]interface{}) (interface{}, error) {
+	res := r.BuildFindWhereQuery(condition).First(&target)
+
+	if res.Error != nil {
+		return nil, r.HandleError(res)
+	}
+
+	return &target, nil
+}
+
+func (r *Repositories) Clear(target interface{}) error {
+	res := r.db.Migrator().DropTable(target)
+
+	if res != nil {
+		return res
 	}
 
 	return nil
@@ -287,3 +292,119 @@ func (r *Repositories) HandleOneError(res *database.DB) error {
 
 	return nil
 }
+
+// func (r *Repositories) GetAll(target interface{}) error {
+
+// 	res := r.DB().
+// 		Unscoped().
+// 		Find(target)
+
+// 	return r.HandleError(res)
+// }
+
+// func (r *Repositories) GetBatch(target interface{}, limit, offset int) error {
+
+// 	res := r.DB().
+// 		Unscoped().
+// 		Limit(limit).
+// 		Offset(offset).
+// 		Find(target)
+
+// 	return r.HandleError(res)
+// }
+
+// func (r *Repositories) GetWhere(target interface{}, condition string) error {
+
+// 	res := r.DB().
+// 		Where(condition).
+// 		Find(target)
+
+// 	return r.HandleError(res)
+// }
+
+// func (r *Repositories) GetWhereBatch(target interface{}, condition string, limit, offset int) error {
+
+// 	res := r.DB().
+// 		Where(condition).
+// 		Limit(limit).
+// 		Offset(offset).
+// 		Find(target)
+
+// 	return r.HandleError(res)
+// }
+
+// func (r *Repositories) GetByField(target interface{}, field string, value interface{}) error {
+
+// 	res := r.DB().
+// 		Where(fmt.Sprintf("%v = ?", field), value).
+// 		Find(target)
+
+// 	return r.HandleError(res)
+// }
+
+// func (r *Repositories) GetByFields(target interface{}, filters map[string]interface{}) error {
+
+// 	db := r.DB()
+// 	for field, value := range filters {
+// 		db = db.Where(fmt.Sprintf("%v = ?", field), value)
+// 	}
+
+// 	res := db.Find(target)
+
+// 	return r.HandleError(res)
+// }
+
+// func (r *Repositories) GetByFieldBatch(target interface{}, field string, value interface{}, limit, offset int) error {
+
+// 	res := r.DB().
+// 		Where(fmt.Sprintf("%v = ?", field), value).
+// 		Limit(limit).
+// 		Offset(offset).
+// 		Find(target)
+
+// 	return r.HandleError(res)
+// }
+
+// func (r *Repositories) GetByFieldsBatch(target interface{}, filters map[string]interface{}, limit, offset int) error {
+
+// 	db := r.DB()
+// 	for field, value := range filters {
+// 		db = db.Where(fmt.Sprintf("%v = ?", field), value)
+// 	}
+
+// 	res := db.
+// 		Limit(limit).
+// 		Offset(offset).
+// 		Find(target)
+
+// 	return r.HandleError(res)
+// }
+
+// func (r *Repositories) GetOneByField(target interface{}, field string, value interface{}) error {
+
+// 	res := r.DB().
+// 		Where(fmt.Sprintf("%v = ?", field), value).
+// 		First(target)
+
+// 	return r.HandleOneError(res)
+// }
+
+// func (r *Repositories) GetOneByFields(target interface{}, filters map[string]interface{}) error {
+
+// 	db := r.DB()
+// 	for field, value := range filters {
+// 		db = db.Where(fmt.Sprintf("%v = ?", field), value)
+// 	}
+
+// 	res := db.First(target)
+// 	return r.HandleOneError(res)
+// }
+
+// func (r *Repositories) GetOneByID(target interface{}, id string) error {
+
+// 	res := r.DB().
+// 		Where("id = ?", id).
+// 		First(target)
+
+// 	return r.HandleOneError(res)
+// }

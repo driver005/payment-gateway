@@ -3,10 +3,6 @@ package main
 import (
 	"context"
 	"embed"
-	"fmt"
-
-	"github.com/driver005/gateway/driver"
-	"github.com/driver005/gateway/models"
 	// "github.com/gofiber/fiber/v2/middleware/csrf"
 	// "github.com/gofiber/fiber/v2/middleware/limiter"
 )
@@ -219,18 +215,26 @@ var ctx = context.Background()
 // }
 
 func main() {
-	r := driver.New(ctx)
-	m := models.Product{}
+	// r := driver.New(ctx)
+	// m := models.Product{}
 
-	err := r.Repository().GetWhere(&m, "id = '6c1b336c-156a-4dcd-a124-0a143a07117c'")
-	fmt.Println(err)
-	fmt.Println(m)
+	// err := r.Repository().GetWhere(&m, "id = '6c1b336c-156a-4dcd-a124-0a143a07117c'")
+	// fmt.Println(err)
+	// fmt.Println(m)
+
+	// repository.BuildFindQuery(repository.FindOption{
+	// 	Select: map[string]interface{}{
+	// 		"firstName": true,
+	// 		"lastName":  false,
+	// 	},
+	// })
+
 	// f := types.FilterableBatchJobProps{}
 	// f.CreatedAt.Lt = time.Now().UTC().Round(time.Second)
 	// f.UpdatedAt.Gt = time.Now().UTC().Round(time.Second)
 	// f.Offset = 2
 
-	// id, _ := uuid.NewV4()
+	// id, _ := uuid.NewUUID()
 	// m := models.BatchJob{}
 	// m.Id = id
 

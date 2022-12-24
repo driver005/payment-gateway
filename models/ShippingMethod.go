@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // ShippingMethod - Shipping Methods represent a way in which an Order or Return can be shipped. Shipping Methods are built from a Shipping Option, but may contain additional details, that can be necessary for the Fulfillment Provider to handle the shipment.

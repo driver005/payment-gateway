@@ -8,7 +8,7 @@ import (
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/driver005/gateway/types"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) GetProduct(ctx context.Context, config types.FilterableProductProps, model models.Product) (*models.Product, error) {
@@ -104,7 +104,7 @@ func (h *Handler) GetProductsByIds(ctx context.Context, ProductIds []string) ([]
 	var m = make([]models.Product, 0)
 
 	for _, p := range ProductIds {
-		Id, err := uuid.FromString(p)
+		Id, err := uuid.Parse(p)
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}

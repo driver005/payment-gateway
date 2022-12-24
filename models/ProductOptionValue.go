@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // A value given to a Product Variant's option set. Product Variant have a Product Option Value for each of the Product Options defined on the Product.

@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // Payment - Payments represent an amount authorized with a given payment method, Payments can be captured, canceled or refunded.

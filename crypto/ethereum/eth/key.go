@@ -9,13 +9,12 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/driver005/gateway/wallet/account"
 	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
-
-	"github.com/driver005/gateway/wallet/account"
 )
 
 // Note: key filename is different between Geth and Parity
@@ -70,7 +69,8 @@ func (e *Ethereum) GetPrivKey(hexAddr, password string) (*keystore.Key, error) {
 
 // readPrivKey read private key file from directory
 // Note: file is found out from local directory,
-//  if node is working remotely, file is not found.
+//
+//	if node is working remotely, file is not found.
 func (e *Ethereum) readPrivKey(hexAddr, path string) ([]byte, error) {
 	// search file
 	// filename is like `UTC--2020-05-18T16-01-32.772616000Z--e52307deb1a7dc3985d2873b45ae23b91d57a36d`

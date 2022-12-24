@@ -3,23 +3,26 @@ package admin
 import (
 	"strconv"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) GetProductOption(context *fiber.Ctx) error {
+	f := models.ProductOption{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetProductOption(context.Context(), Id)
+	m, err := a.r.ClientManager().GetProductOption(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -49,7 +52,7 @@ func (a *Admin) ListProductOption(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetProductOptions(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, core.Filter{}, models.ProductOption{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -72,7 +75,7 @@ func (a *Admin) CreateProductOption(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -102,7 +105,7 @@ func (a *Admin) UpdateProductOption(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -110,7 +113,7 @@ func (a *Admin) UpdateProductOption(context *fiber.Ctx) error {
 		})
 	}
 
-	OptionId, err := uuid.FromString(context.Params("option_id"))
+	OptionId, err := uuid.Parse(context.Params("option_id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -130,7 +133,7 @@ func (a *Admin) UpdateProductOption(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteProductOption(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -138,7 +141,7 @@ func (a *Admin) DeleteProductOption(context *fiber.Ctx) error {
 		})
 	}
 
-	OptionId, err := uuid.FromString(context.Params("option_id"))
+	OptionId, err := uuid.Parse(context.Params("option_id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

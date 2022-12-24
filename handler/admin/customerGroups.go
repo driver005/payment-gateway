@@ -5,8 +5,9 @@ import (
 
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) removeCustomer(slice []models.Customer, s int) []models.Customer {
@@ -14,16 +15,18 @@ func (a *Admin) removeCustomer(slice []models.Customer, s int) []models.Customer
 }
 
 func (a *Admin) GetCustomerGroup(context *fiber.Ctx) error {
+	f := models.CustomerGroup{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetCustomerGroup(context.Context(), Id)
+	m, err := a.r.ClientManager().GetCustomerGroup(context.Context(), types.FilterableCustomerGroupProps{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -53,7 +56,7 @@ func (a *Admin) ListCustomerGroup(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetCustomerGroups(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, types.FilterableCustomerGroupProps{}, models.CustomerGroup{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -98,7 +101,7 @@ func (a *Admin) UpdateCustomerGroup(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -120,7 +123,7 @@ func (a *Admin) UpdateCustomerGroup(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteCustomerGroup(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -154,7 +157,7 @@ func (a *Admin) UpdateCustomerGroupCustomers(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -199,7 +202,7 @@ func (a *Admin) DeleteCustomerGroupCustomers(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

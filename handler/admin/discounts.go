@@ -3,10 +3,12 @@ package admin
 import (
 	"strconv"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) removeRegion(slice []models.Region, s int) []models.Region {
@@ -14,16 +16,18 @@ func (a *Admin) removeRegion(slice []models.Region, s int) []models.Region {
 }
 
 func (a *Admin) GetDiscount(context *fiber.Ctx) error {
+	f := models.Discount{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetDiscount(context.Context(), Id)
+	m, err := a.r.ClientManager().GetDiscount(context.Context(), types.FilterableDiscountProps{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -65,7 +69,7 @@ func (a *Admin) ListDiscount(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetDiscounts(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, types.FilterableDiscountProps{}, models.Discount{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -110,7 +114,7 @@ func (a *Admin) UpdateDiscount(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -132,7 +136,7 @@ func (a *Admin) UpdateDiscount(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteDiscount(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -165,6 +169,7 @@ type DynamicCodesRequest struct {
 
 func (a *Admin) UpdateDynamicCode(context *fiber.Ctx) error {
 	var b DynamicCodesRequest
+	f := models.Discount{}
 
 	if err := context.BodyParser(&b); err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
@@ -173,7 +178,7 @@ func (a *Admin) UpdateDynamicCode(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -181,7 +186,9 @@ func (a *Admin) UpdateDynamicCode(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := a.r.ClientManager().GetDiscount(context.Context(), Id)
+	f.Id = Id
+
+	m, err := a.r.ClientManager().GetDiscount(context.Context(), types.FilterableDiscountProps{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -207,7 +214,7 @@ func (a *Admin) UpdateDynamicCode(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteDynamicCode(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -228,7 +235,7 @@ func (a *Admin) DeleteDynamicCode(context *fiber.Ctx) error {
 
 func (a *Admin) UpdateRegion(context *fiber.Ctx) error {
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -236,7 +243,7 @@ func (a *Admin) UpdateRegion(context *fiber.Ctx) error {
 		})
 	}
 
-	RegionId, err := uuid.FromString(context.Params("region_id"))
+	RegionId, err := uuid.Parse(context.Params("region_id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -244,7 +251,10 @@ func (a *Admin) UpdateRegion(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := a.r.ClientManager().GetDiscount(context.Context(), Id)
+	f := models.Discount{}
+	f.Id = Id
+
+	m, err := a.r.ClientManager().GetDiscount(context.Context(), types.FilterableDiscountProps{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -252,7 +262,10 @@ func (a *Admin) UpdateRegion(context *fiber.Ctx) error {
 		})
 	}
 
-	l, err := a.r.ClientManager().GetRegion(context.Context(), RegionId)
+	re := models.Region{}
+	re.Id = RegionId
+
+	l, err := a.r.ClientManager().GetRegion(context.Context(), core.Filter{}, re)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -277,7 +290,7 @@ func (a *Admin) UpdateRegion(context *fiber.Ctx) error {
 
 func (a *Admin) DeleteRegion(context *fiber.Ctx) error {
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -285,7 +298,17 @@ func (a *Admin) DeleteRegion(context *fiber.Ctx) error {
 		})
 	}
 
-	RegionId, err := uuid.FromString(context.Params("region_id"))
+	RegionId, err := uuid.Parse(context.Params("region_id"))
+	if err != nil {
+		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+			"type":    "database_error",
+		})
+	}
+	f := models.Discount{}
+	f.Id = Id
+
+	m, err := a.r.ClientManager().GetDiscount(context.Context(), types.FilterableDiscountProps{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -293,15 +316,10 @@ func (a *Admin) DeleteRegion(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := a.r.ClientManager().GetDiscount(context.Context(), Id)
-	if err != nil {
-		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-			"message": err.Error(),
-			"type":    "database_error",
-		})
-	}
+	re := models.Region{}
+	re.Id = RegionId
 
-	l, err := a.r.ClientManager().GetRegion(context.Context(), RegionId)
+	l, err := a.r.ClientManager().GetRegion(context.Context(), core.Filter{}, re)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -356,7 +374,7 @@ func (a *Admin) UpdateDiscountsCondition(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -364,7 +382,7 @@ func (a *Admin) UpdateDiscountsCondition(context *fiber.Ctx) error {
 		})
 	}
 
-	ConditionId, err := uuid.FromString(context.Params("condition_id"))
+	ConditionId, err := uuid.Parse(context.Params("condition_id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -372,7 +390,10 @@ func (a *Admin) UpdateDiscountsCondition(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := a.r.ClientManager().GetDiscount(context.Context(), Id)
+	f := models.Discount{}
+	f.Id = Id
+
+	m, err := a.r.ClientManager().GetDiscount(context.Context(), types.FilterableDiscountProps{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -380,7 +401,10 @@ func (a *Admin) UpdateDiscountsCondition(context *fiber.Ctx) error {
 		})
 	}
 
-	c, err := a.r.ClientManager().GetDiscountCondition(context.Context(), ConditionId)
+	cd := models.DiscountCondition{}
+	cd.Id = Id
+
+	c, err := a.r.ClientManager().GetDiscountCondition(context.Context(), core.Filter{}, cd)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

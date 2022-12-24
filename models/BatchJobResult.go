@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/driver005/database"
-	"github.com/driver005/database/types"
+	"github.com/driver005/database/clause"
 	"github.com/driver005/gateway/helper"
 )
 
@@ -56,8 +56,8 @@ func (BatchJobResult) DBDataType() string {
 	return "result"
 }
 
-func (b BatchJobResult) DBValue(ctx context.Context, db *database.DB) types.Expr {
-	return types.Expr{
+func (b BatchJobResult) DBValue(ctx context.Context, db *database.DB) clause.Expr {
+	return clause.Expr{
 		SQL: "ROW(?, ?, ?, ?, ?, ?, ?, ?)::result",
 		Vars: []interface{}{
 			b.Count,

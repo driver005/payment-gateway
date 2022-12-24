@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // GiftCardTransaction - Gift Card Transactions are created once a Customer uses a Gift Card to pay for their Order

@@ -3,23 +3,26 @@ package admin
 import (
 	"strconv"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) GetShippingProfile(context *fiber.Ctx) error {
+	f := models.ShippingProfile{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetShippingProfile(context.Context(), Id)
+	m, err := a.r.ClientManager().GetShippingProfile(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -49,7 +52,7 @@ func (a *Admin) ListShippingProfile(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetShippingProfiles(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, core.Filter{}, models.ShippingProfile{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -94,7 +97,7 @@ func (a *Admin) UpdateShippingProfile(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -116,7 +119,7 @@ func (a *Admin) UpdateShippingProfile(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteShippingProfile(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

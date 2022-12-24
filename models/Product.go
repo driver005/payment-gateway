@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 type Product struct {
@@ -97,7 +97,7 @@ type Product struct {
 }
 
 // func (p *Product) BeforeCreate(tx *database.DB) (err error) {
-// 	p.Id, err = uuid.NewV4()
+// 	p.Id, err = uuid.NewUUID()
 // 	if err != nil {
 // 		return err
 // 	}

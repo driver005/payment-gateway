@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // GiftCard - Gift Cards are redeemable and represent a value that can be used towards the payment of an Order.

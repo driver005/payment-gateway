@@ -3,15 +3,17 @@ package admin
 import (
 	"strconv"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) GetProductType(context *fiber.Ctx) error {
+	f := models.ProductType{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -19,7 +21,8 @@ func (a *Admin) GetProductType(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := a.r.ClientManager().GetProductType(context.Context(), Id)
+	f.Id = Id
+	m, err := a.r.ClientManager().GetProductType(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -49,7 +52,7 @@ func (a *Admin) ListProductType(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetProductTypes(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, core.Filter{}, models.ProductType{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -94,7 +97,7 @@ func (a *Admin) UpdateProductType(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -116,7 +119,7 @@ func (a *Admin) UpdateProductType(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteProductType(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

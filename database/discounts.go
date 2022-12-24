@@ -7,7 +7,7 @@ import (
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/driver005/gateway/types"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) GetDiscount(ctx context.Context, config types.FilterableDiscountProps, model models.Discount) (*models.Discount, error) {

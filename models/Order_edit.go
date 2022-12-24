@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // OrderEdit - Order edit keeps track of order items changes.

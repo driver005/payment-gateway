@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // Customer - Represents a customer
@@ -36,7 +36,7 @@ type Customer struct {
 	Orders []Order `json:"orders" database:"foreignKey:id"`
 
 	// The customer groups the customer belongs to. Available if the relation `groups` is expanded.
-	Groups []CustomerGroup `json:"groups" database:"foreignKey:id"`
+	Groups []CustomerGroup `json:"groups" database:"many2many:customer_group"`
 
 	// An optional key-value map with additional details
 	Metadata JSONB `json:"metadata" database:"default:null"`

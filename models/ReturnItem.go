@@ -1,6 +1,6 @@
 package models
 
-import "github.com/gofrs/uuid"
+import "github.com/google/uuid"
 
 // ReturnItem - Correlates a Line Item with a Return, keeping track of the quantity of the Line Item that will be returned.
 type ReturnItem struct {

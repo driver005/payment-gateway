@@ -8,7 +8,7 @@ import (
 
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // An address.
@@ -59,7 +59,7 @@ type Address struct {
 }
 
 func (a *Address) BeforeCreate(tx *database.DB) (err error) {
-	a.Id, err = uuid.NewV4()
+	a.Id, err = uuid.NewUUID()
 	if err != nil {
 		return err
 	}

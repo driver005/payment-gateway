@@ -7,7 +7,7 @@ import (
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/driver005/gateway/types"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) GetCustomerGroup(ctx context.Context, config types.FilterableCustomerGroupProps, model models.CustomerGroup) (*models.CustomerGroup, error) {
@@ -79,7 +79,7 @@ func (h *Handler) GetCustomerGroupsByIds(ctx context.Context, Ids []string) ([]m
 	var m = make([]models.CustomerGroup, 0)
 
 	for _, p := range Ids {
-		Id, err := uuid.FromString(p)
+		Id, err := uuid.Parse(p)
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}

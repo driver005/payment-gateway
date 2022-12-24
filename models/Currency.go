@@ -21,7 +21,7 @@ type Currency struct {
 }
 
 // func (c *Currency) BeforeCreate(tx *database.DB) (err error) {
-// 	c.Id, err = uuid.NewV4()
+// 	c.Id, err = uuid.NewUUID()
 // 	if err != nil {
 // 		return err
 // 	}

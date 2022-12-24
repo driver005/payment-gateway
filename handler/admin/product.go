@@ -6,21 +6,24 @@ import (
 
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) GetProduct(context *fiber.Ctx) error {
+	f := models.Product{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetProduct(context.Context(), Id)
+	m, err := a.r.ClientManager().GetProduct(context.Context(), types.FilterableProductProps{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -50,7 +53,7 @@ func (a *Admin) ListProduct(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetProducts(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, types.FilterableProductProps{}, models.Product{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -95,7 +98,7 @@ func (a *Admin) UpdateProduct(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -117,7 +120,7 @@ func (a *Admin) UpdateProduct(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteProduct(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -156,7 +159,7 @@ func (a *Admin) CreateProductMetadata(context *fiber.Ctx) error {
 		})
 	}
 
-	ID, err := uuid.FromString(context.Params("id"))
+	ID, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

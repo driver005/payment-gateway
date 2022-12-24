@@ -4,10 +4,11 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) remove(slice []models.Product, s int) []models.Product {
@@ -15,8 +16,9 @@ func (a *Admin) remove(slice []models.Product, s int) []models.Product {
 }
 
 func (a *Admin) GetCollection(context *fiber.Ctx) error {
+	f := models.ProductCollection{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -24,7 +26,9 @@ func (a *Admin) GetCollection(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := a.r.ClientManager().GetCollection(context.Context(), Id)
+	f.Id = Id
+
+	m, err := a.r.ClientManager().GetCollection(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -54,7 +58,7 @@ func (a *Admin) ListCollection(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetCollections(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, core.Filter{}, models.ClaimOrder{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -101,7 +105,7 @@ func (a *Admin) UpdateCollection(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -123,7 +127,7 @@ func (a *Admin) UpdateCollection(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteCollection(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -157,7 +161,7 @@ func (a *Admin) UpdateCollectionProducts(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -202,7 +206,7 @@ func (a *Admin) DeleteCollectionProducts(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

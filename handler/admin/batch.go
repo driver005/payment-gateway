@@ -6,13 +6,15 @@ import (
 
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) GetBatchJob(context *fiber.Ctx) error {
+	f := models.BatchJob{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -20,7 +22,9 @@ func (a *Admin) GetBatchJob(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := a.r.ClientManager().GetBatchJob(context.Context(), Id)
+	f.Id = Id
+
+	m, err := a.r.ClientManager().GetBatchJob(context.Context(), types.FilterableBatchJobProps{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -50,7 +54,7 @@ func (a *Admin) ListBatchJob(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetBatchJobs(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, types.FilterableBatchJobProps{}, models.BatchJob{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -88,7 +92,7 @@ func (a *Admin) CreateBatchJob(context *fiber.Ctx) error {
 func (a *Admin) ConfirmBatchJob(context *fiber.Ctx) error {
 	var m models.BatchJob
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -115,7 +119,7 @@ func (a *Admin) ConfirmBatchJob(context *fiber.Ctx) error {
 func (a *Admin) CancelBatchJob(context *fiber.Ctx) error {
 	var m models.BatchJob
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -149,7 +153,7 @@ func (a *Admin) UpdateBatchJob(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -171,7 +175,7 @@ func (a *Admin) UpdateBatchJob(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteBatchJob(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

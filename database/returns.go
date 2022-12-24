@@ -7,7 +7,7 @@ import (
 	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) GetReturn(ctx context.Context, config core.Filter, model models.Return) (*models.Return, error) {

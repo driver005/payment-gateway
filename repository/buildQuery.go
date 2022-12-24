@@ -196,3 +196,81 @@ func (r *Repositories) ToQuery(config interface{}, model interface{}) *database.
 
 	return query
 }
+
+type FindOption struct {
+	Select    map[string]interface{}
+	Where     map[string]interface{}
+	Order     map[string]interface{}
+	Relations map[string]interface{}
+	Offset    *int
+	Limit     *int
+	Deleted   bool
+}
+
+func (r *Repositories) BuildFindQuery(option FindOption) *database.DB {
+	query := r.db
+	for index, value := range option.Select {
+		switch value.(type) {
+		case bool:
+			if value == true {
+				query = query.Select(index)
+			}
+		}
+	}
+
+	for index, value := range option.Relations {
+		switch value.(type) {
+		case bool:
+			if value == true {
+				query = query.Preload(index)
+			}
+		}
+	}
+
+	for index, value := range option.Where {
+		switch value.(type) {
+		case string:
+			if value == true {
+				query = query.Where(fmt.Sprintf("%+v = ?", index), value)
+			}
+		}
+	}
+
+	for index, value := range option.Order {
+		switch value.(type) {
+		case string:
+			if value == true {
+				query = query.Order(fmt.Sprintf("%+v %+v", index, value))
+			}
+		}
+	}
+
+	if option.Offset != nil {
+		query = query.Offset(*option.Offset)
+	}
+
+	if option.Limit != nil {
+		query = query.Limit(*option.Limit)
+	}
+
+	if option.Deleted {
+		query = query.Unscoped()
+	}
+
+	return query
+}
+
+func (r *Repositories) BuildFindWhereQuery(where map[string]interface{}) *database.DB {
+	query := r.db
+
+	for index, value := range where {
+		switch value.(type) {
+		case string:
+			if value == true {
+				query = query.Where(fmt.Sprintf("%+v = ?", index), value)
+			}
+		}
+	}
+
+	return query
+}

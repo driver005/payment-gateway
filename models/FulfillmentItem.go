@@ -1,6 +1,6 @@
 package models
 
-import "github.com/gofrs/uuid"
+import "github.com/google/uuid"
 
 // FulfillmentItem - Correlates a Line Item with a Fulfillment, keeping track of the quantity of the Line Item.
 type FulfillmentItem struct {

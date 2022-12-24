@@ -4,15 +4,17 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) GetClaim(context *fiber.Ctx) error {
+	f := models.ClaimOrder{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -20,7 +22,9 @@ func (a *Admin) GetClaim(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := a.r.ClientManager().GetClaim(context.Context(), Id)
+	f.Id = Id
+
+	m, err := a.r.ClientManager().GetClaim(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -50,7 +54,7 @@ func (a *Admin) ListClaim(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetClaims(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, core.Filter{}, models.ClaimOrder{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -73,7 +77,7 @@ func (a *Admin) CreateClaim(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -105,7 +109,7 @@ func (a *Admin) UpdateClaim(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("claim_id"))
+	Id, err := uuid.Parse(context.Params("claim_id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -113,7 +117,7 @@ func (a *Admin) UpdateClaim(context *fiber.Ctx) error {
 		})
 	}
 
-	OrderId, err := uuid.FromString(context.Params("id"))
+	OrderId, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -135,7 +139,7 @@ func (a *Admin) UpdateClaim(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteClaim(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -164,7 +168,7 @@ func (a *Admin) CancelClaim(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("claim_id"))
+	Id, err := uuid.Parse(context.Params("claim_id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -172,7 +176,7 @@ func (a *Admin) CancelClaim(context *fiber.Ctx) error {
 		})
 	}
 
-	OrderId, err := uuid.FromString(context.Params("id"))
+	OrderId, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -215,7 +219,7 @@ func (a *Admin) UpdateClaimShipment(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("claim_id"))
+	Id, err := uuid.Parse(context.Params("claim_id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -223,7 +227,7 @@ func (a *Admin) UpdateClaimShipment(context *fiber.Ctx) error {
 		})
 	}
 
-	OrderId, err := uuid.FromString(context.Params("id"))
+	OrderId, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

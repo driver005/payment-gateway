@@ -5,7 +5,7 @@ import (
 
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 type Charge struct {

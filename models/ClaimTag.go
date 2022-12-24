@@ -1,6 +1,6 @@
 package models
 
-import "github.com/gofrs/uuid"
+import "github.com/google/uuid"
 
 // ClaimTag - Claim Tags are user defined tags that can be assigned to claim items for easy filtering and grouping.
 type ClaimTag struct {

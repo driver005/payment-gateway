@@ -1,6 +1,6 @@
 package models
 
-import "github.com/gofrs/uuid"
+import "github.com/google/uuid"
 
 // PaymentProvider - Represents a Payment Provider plugin and holds its installation status.
 type PaymentProvider struct {

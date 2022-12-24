@@ -3,22 +3,26 @@ package admin
 import (
 	"strconv"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) GetProductTag(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	f := models.ProductTag{}
+
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetProductTag(context.Context(), Id)
+	m, err := a.r.ClientManager().GetProductTag(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -48,7 +52,7 @@ func (a *Admin) ListProductTag(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetProductTags(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, core.Filter{}, models.ProductTag{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -93,7 +97,7 @@ func (a *Admin) UpdateProductTag(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -115,7 +119,7 @@ func (a *Admin) UpdateProductTag(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteProductTag(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -136,7 +140,7 @@ func (a *Admin) DeleteProductTag(context *fiber.Ctx) error {
 
 func (a *Admin) GetProductTagUsageCount(context *fiber.Ctx) error {
 
-	r, _, err := a.r.ClientManager().GetProductTagUsageCount(context.Context())
+	r, _, err := a.r.ClientManager().GetProductTagCount(context.Context())
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

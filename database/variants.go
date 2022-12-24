@@ -7,7 +7,7 @@ import (
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/driver005/gateway/types"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) GetProductVariant(ctx context.Context, config types.FilterableProductVariantProps, model models.ProductVariant) (*models.ProductVariant, error) {

@@ -45,8 +45,6 @@ type Registry interface {
 	// Service() *service.Handler
 
 	sql.Provider
-
-	//SQL() *SQL
 }
 
 // RegisterDriver registers a driver

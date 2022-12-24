@@ -3,13 +3,14 @@ package admin
 import (
 	"strconv"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofiber/fiber/v2"
 )
 
 func (a *Admin) GetCurrency(context *fiber.Ctx) error {
-	m, err := a.r.ClientManager().GetCurrency(context.Context(), context.Params("id"))
+	m, err := a.r.ClientManager().GetCurrency(context.Context(), context.Params("id"), core.Filter{}, models.Currency{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -39,7 +40,7 @@ func (a *Admin) ListCurrency(context *fiber.Ctx) error {
 	m, n, err := a.r.ClientManager().GetCurrencys(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, core.Filter{}, models.Currency{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

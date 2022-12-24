@@ -3,11 +3,12 @@ package admin
 import (
 	"strconv"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/handler"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 type Admin struct {
@@ -15,16 +16,18 @@ type Admin struct {
 }
 
 func (a *Admin) GetDiscountCondition(context *fiber.Ctx) error {
+	f := models.DiscountCondition{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetDiscountCondition(context.Context(), Id)
+	m, err := a.r.ClientManager().GetDiscountCondition(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -54,7 +57,7 @@ func (p *Admin) ListDiscountCondition(context *fiber.Ctx) error {
 	m, n, err := p.r.ClientManager().GetDiscountConditions(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, core.Filter{}, models.DiscountCondition{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -99,7 +102,7 @@ func (a *Admin) UpdateDiscountCondition(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -121,7 +124,7 @@ func (a *Admin) UpdateDiscountCondition(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteDiscountCondition(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -154,7 +157,7 @@ func (a *Admin) DeleteDiscountCondition(context *fiber.Ctx) error {
 // 		})
 // 	}
 
-// 	Id, err := uuid.FromString(context.Params("id"))
+// 	Id, err := uuid.Parse(context.Params("id"))
 // 	if err != nil {
 // 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 // 			"message": err.Error(),
@@ -162,7 +165,7 @@ func (a *Admin) DeleteDiscountCondition(context *fiber.Ctx) error {
 // 		})
 // 	}
 
-// 	ConditionId, err := uuid.FromString(context.Params("condition_id"))
+// 	ConditionId, err := uuid.Parse(context.Params("condition_id"))
 // 	if err != nil {
 // 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 // 			"message": err.Error(),
@@ -191,7 +194,7 @@ func (a *Admin) DeleteDiscountCondition(context *fiber.Ctx) error {
 // 		})
 // 	}
 
-// 	Id, err := uuid.FromString(context.Params("id"))
+// 	Id, err := uuid.Parse(context.Params("id"))
 // 	if err != nil {
 // 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 // 			"message": err.Error(),
@@ -199,7 +202,7 @@ func (a *Admin) DeleteDiscountCondition(context *fiber.Ctx) error {
 // 		})
 // 	}
 
-// 	ConditionId, err := uuid.FromString(context.Params("condition_id"))
+// 	ConditionId, err := uuid.Parse(context.Params("condition_id"))
 // 	if err != nil {
 // 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 // 			"message": err.Error(),

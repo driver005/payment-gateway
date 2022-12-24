@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/driver005/gateway/core"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 // ReturnReason - A Reason for why a given product is returned. A Return Reason can be used on Return Items in order to indicate why a Line Item was returned.

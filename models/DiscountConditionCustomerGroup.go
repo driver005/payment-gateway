@@ -1,6 +1,6 @@
 package models
 
-import "github.com/gofrs/uuid"
+import "github.com/google/uuid"
 
 // DiscountConditionCustomerGroup - Associates a discount condition with a customer group
 type DiscountConditionCustomerGroup struct {

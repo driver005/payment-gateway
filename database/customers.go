@@ -7,7 +7,7 @@ import (
 	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (h *Handler) GetCustomer(ctx context.Context, config core.Filter, model models.Customer) (*models.Customer, error) {
@@ -79,7 +79,7 @@ func (h *Handler) GetCustomerByIds(ctx context.Context, CustomerIds []string) ([
 	var m = make([]models.Customer, 0)
 
 	for _, p := range CustomerIds {
-		Id, err := uuid.FromString(p)
+		Id, err := uuid.Parse(p)
 		if err != nil {
 			return nil, helper.ParseError(err)
 		}

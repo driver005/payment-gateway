@@ -3,23 +3,27 @@ package admin
 import (
 	"strconv"
 
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/models"
+	"github.com/driver005/gateway/types"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 func (a *Admin) GetDraftOrder(context *fiber.Ctx) error {
+	f := models.DraftOrder{}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetDraftOrder(context.Context(), Id)
+	m, err := a.r.ClientManager().GetDraftOrder(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -49,7 +53,7 @@ func (p *Admin) ListDraftOrder(context *fiber.Ctx) error {
 	m, n, err := p.r.ClientManager().GetDraftOrders(context.Context(), models.Filter{
 		Size:   pageSize,
 		Offset: offset,
-	})
+	}, core.Filter{}, models.DraftOrder{})
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -94,7 +98,7 @@ func (a *Admin) UpdateDraftOrder(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -116,7 +120,7 @@ func (a *Admin) UpdateDraftOrder(context *fiber.Ctx) error {
 }
 
 func (a *Admin) DeleteDraftOrder(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -164,15 +168,17 @@ func (a *Admin) CreateDraftOrderLineItem(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f := models.DraftOrder{}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetDraftOrder(context.Context(), Id)
+	m, err := a.r.ClientManager().GetDraftOrder(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -216,7 +222,7 @@ func (a *Admin) UpdateDraftOrderLineItem(context *fiber.Ctx) error {
 		})
 	}
 
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -224,23 +230,27 @@ func (a *Admin) UpdateDraftOrderLineItem(context *fiber.Ctx) error {
 		})
 	}
 
-	LineId, err := uuid.FromString(context.Params("line_id"))
+	LineId, err := uuid.Parse(context.Params("line_id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f := models.DraftOrder{}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetDraftOrder(context.Context(), Id)
+	m, err := a.r.ClientManager().GetDraftOrder(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	li := models.LineItem{}
+	li.Id = LineId
 
-	l, err := a.r.ClientManager().GetLineItem(context.Context(), LineId)
+	l, err := a.r.ClientManager().GetLineItem(context.Context(), types.FilterableLineItemProps{}, li)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -276,15 +286,17 @@ func (a *Admin) UpdateDraftOrderLineItem(context *fiber.Ctx) error {
 }
 
 func (a *Admin) UpdateDraftOrderPayment(context *fiber.Ctx) error {
-	Id, err := uuid.FromString(context.Params("id"))
+	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
 		context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
 			"type":    "database_error",
 		})
 	}
+	f := models.DraftOrder{}
+	f.Id = Id
 
-	m, err := a.r.ClientManager().GetDraftOrder(context.Context(), Id)
+	m, err := a.r.ClientManager().GetDraftOrder(context.Context(), core.Filter{}, f)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -304,4 +316,3 @@ func (a *Admin) UpdateDraftOrderPayment(context *fiber.Ctx) error {
 
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
-

@@ -6,7 +6,7 @@ import (
 	"github.com/driver005/database"
 	"github.com/go-ozzo/ozzo-validation/is"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
-	"github.com/gofrs/uuid"
+	"github.com/google/uuid"
 )
 
 type Card struct {
@@ -32,7 +32,7 @@ type Card struct {
 }
 
 func (c *Card) BeforeCreate(tx *database.DB) (err error) {
-	c.ID, err = uuid.NewV4()
+	c.ID, err = uuid.NewUUID()
 	if err != nil {
 		return err
 	}
