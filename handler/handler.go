@@ -7,7 +7,16 @@ import (
 const (
 	NbxplorerPath = "/nbxplorer"
 	BtcpayPath    = "/btcpay"
+	ApplePayPath  = "/applepay"
+	GooglePayPath = "/googlepay"
 )
+
+func (h *Handler) Routes(public fiber.Router) {
+	h.NbxplorerRoutes(public)
+	h.BtcpayRoutes(public)
+	// h.ApplePayRoutes(public)
+	// h.GooglePayRoutes(public)
+}
 
 func (h *Handler) NbxplorerRoutes(public fiber.Router) {
 	public.Get(NbxplorerPath+"/cryptos/:cryptoCode/status", h.n.GetStatus)
@@ -47,74 +56,63 @@ func (h *Handler) NbxplorerRoutes(public fiber.Router) {
 	public.Post(NbxplorerPath+"/cryptos/:cryptoCode/psbt/update", h.n.UpdatePSBT)
 }
 
-func (n *Handler) BtcpayRoutes(public fiber.Router) {
-	public.Get(BtcpayPath+"/health", n.b.GetHealth)
-	public.Get(BtcpayPath+"/server/info", n.b.GetServerInfo)
-	public.Get(BtcpayPath+"/misc/lang", n.b.GetLanguageCodes)
-	public.Get(BtcpayPath+"/i/:invoiceId", n.b.GetInvoiceCheckoutPage)
+func (h *Handler) BtcpayRoutes(public fiber.Router) {
+	public.Get(BtcpayPath+"/health", h.b.GetHealth)
+	public.Get(BtcpayPath+"/server/info", h.b.GetServerInfo)
+	public.Get(BtcpayPath+"/misc/lang", h.b.GetLanguageCodes)
+	public.Get(BtcpayPath+"/i/:invoiceId", h.b.GetInvoiceCheckoutPage)
 
-	public.Delete(BtcpayPath+"/api-keys/:apikey", n.b.RevokeAPIKey)
-	public.Get(BtcpayPath+"/api-keys/current", n.b.GetCurrentAPIKey)
-	// public.Delete(BtcpayPath+"/api-keys/current", n.b.RevokeCurrentAPIKey)
-	public.Post(BtcpayPath+"/api-keys", n.b.CreateAPIKey)
+	public.Delete(BtcpayPath+"/api-keys/:apikey", h.b.RevokeAPIKey)
+	public.Get(BtcpayPath+"/api-keys/current", h.b.GetCurrentAPIKey)
+	// public.Delete(BtcpayPath+"/api-keys/current", h.b.RevokeCurrentAPIKey)
+	public.Post(BtcpayPath+"/api-keys", h.b.CreateAPIKey)
 
-	public.Get(BtcpayPath+"/api-keys/authorize", n.b.Authorize)
+	public.Get(BtcpayPath+"/api-keys/authorize", h.b.Authorize)
 
-	// public.Post(BtcpayPath+"api/v1/stores/:storeId/apps/pos", n.b.CreateAPIKey)
-	// public.Get(BtcpayPath+"api/v1/apps/:appId", n.b.CreateAPIKey)
-	// public.Delete(BtcpayPath+"api/v1/apps/:appId", n.b.CreateAPIKey)
+	// public.Post(BtcpayPath+"api/v1/stores/:storeId/apps/pos", h.b.CreateAPIKey)
+	// public.Get(BtcpayPath+"api/v1/apps/:appId", h.b.CreateAPIKey)
+	// public.Delete(BtcpayPath+"api/v1/apps/:appId", h.b.CreateAPIKey)
 
-	public.Get(BtcpayPath+"/users/me", n.b.GetUser)
-	public.Get(BtcpayPath+"/users", n.b.CreateUser)
+	public.Get(BtcpayPath+"/users/me", h.b.GetUser)
+	public.Get(BtcpayPath+"/users", h.b.CreateUser)
 
-	public.Get(BtcpayPath+"/stores", n.b.GetStores)
-	public.Post(BtcpayPath+"/stores", n.b.CreateStore)
-	public.Get(BtcpayPath+"/stores/:storeId", n.b.GetStore)
-	public.Put(BtcpayPath+"/stores/:storeId", n.b.UpdateStore)
-	public.Delete(BtcpayPath+"/stores/:storeId", n.b.RemoveStore)
+	public.Get(BtcpayPath+"/stores", h.b.GetStores)
+	public.Post(BtcpayPath+"/stores", h.b.CreateStore)
+	public.Get(BtcpayPath+"/stores/:storeId", h.b.GetStore)
+	public.Put(BtcpayPath+"/stores/:storeId", h.b.UpdateStore)
+	public.Delete(BtcpayPath+"/stores/:storeId", h.b.RemoveStore)
 
-	public.Get(BtcpayPath+"/stores/:storeId/payment-requests", n.b.GetPaymentRequests)
-	public.Post(BtcpayPath+"/stores/:storeId/payment-requests", n.b.CreatePaymentRequest)
-	public.Get(BtcpayPath+"/stores/:storeId/payment-requests/:paymentRequestId", n.b.GetPaymentRequest)
-	public.Delete(BtcpayPath+"/stores/:storeId/payment-requests/:paymentRequestId", n.b.ArchivePaymentRequest)
-	public.Put(BtcpayPath+"/stores/:storeId/payment-requests/:paymentRequestId", n.b.UpdatePaymentRequest)
+	public.Get(BtcpayPath+"/stores/:storeId/payment-requests", h.b.GetPaymentRequests)
+	public.Post(BtcpayPath+"/stores/:storeId/payment-requests", h.b.CreatePaymentRequest)
+	public.Get(BtcpayPath+"/stores/:storeId/payment-requests/:paymentRequestId", h.b.GetPaymentRequest)
+	public.Delete(BtcpayPath+"/stores/:storeId/payment-requests/:paymentRequestId", h.b.ArchivePaymentRequest)
+	public.Put(BtcpayPath+"/stores/:storeId/payment-requests/:paymentRequestId", h.b.UpdatePaymentRequest)
 
-	public.Get(BtcpayPath+"/stores/:storeId/pull-payments", n.b.GetPullPayments)
-	public.Post(BtcpayPath+"/stores/:storeId/pull-payments", n.b.CreatePullPayment)
-	public.Get(BtcpayPath+"/pull-payments/:pullPaymentId", n.b.GetPullPayment)
-	public.Delete(BtcpayPath+"/stores/:storeId/pull-payments/:pullPaymentId", n.b.ArchivePullPayment)
-	public.Get(BtcpayPath+"/pull-payments/:pullPaymentId/payouts", n.b.GetPayouts)
-	public.Post(BtcpayPath+"/pull-payments/:pullPaymentId/payouts", n.b.CreatePayout)
-	public.Post(BtcpayPath+"/stores/:storeId/payouts/:payoutId", n.b.ApprovePayout)
-	public.Delete(BtcpayPath+"/stores/:storeId/payouts/:payoutId", n.b.CancelPayout)
+	public.Get(BtcpayPath+"/stores/:storeId/pull-payments", h.b.GetPullPayments)
+	public.Post(BtcpayPath+"/stores/:storeId/pull-payments", h.b.CreatePullPayment)
+	public.Get(BtcpayPath+"/pull-payments/:pullPaymentId", h.b.GetPullPayment)
+	public.Delete(BtcpayPath+"/stores/:storeId/pull-payments/:pullPaymentId", h.b.ArchivePullPayment)
+	public.Get(BtcpayPath+"/pull-payments/:pullPaymentId/payouts", h.b.GetPayouts)
+	public.Post(BtcpayPath+"/pull-payments/:pullPaymentId/payouts", h.b.CreatePayout)
+	public.Post(BtcpayPath+"/stores/:storeId/payouts/:payoutId", h.b.ApprovePayout)
+	public.Delete(BtcpayPath+"/stores/:storeId/payouts/:payoutId", h.b.CancelPayout)
 
-	public.Get(BtcpayPath+"/stores/:storeId/invoices", n.b.GetInvoices)
-	public.Post(BtcpayPath+"/stores/:storeId/invoices", n.b.CreateInvoice)
-	public.Post(BtcpayPath+"/stores/:storeId/invoices/:invoiceId", n.b.GetInvoice)
-	public.Delete(BtcpayPath+"/stores/:storeId/invoices/:invoiceId", n.b.ArchiveInvoice)
-	public.Put(BtcpayPath+"/stores/:storeId/invoices/:invoiceId", n.b.UpdateInvoice)
-	public.Get(BtcpayPath+"/stores/:storeId/invoices/:invoiceId/payment-methods", n.b.GetInvoicePaymentMethod)
-	public.Post(BtcpayPath+"/stores/:storeId/invoices/:invoiceId/status", n.b.MarkInvoiceStatus)
-	public.Post(BtcpayPath+"/stores/:storeId/invoices/:invoiceId/unarchive", n.b.UnarchiveInvoice)
-	public.Post(BtcpayPath+"/stores/:storeId/invoices/:invoiceId/payment-methods/:paymentMethod/activate", n.b.ActivatePaymentMethod)
+	public.Get(BtcpayPath+"/stores/:storeId/invoices", h.b.GetInvoices)
+	public.Post(BtcpayPath+"/stores/:storeId/invoices", h.b.CreateInvoice)
+	public.Post(BtcpayPath+"/stores/:storeId/invoices/:invoiceId", h.b.GetInvoice)
+	public.Delete(BtcpayPath+"/stores/:storeId/invoices/:invoiceId", h.b.ArchiveInvoice)
+	public.Put(BtcpayPath+"/stores/:storeId/invoices/:invoiceId", h.b.UpdateInvoice)
+	public.Get(BtcpayPath+"/stores/:storeId/invoices/:invoiceId/payment-methods", h.b.GetInvoicePaymentMethod)
+	public.Post(BtcpayPath+"/stores/:storeId/invoices/:invoiceId/status", h.b.MarkInvoiceStatus)
+	public.Post(BtcpayPath+"/stores/:storeId/invoices/:invoiceId/unarchive", h.b.UnarchiveInvoice)
+	public.Post(BtcpayPath+"/stores/:storeId/invoices/:invoiceId/payment-methods/:paymentMethod/activate", h.b.ActivatePaymentMethod)
 }
 
-// func (h *Handler) SetRoutes(public *helper.RouterPublic) {
-// 	h.CardRoutes(public)
+// func (h *Handler) ApplePayRoutes(public fiber.Router) {
+// 	public.Post(ApplePayPath+"/session", h.a.GetApplePaySession)
+// 	public.Post(ApplePayPath+"/process", h.a.ProcessApplePayResponse)
 // }
 
-// func (h *Handler) GetHealth(context *fiber.Ctx) error {
-// 	respond.NewResponse(w).Ok("Working")
-// }
-
-// func (h *Handler) CardRoutes(public *helper.RouterPublic) {
-// 	public.Get(ClientsHandlerPath, h.ListCard)
-// 	public.Post(ClientsHandlerPath, h.CreateCard)
-// 	public.Get(ClientsHandlerPath+"/:id", h.GetCard)
-// 	public.Put(ClientsHandlerPath+"/:id", h.UpdateCard)
-// 	public.Delete(ClientsHandlerPath+"/:id", h.DeleteCard)
-// }
-
-// func (h *Handler) Routes(public fiber.Router) {
-// 	public.Get("/", h.GetHealth)
+// func (h *Handler) GooglePayRoutes(public fiber.Router) {
+// 	public.Post(GooglePayPath+"/process", h.g.ProcessGooglePayResponse)
 // }

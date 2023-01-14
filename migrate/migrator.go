@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"regexp"
 	"sort"
 	"strings"
 	"text/tabwriter"
@@ -29,13 +28,13 @@ const (
 	tracingComponent = "github.com/driver005/gateway"
 )
 
-var mrx = regexp.MustCompile(`^(\d+)_([^.]+)(\.[a-z0-9]+)?\.(up|down)\.(sql|fizz)$`)
+// var mrx = regexp.MustCompile(`^(\d+)_([^.]+)(\.[a-z0-9]+)?\.(up|down)\.(sql|fizz)$`)
 
 // NewMigrator returns a new "blank" migrator. It is recommended
 // to use something like MigrationBox or FileMigrator. A "blank"
 // Migrator should only be used as the basis for a new type of
 // migration system.
-func NewMigrator(c *pop.Connection, l *logger.Logger,  tracer trace.Tracer, perMigrationTimeout time.Duration) *Migrator {
+func NewMigrator(c *pop.Connection, l *logger.Logger, tracer trace.Tracer, perMigrationTimeout time.Duration) *Migrator {
 	return &Migrator{
 		Connection: c,
 		l:          l,
@@ -510,7 +509,7 @@ func (m *Migrator) wrapSpan(ctx context.Context, opName string, f func(ctx conte
 
 func (m *Migrator) startSpan(ctx context.Context, opName string) (trace.Span, context.Context) {
 	tracer := otel.Tracer(tracingComponent)
-	
+
 	if m.IsLoaded() {
 		tracer = m.Tracer()
 	}

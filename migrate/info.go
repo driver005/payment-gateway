@@ -1,11 +1,15 @@
 package migrate
 
 import (
+	"embed"
 	"fmt"
 	"sort"
 
 	"github.com/gobuffalo/pop/v6"
 )
+
+//go:embed migrations/*.sql
+var migrations embed.FS
 
 // Migration handles the data for a given database migration
 type Migration struct {

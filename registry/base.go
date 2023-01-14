@@ -4,9 +4,11 @@ import (
 	"context"
 
 	"github.com/driver005/gateway/database"
+	"github.com/driver005/gateway/driver"
 	"github.com/driver005/gateway/handler"
 	"github.com/driver005/gateway/logger"
 	"github.com/driver005/gateway/repository"
+	"github.com/driver005/gateway/service"
 
 	// "github.com/driver005/gateway/service"
 	"github.com/driver005/gateway/sql"
@@ -16,11 +18,11 @@ import (
 )
 
 type Base struct {
-	l  *logger.Logger
-	al *logger.Logger
-	h  *handler.Handler
-	// a  *admin.Handler
-	// s            *service.Handler
+	l            *logger.Logger
+	al           *logger.Logger
+	h            *handler.Handler
+	d            *driver.Handler
+	s            *service.Handler
 	buildVersion string
 	buildHash    string
 	buildDate    string
@@ -85,8 +87,7 @@ func (m *Base) AuditLogger() *logger.Logger {
 
 func (m *Base) RegisterRoutes(router *fiber.App) {
 	group := router.Group("/api")
-	m.Handler().NbxplorerRoutes(group)
-	m.Handler().BtcpayRoutes(group)
+	m.Handler().Routes(group)
 	// m.Admin().Routes(group)
 }
 
@@ -111,18 +112,50 @@ func (m *Base) Repository() repository.TransactionRepository {
 	return m.rp
 }
 
-// func (m *Base) Admin() *admin.Handler {
-// 	if m.a == nil {
-// 		m.a = admin.NewHandler(m.r)
-// 	}
-// 	return m.a
-// }
+func (m *Base) Driver() *driver.Handler {
+	if m.d == nil {
+		m.d = driver.NewHandler(m.r)
+	}
+	return m.d
+}
 
-// func (m *Base) Service() *service.Handler {
-// 	if m.s == nil {
-// 		m.s = service.NewHandler(m.r)
+func (m *Base) Service() *service.Handler {
+	if m.s == nil {
+		m.s = service.NewHandler()
+	}
+	return m.s
+}
+
+// func (m *Base) Applepay() *applepay.Merchant {
+// 	if m.applepay == nil {
+// 		certRoot := viper.GetString("apple.certs")
+// 		if certRoot == "" {
+// 			certRoot = path.Join(util.DirName(), "/../")
+// 		}
+
+// 		applepay.UnsafeSignatureVerification = true
+
+// 		ap, err := applepay.New(
+// 			viper.GetString("apple.merchant.id"),
+// 			applepay.MerchantDisplayName(viper.GetString("apple.merchant.name")),
+// 			applepay.MerchantDomainName(viper.GetString("apple.merchant.domain")),
+// 			applepay.MerchantCertificateLocation(
+// 				path.Join(certRoot, "/certs/cert-merchant.crt"),
+// 				path.Join(certRoot, "/certs/cert-merchant-key.pem"),
+// 			),
+// 			applepay.ProcessingCertificateLocation(
+// 				path.Join(certRoot, "/certs/cert-processing.crt"),
+// 				path.Join(certRoot, "/certs/cert-processing-key.pem"),
+// 			),
+// 		)
+
+// 		if err != nil {
+// 			m.Logger().Warn("Cannot find Apple Pay Certificates. Running API without Apple Pay authority.", err)
+// 		}
+
+// 		m.applepay = ap
 // 	}
-// 	return m.s
+// 	return m.applepay
 // }
 
 func (m *Base) Database() sql.Database {
@@ -130,5 +163,4 @@ func (m *Base) Database() sql.Database {
 }
 
 func (m *Base) Setup() {
-	m.r.ClientManager().GenerateDefaultShippingProfile(context.Background())
 }

@@ -9,15 +9,28 @@ import (
 
 type Model struct {
 	Id        uuid.UUID          `json:"id" database:"primarykey"`
+	Object    string             `json:"object"`
+	Livemode  bool               `json:"livemode"`
+	Metadata  JSONB              `json:"metadata" database:"default:null"`
 	CreatedAt time.Time          `json:"created_at,omitempty" db:"created_at"`
 	UpdatedAt time.Time          `json:"updated_at,omitempty" db:"updated_at"`
 	DeletedAt database.DeletedAt `json:"deleted_at,omitempty" db:"deleted_at"`
 }
 
-func (a *Model) BeforeCreate(tx *database.DB) (err error) {
-	a.Id, err = uuid.NewUUID()
+func (m *Model) BeforeCreate(tx *database.DB) (err error) {
+	m.Id, err = uuid.NewUUID()
+
+	m.CreatedAt = time.Now().UTC().Round(time.Second)
+	m.UpdatedAt = m.CreatedAt
+
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func (m *Model) BeforeUpdate(tx *database.DB) (err error) {
+	m.UpdatedAt = time.Now().UTC().Round(time.Second)
+
 	return nil
 }

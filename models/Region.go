@@ -18,7 +18,7 @@ type Region struct {
 	Currency *Currency `json:"currency" database:"foreignKey:code;references:currency_code"`
 
 	// The tax rate that should be charged on purchases in the Region.
-	TaxRate float32 `json:"tax_rate"`
+	TaxRate float64 `json:"tax_rate"`
 
 	// The tax rates that are included in the Region. Available if the relation `tax_rates` is expanded.
 	TaxRates []TaxRate `json:"tax_rates" database:"foreignKey:id"`
@@ -43,12 +43,6 @@ type Region struct {
 	// The Payment Providers that can be used to process Payments in the Region. Available if the relation `payment_providers` is expanded.
 	PaymentProviders []PaymentProvider `json:"payment_providers" database:"foreignKey:id"`
 
-	// The Fulfillment Providers that can be used to fulfill orders in the Region. Available if the relation `payment_providers` is expanded.
-	FulfillmentProviders []FulfillmentProvider `json:"fulfillment_providers" database:"foreignKey:id"`
-
 	// [EXPERIMENTAL] Does the prices for the region include tax
 	IncludesTax bool `json:"includes_tax" database:"default:null"`
-
-	// An optional key-value map with additional details
-	Metadata JSONB `json:"metadata" database:"default:null"`
 }

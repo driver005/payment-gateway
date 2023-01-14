@@ -6,10 +6,7 @@ import (
 
 // IsLoaded returns true if the tracer has been loaded.
 func (m *Migrator) IsLoaded() bool {
-	if m.tracer == nil || m.tracer == nil {
-		return false
-	}
-	return true
+	return m.tracer != nil
 }
 
 // Returns the wrapped tracer.

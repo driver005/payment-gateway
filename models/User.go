@@ -1,23 +1,17 @@
 package models
 
-import "github.com/driver005/gateway/core"
+import (
+	"time"
 
-// User - Represents a User who can manage store settings.
+	"github.com/google/uuid"
+)
+
 type User struct {
-	core.Model
-
-	// The email of the User
-	Email string `json:"email"`
-
-	// The first name of the User
-	FirstName string `json:"first_name" database:"default:null"`
-
-	// The last name of the User
-	LastName string `json:"last_name" database:"default:null"`
-
-	// An API token associated with the user.
-	ApiToken string `json:"api_token" database:"default:null"`
-
-	// An optional key-value map with additional details
-	Metadata JSONB `json:"metadata" database:"default:null"`
+	ID        uuid.UUID `json:"id" db:"id"`
+	CreatedAt time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt time.Time `json:"updated_at" db:"updated_at"`
+	Title     string    `json:"title" db:"title"`
+	FirstName string    `json:"first_name" db:"first_name"`
+	LastName  string    `json:"last_name" db:"last_name"`
+	Bio       string    `json:"bio" db:"bio"`
 }

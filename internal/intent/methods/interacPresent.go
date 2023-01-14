@@ -1,0 +1,6 @@
+package methods
+
+// PaymentIntentPaymentMethodOptionsInteracPresent struct for PaymentIntentPaymentMethodOptionsInteracPresent
+type PaymentIntentPaymentMethodOptionsInteracPresent struct {
+	PaymentIntentTypeSpecificPaymentMethodOptionsClient *PaymentIntentTypeSpecificPaymentMethodOptionsClient
+}

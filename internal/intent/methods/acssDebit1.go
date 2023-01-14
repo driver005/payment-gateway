@@ -1,0 +1,7 @@
+package methods
+
+// PaymentIntentPaymentMethodOptionsAcssDebit1 struct for PaymentIntentPaymentMethodOptionsAcssDebit1
+type PaymentIntentPaymentMethodOptionsAcssDebit1 struct {
+	PaymentIntentPaymentMethodOptionsAcssDebit          *PaymentIntentPaymentMethodOptionsAcssDebit
+	PaymentIntentTypeSpecificPaymentMethodOptionsClient *PaymentIntentTypeSpecificPaymentMethodOptionsClient
+}

@@ -429,7 +429,7 @@ Each of these functions takes a value of the given basic type and returns a poin
 * `PtrInt32`
 * `PtrInt64`
 * `PtrFloat`
-* `PtrFloat32`
+* `Ptrfloat64`
 * `PtrFloat64`
 * `PtrString`
 * `PtrTime`

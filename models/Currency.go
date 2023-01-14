@@ -1,8 +1,10 @@
 package models
 
+import "github.com/driver005/gateway/core"
+
 // Currency
 type Currency struct {
-	// core.Model
+	core.Model
 
 	// The 3 character ISO code for the currency.
 	Code string `json:"code" database:"primarykey"`

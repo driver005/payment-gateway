@@ -3,7 +3,7 @@ package handler
 import (
 	"strconv"
 
-	"github.com/driver005/gateway/crypto/nbxplorer"
+	"github.com/driver005/gateway/gateway/nbxplorer"
 	"github.com/driver005/gateway/helper"
 	"github.com/gofiber/fiber/v2"
 )

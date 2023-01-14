@@ -1,0 +1,6 @@
+package methods
+
+// PaymentIntentPaymentMethodOptionsBlik1 struct for PaymentIntentPaymentMethodOptionsBlik1
+type PaymentIntentPaymentMethodOptionsBlik1 struct {
+	PaymentIntentTypeSpecificPaymentMethodOptionsClient *PaymentIntentTypeSpecificPaymentMethodOptionsClient
+}

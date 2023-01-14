@@ -1,0 +1,7 @@
+package methods
+
+// PaymentIntentPaymentMethodOptionsSepaDebit1 struct for PaymentIntentPaymentMethodOptionsSepaDebit1
+type PaymentIntentPaymentMethodOptionsSepaDebit1 struct {
+	PaymentIntentPaymentMethodOptionsSepaDebit          *PaymentIntentPaymentMethodOptionsSepaDebit
+	PaymentIntentTypeSpecificPaymentMethodOptionsClient *PaymentIntentTypeSpecificPaymentMethodOptionsClient
+}

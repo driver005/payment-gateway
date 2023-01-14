@@ -3,7 +3,6 @@ package models
 import (
 	"regexp"
 
-	"github.com/driver005/database"
 	"github.com/driver005/gateway/core"
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
@@ -36,15 +35,7 @@ type Country struct {
 	Region Region `json:"region" database:"default:null"`
 }
 
-func (c *Country) BeforeCreate(tx *database.DB) (err error) {
-	c.Id, err = uuid.NewUUID()
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (c Country) Validate() error {
+func (c *Country) Validate() error {
 	return validation.ValidateStruct(&c,
 		validation.Field(&c.Id, validation.Required, is.UUID),
 		validation.Field(&c.DisplayName),

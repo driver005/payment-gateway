@@ -1,0 +1,1 @@
+openapi-generator-cli generate -i "https://raw.githubusercontent.com/stripe/openapi/master/openapi/spec3.json" -g go --legacy-discriminator-behavior --generate-alias-as-model --skip-validate-spec -o StripeAPI

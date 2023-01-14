@@ -1,0 +1,6 @@
+package next
+
+// PaymentIntentNextActionKonbiniStoresFamilymart FamilyMart instruction details.
+type PaymentIntentNextActionKonbiniStoresFamilymart struct {
+	PaymentIntentNextActionKonbiniFamilymart *PaymentIntentNextActionKonbiniFamilymart
+}

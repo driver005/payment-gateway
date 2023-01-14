@@ -45,9 +45,6 @@ type Address struct {
 	// Last name
 	LastName string `json:"last_name" database:"default:null"`
 
-	// An optional key-value map with additional details
-	Metadata JSONB `json:"metadata" database:"default:null"`
-
 	// Phone Number
 	Phone string `json:"phone" database:"default:null"`
 

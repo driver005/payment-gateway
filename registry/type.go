@@ -6,10 +6,12 @@ import (
 
 	"github.com/driver005/database"
 	db "github.com/driver005/gateway/database"
+	"github.com/driver005/gateway/driver"
 	"github.com/driver005/gateway/handler"
 	"github.com/driver005/gateway/helper"
 	"github.com/driver005/gateway/logger"
 	"github.com/driver005/gateway/repository"
+	"github.com/driver005/gateway/service"
 	"github.com/driver005/gateway/sql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/pkg/errors"
@@ -37,12 +39,15 @@ type Registry interface {
 
 	Init(ctx context.Context) error
 	WithLogger(l *logger.Logger) Registry
+	Logger() *logger.Logger
 	Handler() *handler.Handler
 	RegisterRoutes(router *fiber.App)
 	Setup()
 	ClientManager() *db.Handler
 	Repository() repository.TransactionRepository
-	// Service() *service.Handler
+	Service() *service.Handler
+	Driver() *driver.Handler
+	// Applepay() *applepay.Merchant
 
 	sql.Provider
 }

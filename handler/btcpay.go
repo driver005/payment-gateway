@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 
-	"github.com/driver005/gateway/crypto/btcpay"
+	"github.com/driver005/gateway/driver/wallet/btcpay"
 	"github.com/driver005/gateway/helper"
 	"github.com/gofiber/fiber/v2"
 )
