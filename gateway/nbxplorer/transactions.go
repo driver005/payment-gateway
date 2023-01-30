@@ -53,8 +53,8 @@ func (c *Client) GetTransaction(hash string, hex bool) (Transaction, error) {
 }
 
 type BroadcastedTransaction struct {
-	ID      string  `json:"transactionId"`
-	BlockID *string `json:"blockId,omitempty"`
+	ID      string `json:"transactionId"`
+	BlockID string `json:"blockId,omitempty"`
 }
 
 // BroadcastTransaction
@@ -75,8 +75,8 @@ func (c *Client) BroadcastTransaction(tx []byte, testOnly bool) error {
 
 // TransactionID struct
 type TransactionID struct {
-	ID      string  `json:"transactionId"`
-	BlockID *string `json:"blockId,omitempty"`
+	ID      string `json:"transactionId"`
+	BlockID string `json:"blockId,omitempty"`
 }
 
 // RescanTransactions will index previous txs.

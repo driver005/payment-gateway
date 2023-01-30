@@ -1,5 +1,7 @@
 package methods
 
-// PaymentMethodGrabpay
+import "github.com/driver005/gateway/core"
+
 type PaymentMethodGrabpay struct {
+	core.Model
 }

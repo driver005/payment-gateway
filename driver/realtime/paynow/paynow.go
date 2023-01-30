@@ -52,6 +52,10 @@ func NewMobile(mobile string) *Payee {
 	return pp
 }
 
+func (pp *Payee) Generate(amount float32, ref string, editable bool, expirySGT time.Time) string {
+	return pp.New(amount, ref, editable, expirySGT).String()
+}
+
 // New returns a new payment
 func (pp *Payee) New(amount float32, ref string, editable bool, expirySGT time.Time) payment {
 	var (

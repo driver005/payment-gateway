@@ -1,7 +1,9 @@
 package methods
 
-// PaymentMethodP24
+import "github.com/driver005/gateway/core"
+
 type PaymentMethodP24 struct {
-	// The customer's bank, if provided.
+	core.Model
+
 	Bank string `json:"bank,omitempty"`
 }

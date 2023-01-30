@@ -1,8 +1,13 @@
-package attempt
+package methods
 
-import "github.com/driver005/gateway/models"
+import (
+	"github.com/driver005/gateway/core"
+	"github.com/driver005/gateway/payment/method/details"
+)
 
 // SetupAttemptPaymentMethodDetailsCard
 type SetupAttemptPaymentMethodDetailsCard struct {
-	ThreeDSecure models.ThreeDSecureDetails `json:"three_d_secure,omitempty"`
+	core.Model
+
+	ThreeDSecure details.ThreeDSecureDetails `json:"three_d_secure,omitempty" database:"foreignKey:id"`
 }

@@ -7,8 +7,6 @@ import (
 const (
 	NbxplorerPath = "/nbxplorer"
 	BtcpayPath    = "/btcpay"
-	ApplePayPath  = "/applepay"
-	GooglePayPath = "/googlepay"
 )
 
 func (h *Handler) Routes(public fiber.Router) {

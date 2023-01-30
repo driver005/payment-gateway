@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsAuBecsDebit
 type PaymentMethodDetailsAuBecsDebit struct {
+	core.Model
+
 	// Bank-State-Branch number of the bank account.
 	BsbNumber string `json:"bsb_number,omitempty"`
 	// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.

@@ -1,9 +1,10 @@
 package methods
 
-// PaymentMethodLink
+import "github.com/driver005/gateway/core"
+
 type PaymentMethodLink struct {
-	// Account owner's email address.
-	Email string `json:"email,omitempty"`
-	// Token used for persistent Link logins.
+	core.Model
+
+	Email           string `json:"email,omitempty"`
 	PersistentToken string `json:"persistent_token,omitempty"`
 }

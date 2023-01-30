@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsSofort
 type PaymentMethodDetailsSofort struct {
+	core.Model
+
 	// Bank code of bank associated with the bank account.
 	BankCode string `json:"bank_code,omitempty"`
 	// Name of the bank associated with the bank account.
@@ -9,9 +13,7 @@ type PaymentMethodDetailsSofort struct {
 	// Bank Identifier Code of the bank associated with the bank account.
 	Bic string `json:"bic,omitempty"`
 	// Two-letter ISO code representing the country the bank account is located in.
-	Country                   string                                                  `json:"country,omitempty"`
-	GeneratedSepaDebit        PaymentMethodDetailsBancontactGeneratedSepaDebit        `json:"generated_sepa_debit,omitempty"`
-	GeneratedSepaDebitMandate PaymentMethodDetailsBancontactGeneratedSepaDebitMandate `json:"generated_sepa_debit_mandate,omitempty"`
+	Country string `json:"country,omitempty"`
 	// Last four characters of the IBAN.
 	IbanLast4 string `json:"iban_last4,omitempty"`
 	// Preferred language of the SOFORT authorization page that the customer is redirected to. Can be one of `de`, `en`, `es`, `fr`, `it`, `nl`, or `pl`

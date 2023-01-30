@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsAchDebit
 type PaymentMethodDetailsAchDebit struct {
+	core.Model
+
 	// Type of entity that holds the account. This can be either `individual` or `company`.
 	AccountHolderType string `json:"account_holder_type,omitempty"`
 	// Name of the bank associated with the bank account.

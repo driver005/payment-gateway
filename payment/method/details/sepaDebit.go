@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsSepaDebit
 type PaymentMethodDetailsSepaDebit struct {
+	core.Model
+
 	// Bank code of bank associated with the bank account.
 	BankCode string `json:"bank_code,omitempty"`
 	// Branch code of bank associated with the bank account.

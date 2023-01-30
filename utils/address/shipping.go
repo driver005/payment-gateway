@@ -1,8 +1,12 @@
 package address
 
+import "github.com/driver005/gateway/core"
+
 // Shipping
 type Shipping struct {
-	Address *Address `json:"address,omitempty"`
+	core.Model
+
+	Address *Address `json:"address,omitempty" database:"foreignKey:id"`
 	// The delivery service that shipped a physical product, such as Fedex, UPS, USPS, etc.
 	Carrier string `json:"carrier,omitempty"`
 	// Recipient name.

@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsBacsDebit
 type PaymentMethodDetailsBacsDebit struct {
+	core.Model
+
 	// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// Last four digits of the bank account number.

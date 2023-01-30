@@ -1,7 +1,11 @@
 package options
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodOptionsAfterpayClearpay
 type PaymentMethodOptionsAfterpayClearpay struct {
+	core.Model
+
 	// Controls when the funds will be captured from the customer's account.
 	CaptureMethod string `json:"capture_method,omitempty"`
 	// Order identifier shown to the customer in Afterpay’s online portal. We recommend using a value that helps you answer any questions a customer might have about the payment. The identifier is limited to 128 characters and may contain only letters, digits, underscores, backslashes and dashes.

@@ -160,8 +160,8 @@ type ItemInfo struct {
 	ItemName        string          `json:"itemName"`
 	Quantity        int64           `json:"quantity"`
 	Price           int64           `json:"price"`
-	Category        *string         `json:"category,omitempty"`
-	SupplierName    *string         `json:"supplierName,omitempty"`
+	Category        string          `json:"category,omitempty"`
+	SupplierName    string          `json:"supplierName,omitempty"`
 	ItemCategory    string          `json:"itemCategory,omitempty"`
 	URL             string          `json:"url,omitempty"`
 	ImageURL        string          `json:"imageURL,omitempty"`
@@ -182,7 +182,7 @@ type SupplierDetail struct {
 
 // LocationInfo defines the location where payment was initiated.
 type LocationInfo struct {
-	IPAddress *string  `json:"ipAddress,omitempty"`
+	IPAddress string   `json:"ipAddress,omitempty"`
 	Latitude  *float64 `json:"latitude,omitempty"`
 	Longitude *float64 `json:"longitude,omitempty"`
 	Accuracy  *float64 `json:"accuracy,omitempty"`
@@ -190,17 +190,17 @@ type LocationInfo struct {
 
 // DeviceInfo defines the device information used to initiate payment.
 type DeviceInfo struct {
-	DeviceID    string  `json:"deviceID,omitempty"`
-	DeviceModel *string `json:"deviceModel,omitempty"`
-	DeviceBrand *string `json:"deviceBrand,omitempty"`
-	IOSUDID     *string `json:"iosUDID,omitempty"` // required for IOS devices
-	IMEI        *string `json:"imei,omitempty"`    // required for Android devices
+	DeviceID    string `json:"deviceID,omitempty"`
+	DeviceModel string `json:"deviceModel,omitempty"`
+	DeviceBrand string `json:"deviceBrand,omitempty"`
+	IOSUDID     string `json:"iosUDID,omitempty"` // required for IOS devices
+	IMEI        string `json:"imei,omitempty"`    // required for Android devices
 }
 
 // SubMerchantContext defines the lowest level merchant which pax is transacting with
 type SubMerchantContext struct {
-	Name     *string `json:"name,omitempty"`
-	Category *string `json:"category,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Category string `json:"category,omitempty"`
 }
 
 // PartnerUserInfo is data user from partner

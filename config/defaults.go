@@ -4,7 +4,11 @@ import (
 	"github.com/spf13/viper"
 )
 
-func init() {
+func Init() {
+	//Stripe
+	// viper.SetDefault("stripe.secret_key", "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")
+	viper.SetDefault("stripe.secret_key", "sk_test_51MJoIJDuTp4RMkBZ7gkfWY0Un5XLA60A4cpkn86lARUhCuflEj2BIN0iD80J7mRwZCQodp0azQ4BC5Wd71nZxOEF00g9d402Tk")
+	viper.SetDefault("stripe.public_key", "pk_live_51MJoIJDuTp4RMkBZQ0AcBuEmHGbIjWqwHcwHDdDBPMLevQcUk8OQnXWjJthdwKsJKF8LrfApwaiv1MrcV4ShhAHk00ZbuZp49x")
 
 	// Logger Defaults
 	viper.SetDefault("logger.level", "debug")

@@ -1,7 +1,9 @@
 package methods
 
-// PaymentMethodSofort
+import "github.com/driver005/gateway/core"
+
 type PaymentMethodSofort struct {
-	// Two-letter ISO code representing the country the bank account is located in.
+	core.Model
+
 	Country string `json:"country,omitempty"`
 }

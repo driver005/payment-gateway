@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsAchCreditTransfer
 type PaymentMethodDetailsAchCreditTransfer struct {
+	core.Model
+
 	// Account number to transfer funds to.
 	AccountNumber string `json:"account_number,omitempty"`
 	// Name of the bank associated with the routing number.

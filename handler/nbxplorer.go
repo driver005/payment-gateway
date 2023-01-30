@@ -357,7 +357,7 @@ func (n *Nbxplorer) CreatePSBT(context *fiber.Ctx) error {
 
 type updatePSBT struct {
 	psbt                        string
-	derivationScheme            *string
+	derivationScheme            string
 	rebaseKeyPaths              []nbxplorer.KeyPath
 	alwaysIncludeNonWitnessUTXO bool
 }

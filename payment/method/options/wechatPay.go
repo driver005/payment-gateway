@@ -1,7 +1,11 @@
 package options
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodOptionsWechatPay
 type PaymentMethodOptionsWechatPay struct {
+	core.Model
+
 	// The app ID registered with WeChat Pay. Only required when client is ios or android.
 	AppId string `json:"app_id,omitempty"`
 	// The client type that the end customer will pay from

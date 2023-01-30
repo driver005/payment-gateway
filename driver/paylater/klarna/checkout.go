@@ -203,7 +203,7 @@ func (srv *checkoutSrv) CreateNewOrder(o *CheckoutOrder) (*Response, error) {
 	if nil != err {
 		return nil, err
 	}
-	
+
 	if err := json.NewDecoder(res.Body).Decode(&m); err != nil {
 		return nil, err
 	}

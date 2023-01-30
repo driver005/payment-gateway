@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsInteracPresent
 type PaymentMethodDetailsInteracPresent struct {
+	core.Model
+
 	// Card brand. Can be `interac`, `mastercard` or `visa`.
 	Brand string `json:"brand,omitempty"`
 	// The cardholder name as read from the card, in [ISO 7813](https://en.wikipedia.org/wiki/ISO/IEC_7813) format. May include alphanumeric characters, special characters and first/last name separator (`/`). In some cases, the cardholder name may not be available depending on how the issuer has configured the card. Cardholder name is typically not available on swipe or contactless payments, such as those made with Apple Pay and Google Pay.
@@ -11,9 +15,9 @@ type PaymentMethodDetailsInteracPresent struct {
 	// Authorization response cryptogram.
 	EmvAuthData string `json:"emv_auth_data,omitempty"`
 	// Two-digit number representing the card's expiration month.
-	ExpMonth int `json:"exp_month"`
+	ExpMonth int `json:"exp_month,omitempty"`
 	// Four-digit number representing the card's expiration year.
-	ExpYear int `json:"exp_year"`
+	ExpYear int `json:"exp_year,omitempty"`
 	// Uniquely identifies this particular card number. You can use this attribute to check whether two customers who’ve signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.  *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
@@ -25,8 +29,8 @@ type PaymentMethodDetailsInteracPresent struct {
 	// Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
 	Network string `json:"network,omitempty"`
 	// EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
-	PreferredLocales []string `json:"preferred_locales,omitempty"`
+	PreferredLocales []string `json:"preferred_locales,omitempty" database:"type:text[]"`
 	// How card details were read in this transaction.
-	ReadMethod string                                     `json:"read_method,omitempty"`
-	Receipt    PaymentMethodDetailsInteracPresentReceipt1 `json:"receipt,omitempty"`
+	ReadMethod string                                    `json:"read_method,omitempty"`
+	Receipt    PaymentMethodDetailsInteracPresentReceipt `json:"receipt,omitempty" database:"foreignKey:id"`
 }

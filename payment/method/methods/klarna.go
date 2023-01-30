@@ -1,6 +1,11 @@
 package methods
 
-// PaymentMethodKlarna
+import "github.com/driver005/gateway/core"
+
 type PaymentMethodKlarna struct {
-	Dob PaymentMethodKlarnaDob `json:"dob,omitempty"`
+	core.Model
+
+	Day   int `json:"day,omitempty"`
+	Month int `json:"month,omitempty"`
+	Year  int `json:"year,omitempty"`
 }

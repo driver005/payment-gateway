@@ -24,8 +24,8 @@ func (c *Client) GetDerivationSchemeTransaction(derivationScheme string, txid st
 // DerivationOptions struct
 type DerivationOptions struct {
 	Feature      Feature `json:"feature"`
-	MinAddresses *int    `json:"minAddresses"`
-	MaxAddresses *int    `json:"maxAddresses"`
+	MinAddresses int     `json:"minAddresses"`
+	MaxAddresses int     `json:"maxAddresses"`
 }
 
 // TrackDerivationSchemeOptions struct

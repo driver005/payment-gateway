@@ -1,8 +1,8 @@
 package boleto
 
 import (
-	"time"
 	"fmt"
+	"time"
 )
 
 func init() {
@@ -13,10 +13,10 @@ func BilletBB() {
 
 	// static data, you should keep this configured in somewhere
 	var bank Bank = BB{
-		Account:            88888888,
-		Agency:             4444,
-		Carteira:           55,
-		Convenio:           4321,
+		Account:  88888888,
+		Agency:   4444,
+		Carteira: 55,
+		Convenio: 4321,
 		Company: Company{
 			Name:      "Nome da empresa",
 			LegalName: "Razao social",
@@ -51,7 +51,7 @@ func BilletBB() {
 	// Optional, to use in your backend,
 	// then you can save the barcode digitable number, or save the image separately
 	var barcode Barcode = bank.Barcode(document)
-	fmt.Println(barcode.toString())
+	fmt.Println(barcode.ToString())
 	fmt.Println(barcode.Digitable())
 
 }

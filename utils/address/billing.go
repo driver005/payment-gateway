@@ -1,8 +1,12 @@
 package address
 
+import "github.com/driver005/gateway/core"
+
 // BillingDetails
 type BillingDetails struct {
-	Address Address `json:"address,omitempty"`
+	core.Model
+
+	Address *Address `json:"address,omitempty" database:"foreignKey:id"`
 	// Email address.
 	Email string `json:"email,omitempty"`
 	// Full name.

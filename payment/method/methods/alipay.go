@@ -1,5 +1,7 @@
 package methods
 
-// PaymentFlowsPrivatePaymentMethodsAlipay
+import "github.com/driver005/gateway/core"
+
 type PaymentMethodAlipay struct {
+	core.Model
 }

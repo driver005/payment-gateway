@@ -20,28 +20,26 @@ type (
 		UseVcn                    bool   `json:"use_vcn"`
 	}
 
+	Address struct {
+		City    string `json:"city"`
+		Country string `json:"country"`
+		Line1   string `json:"line1"`
+		Line2   string `json:"line2,omitempty"`
+		State   string `json:"state"`
+		Zipcode string `json:"zipcode"`
+	}
+
 	Billing struct {
-		Name struct {
-			First string `json:"first"`
-			Full  string `json:"full"`
-			Last  string `json:"last"`
-		} `json:"name"`
-		Address struct {
-			City    string `json:"city"`
-			Country string `json:"country"`
-			Line1   string `json:"line1"`
-			Line2   string `json:"line2"`
-			State   string `json:"state"`
-			Zipcode string `json:"zipcode"`
-		} `json:"address"`
-		PhoneNumber string `json:"phone_number"`
-		Email       string `json:"email"`
+		Name        Name    `json:"name,omitempty"`
+		Address     Address `json:"address"`
+		PhoneNumber string  `json:"phone_number"`
+		Email       string  `json:"email"`
 	}
 
 	Name struct {
-		Full  string `json:"full"`
-		First string `json:"first"`
-		Last  string `json:"last"`
+		Full  string `json:"full,omitempty"`
+		First string `json:"first,omitempty"`
+		Last  string `json:"last,omitempty"`
 	}
 
 	Shipping struct {
@@ -49,7 +47,7 @@ type (
 	}
 
 	DirectCheckout struct {
-		Merchant  Merchant `json:"merchant"`
+		Merchant  Merchant `json:"merchant,omitempty"`
 		Billing   Billing  `json:"billing"`
 		Total     int      `json:"total"`
 		OrderId   string   `json:"order_id"`

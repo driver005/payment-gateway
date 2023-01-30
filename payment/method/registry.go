@@ -4,9 +4,7 @@ import (
 	"context"
 
 	"github.com/driver005/database"
-	db "github.com/driver005/gateway/database"
-	"github.com/driver005/gateway/logger"
-	"github.com/driver005/gateway/service"
+	"github.com/driver005/gateway/internal/customer"
 )
 
 type Handler struct {
@@ -15,13 +13,15 @@ type Handler struct {
 
 type Registry interface {
 	Manager(ctx context.Context) *database.DB
-	ClientManager() *db.Handler
-	Service() *service.Handler
-	Logger() *logger.Logger
+	Context() *database.DB
+	Migrate() bool
+	Customer() *customer.Handler
 }
 
-func NewHandler(r Registry, host string) *Handler {
-	return &Handler{
-		r: r,
+func NewHandler(r Registry) *Handler {
+	h := Handler{r: r}
+	if h.r.Migrate() {
+		h.Migrate()
 	}
+	return &h
 }

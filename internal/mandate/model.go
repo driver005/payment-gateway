@@ -1,18 +1,20 @@
 package mandate
 
 import (
+	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/internal/mandate/methods"
 	"github.com/driver005/gateway/payment/method"
+	"github.com/google/uuid"
 )
 
 type Mandate struct {
-	Id string `json:"id"`
-	Livemode bool `json:"livemode"`
-	MultiUse map[string]interface{} `json:"multi_use,omitempty"`
-	Object               string                      `json:"object"`
-	PaymentMethod        *method.PaymentMethod        `json:"payment_method"`
-	PaymentMethodDetails *methods.MandatePaymentMethodDetails `json:"payment_method_details"`
-	SingleUse            *methods.MandateSingleUse           `json:"single_use,omitempty"`
-	Status string `json:"status"`
-	Type string `json:"type"`
+	core.Model
+
+	PaymentMethodDetails *methods.MandatePaymentMethodDetails `json:"payment_method_details,omitempty" database:"foreignKey:id"`
+	SingleUse            *methods.MandateSingleUse            `json:"single_use,omitempty" database:"foreignKey:id"`
+	Status               string                               `json:"status,omitempty"`
+	Type                 string                               `json:"type,omitempty"`
+
+	PaymentMethodId uuid.UUID             `json:"payment_method_id" database:"default:null"`
+	PaymentMethod   *method.PaymentMethod `json:"payment_method,omitempty" database:"foreignKey:payment_method_id"`
 }

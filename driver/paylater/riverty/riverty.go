@@ -22,42 +22,42 @@ type (
 	}
 
 	RiskData struct {
-		ExistingCustomer               bool    `json:"existingCustomer,omitempty"`
-		VerifiedCustomerIdentification bool    `json:"verifiedCustomerIdentification,omitempty"`
-		MarketingOptIn                 bool    `json:"marketingOptIn,omitempty"`
-		CustomerSince                  string  `json:"customerSince,omitempty"`
-		CustomerClassification         string  `json:"customerClassification,omitempty"`
-		AcquisitionChannel             string  `json:"acquisitionChannel,omitempty"`
-		HasCustomerCard                bool    `json:"hasCustomerCard,omitempty"`
-		CustomerCardSince              string  `json:"customerCardSince,omitempty"`
-		CustomerCardClassification     string  `json:"customerCardClassification,omitempty"`
-		ProfileTrackingID              string  `json:"profileTrackingId,omitempty"`
-		IPAddress                      string  `json:"ipAddress"`
-		NumberOfTransactions           int     `json:"numberOfTransactions,omitempty"`
-		CustomerIndividualScore        string  `json:"customerIndividualScore,omitempty"`
-		UserAgent                      string  `json:"userAgent,omitempty"`
-		AmountOfTransactions           float64 `json:"amountOfTransactions,omitempty"`
-		OtherPaymentMethods            bool    `json:"otherPaymentMethods,omitempty"`
+		ExistingCustomer               bool   `json:"existingCustomer,omitempty"`
+		VerifiedCustomerIdentification bool   `json:"verifiedCustomerIdentification,omitempty"`
+		MarketingOptIn                 bool   `json:"marketingOptIn,omitempty"`
+		CustomerSince                  string `json:"customerSince,omitempty"`
+		CustomerClassification         string `json:"customerClassification,omitempty"`
+		AcquisitionChannel             string `json:"acquisitionChannel,omitempty"`
+		HasCustomerCard                bool   `json:"hasCustomerCard,omitempty"`
+		CustomerCardSince              string `json:"customerCardSince,omitempty"`
+		CustomerCardClassification     string `json:"customerCardClassification,omitempty"`
+		ProfileTrackingID              string `json:"profileTrackingId,omitempty"`
+		IPAddress                      string `json:"ipAddress"`
+		NumberOfTransactions           int    `json:"numberOfTransactions,omitempty"`
+		CustomerIndividualScore        string `json:"customerIndividualScore,omitempty"`
+		UserAgent                      string `json:"userAgent,omitempty"`
+		AmountOfTransactions           int    `json:"amountOfTransactions,omitempty"`
+		OtherPaymentMethods            bool   `json:"otherPaymentMethods,omitempty"`
 	}
 
 	Items struct {
-		ProductID             string  `json:"productId"`
-		GroupID               string  `json:"groupId,omitempty"`
-		Description           string  `json:"description"`
-		Type                  string  `json:"type,omitempty"`
-		NetUnitPrice          float64 `json:"netUnitPrice"`
-		GrossUnitPrice        float64 `json:"grossUnitPrice"`
-		Quantity              float64 `json:"quantity"`
-		VatPercent            float64 `json:"vatPercent"`
-		VatAmount             float64 `json:"vatAmount"`
-		VatCategory           string  `json:"vatCategory"`
-		ImageURL              string  `json:"imageUrl,omitempty"`
-		ProductURL            string  `json:"productUrl,omitempty"`
-		MarketPlaceSellerID   string  `json:"marketPlaceSellerId,omitempty"`
-		AdditionalInformation string  `json:"additionalInformation,omitempty"`
-		Specification         string  `json:"specification,omitempty"`
-		ServiceStart          string  `json:"serviceStart,omitempty"`
-		ServiceEnd            string  `json:"serviceEnd,omitempty"`
+		ProductID             string `json:"productId"`
+		GroupID               string `json:"groupId,omitempty"`
+		Description           string `json:"description"`
+		Type                  string `json:"type,omitempty"`
+		NetUnitPrice          int    `json:"netUnitPrice"`
+		GrossUnitPrice        int    `json:"grossUnitPrice"`
+		Quantity              int    `json:"quantity"`
+		VatPercent            int    `json:"vatPercent"`
+		VatAmount             int    `json:"vatAmount"`
+		VatCategory           string `json:"vatCategory"`
+		ImageURL              string `json:"imageUrl,omitempty"`
+		ProductURL            string `json:"productUrl,omitempty"`
+		MarketPlaceSellerID   string `json:"marketPlaceSellerId,omitempty"`
+		AdditionalInformation string `json:"additionalInformation,omitempty"`
+		Specification         string `json:"specification,omitempty"`
+		ServiceStart          string `json:"serviceStart,omitempty"`
+		ServiceEnd            string `json:"serviceEnd,omitempty"`
 	}
 
 	Payment struct {
@@ -84,9 +84,9 @@ type (
 			InvoiceDate string `json:"invoiceDate,omitempty"`
 		} `json:"consolidatedInvoice,omitempty"`
 		Installment struct {
-			ProfileNo            int     `json:"profileNo,omitempty"`
-			NumberOfInstallments int     `json:"numberOfInstallments,omitempty"`
-			CustomerInterestRate float64 `json:"customerInterestRate,omitempty"`
+			ProfileNo            int `json:"profileNo,omitempty"`
+			NumberOfInstallments int `json:"numberOfInstallments,omitempty"`
+			CustomerInterestRate int `json:"customerInterestRate,omitempty"`
 		} `json:"installment,omitempty"`
 		// PayinX string `json:"payinX,omitempty"`
 	}
@@ -113,8 +113,8 @@ type (
 
 	Order struct {
 		Number           string  `json:"number,omitempty"`
-		TotalNetAmount   float64 `json:"totalNetAmount"`
-		TotalGrossAmount float64 `json:"totalGrossAmount"`
+		TotalNetAmount   int     `json:"totalNetAmount"`
+		TotalGrossAmount int     `json:"totalGrossAmount"`
 		Currency         string  `json:"currency"`
 		MerchantImageURL string  `json:"merchantImageUrl,omitempty"`
 		Items            []Items `json:"items"`

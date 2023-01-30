@@ -33,7 +33,7 @@ type PaymentIntent struct {
 	// NextAction           interface{} `json:"next_action"`
 	PaymentMethod *PaymentMethod `json:"payment_method" database:"foreignKey:id"`
 	// PaymentMethodOptions struct{}    `json:"payment_method_options"`
-	PaymentMethodTypes []string    `json:"payment_method_types"`
+	PaymentMethodTypes []string    `json:"payment_method_types" database:"type:text[]"`
 	Processing         interface{} `json:"processing"`
 	ReceiptEmail       string      `json:"receipt_email"`
 	// Redaction                 interface{} `json:"redaction"`

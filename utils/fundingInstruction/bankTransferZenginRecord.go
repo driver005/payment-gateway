@@ -1,7 +1,10 @@
 package fundingInstruction
 
+import "github.com/driver005/gateway/core"
+
 // FundingInstructionsBankTransferZenginRecord Zengin Records contain Japan bank account details per the Zengin format.
 type FundingInstructionsBankTransferZenginRecord struct {
+	core.Model
 	// The account holder name
 	AccountHolderName string `json:"account_holder_name,omitempty"`
 	// The account number

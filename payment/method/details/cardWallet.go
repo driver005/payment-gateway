@@ -1,19 +1,28 @@
 package details
 
-// PaymentMethodDetailsCardWallet
+import (
+	"github.com/driver005/gateway/core"
+	"github.com/driver005/gateway/utils/address"
+)
+
+type PaymentMethodCardWalletDetails struct {
+	core.Model
+
+	BillingAddress  *address.Address `json:"billing_address,omitempty" database:"foreignKey:id"`
+	Email           string           `json:"email,omitempty"`
+	Name            string           `json:"name,omitempty"`
+	ShippingAddress *address.Address `json:"shipping_address,omitempty" database:"foreignKey:id"`
+}
+
 type PaymentMethodDetailsCardWallet struct {
-	//
-	AmexExpressCheckout map[string]interface{} `json:"amex_express_checkout,omitempty"`
-	//
-	ApplePay map[string]interface{} `json:"apple_pay,omitempty"`
-	// (For tokenized numbers only.) The last four digits of the device account number.
-	DynamicLast4 string `json:"dynamic_last4,omitempty"`
-	//
-	GooglePay  map[string]interface{}                    `json:"google_pay,omitempty"`
-	Masterpass *PaymentMethodDetailsCardWalletMasterpass `json:"masterpass,omitempty"`
-	//
-	SamsungPay map[string]interface{} `json:"samsung_pay,omitempty"`
-	// The type of the card wallet, one of `amex_express_checkout`, `apple_pay`, `google_pay`, `masterpass`, `samsung_pay`, or `visa_checkout`. An additional hash is included on the Wallet subhash with a name matching this value. It contains additional information specific to the card wallet type.
-	Type         string                                      `json:"type"`
-	VisaCheckout *PaymentMethodDetailsCardWalletVisaCheckout `json:"visa_checkout,omitempty"`
+	core.Model
+
+	AmexExpressCheckout *PaymentMethodCardWalletDetails `json:"amex_express_checkout,omitempty" database:"foreignKey:id"`
+	ApplePay            *PaymentMethodCardWalletDetails `json:"apple_pay,omitempty" database:"foreignKey:id"`
+	DynamicLast4        string                          `json:"dynamic_last4,omitempty"`
+	GooglePay           *PaymentMethodCardWalletDetails `json:"google_pay,omitempty" database:"foreignKey:id"`
+	Masterpass          *PaymentMethodCardWalletDetails `json:"masterpass,omitempty" database:"foreignKey:id"`
+	SamsungPay          *PaymentMethodCardWalletDetails `json:"samsung_pay,omitempty" database:"foreignKey:id"`
+	Type                string                          `json:"type,omitempty"`
+	VisaCheckout        *PaymentMethodCardWalletDetails `json:"visa_checkout,omitempty" database:"foreignKey:id"`
 }

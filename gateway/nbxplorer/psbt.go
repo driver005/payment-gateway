@@ -77,7 +77,7 @@ func (c *Client) CreatePSBT(derivationScheme string, psbt PSBT) (CreatePSBTRespo
 }
 
 // UpdatePSBT
-func (c *Client) UpdatePSBT(psbt string, derivationScheme *string, rebaseKeyPaths []KeyPath, alwaysIncludeNonWitnessUTXO bool) (string, error) {
+func (c *Client) UpdatePSBT(psbt string, derivationScheme string, rebaseKeyPaths []KeyPath, alwaysIncludeNonWitnessUTXO bool) (string, error) {
 	var r ErrorResponse
 	var response map[string]interface{}
 	resp, err := c.httpClient.R().

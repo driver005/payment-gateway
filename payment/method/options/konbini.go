@@ -1,7 +1,11 @@
 package options
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodOptionsKonbini
 type PaymentMethodOptionsKonbini struct {
+	core.Model
+
 	// An optional 10 to 11 digit numeric-only string determining the confirmation code at applicable convenience stores.
 	ConfirmationNumber string `json:"confirmation_number,omitempty"`
 	// The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and `expires_after_days` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST.

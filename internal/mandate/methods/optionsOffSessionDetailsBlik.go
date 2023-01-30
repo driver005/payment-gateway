@@ -1,7 +1,11 @@
 package methods
 
+import "github.com/driver005/gateway/core"
+
 // MandateOptionsOffSessionDetailsBlik
 type MandateOptionsOffSessionDetailsBlik struct {
+	core.Model
+
 	// Amount of each recurring payment.
 	Amount int `json:"amount,omitempty"`
 	// Currency of each recurring payment.

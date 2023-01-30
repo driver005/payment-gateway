@@ -1,7 +1,9 @@
 package methods
 
-// PaymentMethodBoleto
+import "github.com/driver005/gateway/core"
+
 type PaymentMethodBoleto struct {
-	// Uniquely identifies the customer tax id (CNPJ or CPF)
-	TaxId string `json:"tax_id"`
+	core.Model
+
+	TaxId string `json:"tax_id,omitempty"`
 }

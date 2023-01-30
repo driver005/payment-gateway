@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsAcssDebit
 type PaymentMethodDetailsAcssDebit struct {
+	core.Model
+
 	// Name of the bank associated with the bank account.
 	BankName string `json:"bank_name,omitempty"`
 	// Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.

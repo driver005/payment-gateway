@@ -1,7 +1,11 @@
 package options
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodOptionsKlarna
 type PaymentMethodOptionsKlarna struct {
+	core.Model
+
 	// Controls when the funds will be captured from the customer's account.
 	CaptureMethod string `json:"capture_method,omitempty"`
 	// Preferred locale of the Klarna checkout page that the customer is redirected to.

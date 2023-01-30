@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsGiropay
 type PaymentMethodDetailsGiropay struct {
+	core.Model
+
 	// Bank code of bank associated with the bank account.
 	BankCode string `json:"bank_code,omitempty"`
 	// Name of the bank associated with the bank account.

@@ -1,5 +1,7 @@
 package methods
 
-// PaymentMethodWechatPay
+import "github.com/driver005/gateway/core"
+
 type PaymentMethodWechatPay struct {
+	core.Model
 }

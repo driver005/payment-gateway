@@ -1,7 +1,11 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsUsBankAccount
 type PaymentMethodDetailsUsBankAccount struct {
+	core.Model
+
 	// Account holder type: individual or company.
 	AccountHolderType string `json:"account_holder_type,omitempty"`
 	// Account type: checkings or savings. Defaults to checking if omitted.

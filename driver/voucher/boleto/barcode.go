@@ -2,10 +2,10 @@ package boleto
 
 import (
 	"fmt"
+	"strconv"
+
 	barcodeImage "github.com/boombuler/barcode"
 	"github.com/boombuler/barcode/twooffive"
-	"image"
-	"strconv"
 )
 
 const (
@@ -26,9 +26,9 @@ const (
 // @Image Return a image, using a BarcodeNumber
 // @Digitable Get the barcode digitable, it may contain dots and spaces
 type Barcode interface {
-	Image() image.Image
+	Image() barcodeImage.Barcode
 	Digitable() string
-	toString() string
+	ToString() string
 	verification()
 }
 
@@ -50,8 +50,21 @@ type BarcodeNumber struct {
 }
 
 // Image return a image.Image, using a BarcodeNumber
-func (n BarcodeNumber) Image() image.Image {
-	e, _ := twooffive.Encode(n.toString(), true)
+func GenrateBarcode(value string) (barcodeImage.Barcode, error) {
+	e, err := twooffive.Encode(value, true)
+	if err != nil {
+		return nil, err
+	}
+	img, err := barcodeImage.Scale(e, 410, 50)
+	if err != nil {
+		return nil, err
+	}
+	return img, nil
+}
+
+// Image return a image.Image, using a BarcodeNumber
+func (n BarcodeNumber) Image() barcodeImage.Barcode {
+	e, _ := twooffive.Encode(n.ToString(), true)
 	img, _ := barcodeImage.Scale(e, 410, 50)
 	return img
 }
@@ -81,7 +94,7 @@ func (n BarcodeNumber) Image() image.Image {
 //
 // return AAABC.CCCCX DDDDD.DDDDDX EEEEE.EEEEEX X UUUUVVVVVVVVVV
 func (n BarcodeNumber) Digitable() string {
-	s := n.toString()
+	s := n.ToString()
 
 	// Field 1
 	var f1 = fmt.Sprintf("%0"+strconv.Itoa(bankMinSize)+"d", n.BankId)
@@ -111,13 +124,13 @@ func (n BarcodeNumber) Digitable() string {
 
 // verification returns the BarcodeNumber verification number using module11
 func (n *BarcodeNumber) verification() {
-	s := n.toString()
+	s := n.ToString()
 	n.Dv = module11(s)
 }
 
-// toString takes BarcodeNumber, and converts to a string,
+// ToString takes BarcodeNumber, and converts to a string,
 // including pad numbers and left zeros
-func (n *BarcodeNumber) toString() string {
+func (n *BarcodeNumber) ToString() string {
 	var s = fmt.Sprintf("%0"+strconv.Itoa(bankMinSize)+"d", n.BankId)
 	s += strconv.Itoa(n.CurrencyId)
 	s += strconv.Itoa(n.Dv)

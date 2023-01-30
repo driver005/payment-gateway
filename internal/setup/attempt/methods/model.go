@@ -1,19 +1,25 @@
-package attempt
+package methods
+
+import (
+	"github.com/driver005/gateway/core"
+)
 
 type SetupAttemptPaymentMethodDetails struct {
-	AcssDebit     map[string]interface{}                       `json:"acss_debit,omitempty"`
-	AuBecsDebit   map[string]interface{}                       `json:"au_becs_debit,omitempty"`
-	BacsDebit     map[string]interface{}                       `json:"bacs_debit,omitempty"`
-	Bancontact    *SetupAttemptPaymentMethodDetailsBancontact  `json:"bancontact,omitempty"`
-	Blik          map[string]interface{}                       `json:"blik,omitempty"`
-	Boleto        map[string]interface{}                       `json:"boleto,omitempty"`
-	Card          *SetupAttemptPaymentMethodDetailsCard        `json:"card,omitempty"`
-	CardPresent   *SetupAttemptPaymentMethodDetailsCardPresent `json:"card_present,omitempty"`
-	Ideal         *SetupAttemptPaymentMethodDetailsIdeal       `json:"ideal,omitempty"`
-	Klarna        map[string]interface{}                       `json:"klarna,omitempty"`
-	Link          map[string]interface{}                       `json:"link,omitempty"`
-	SepaDebit     map[string]interface{}                       `json:"sepa_debit,omitempty"`
-	Sofort        *SetupAttemptPaymentMethodDetailsSofort      `json:"sofort,omitempty"`
-	Type          string                                       `json:"type"`
-	UsBankAccount map[string]interface{}                       `json:"us_bank_account,omitempty"`
+	core.Model
+
+	AcssDebit     core.JSONB                                   `json:"acss_debit,omitempty"`
+	AuBecsDebit   core.JSONB                                   `json:"au_becs_debit,omitempty"`
+	BacsDebit     core.JSONB                                   `json:"bacs_debit,omitempty"`
+	Bancontact    *SetupAttemptPaymentMethodDetailsBancontact  `json:"bancontact,omitempty" database:"foreignKey:id"`
+	Blik          core.JSONB                                   `json:"blik,omitempty"`
+	Boleto        core.JSONB                                   `json:"boleto,omitempty"`
+	Card          *SetupAttemptPaymentMethodDetailsCard        `json:"card,omitempty" database:"foreignKey:id"`
+	CardPresent   *SetupAttemptPaymentMethodDetailsCardPresent `json:"card_present,omitempty" database:"foreignKey:id"`
+	Ideal         *SetupAttemptPaymentMethodDetailsIdeal       `json:"ideal,omitempty" database:"foreignKey:id"`
+	Klarna        core.JSONB                                   `json:"klarna,omitempty"`
+	Link          core.JSONB                                   `json:"link,omitempty"`
+	SepaDebit     core.JSONB                                   `json:"sepa_debit,omitempty"`
+	Sofort        *SetupAttemptPaymentMethodDetailsSofort      `json:"sofort,omitempty" database:"foreignKey:id"`
+	Type          string                                       `json:"type,omitempty"`
+	UsBankAccount core.JSONB                                   `json:"us_bank_account,omitempty"`
 }

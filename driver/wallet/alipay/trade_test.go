@@ -32,7 +32,7 @@ func TestClient_TradePagePay(t *testing.T) {
 	p.TotalAmount = "10.00"
 	p.ProductCode = "FAST_INSTANT_TRADE_PAY"
 
-	p.GoodsDetail = []*alipay.GoodsDetail{&alipay.GoodsDetail{
+	p.GoodsDetail = []*alipay.GoodsDetail{{
 		GoodsId:   "123",
 		GoodsName: "xxx",
 		Quantity:  1,

@@ -1,6 +1,9 @@
 package invoices
 
+import "github.com/driver005/gateway/core"
+
 // InvoicesLineItemsProrationDetails
 type InvoicesLineItemsProrationDetails struct {
-	CreditedItems InvoicesLineItemsProrationDetailsCreditedItems `json:"credited_items,omitempty"`
+	core.Model
+	CreditedItems *InvoicesLineItemsCreditedItems `json:"credited_items,omitempty" database:"foreignKey:id"`
 }

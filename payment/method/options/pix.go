@@ -1,7 +1,11 @@
 package options
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodOptionsPix
 type PaymentMethodOptionsPix struct {
+	core.Model
+
 	// The number of seconds (between 10 and 1209600) after which Pix payment will expire.
 	ExpiresAfterSeconds int `json:"expires_after_seconds,omitempty"`
 	// The timestamp at which the Pix expires.

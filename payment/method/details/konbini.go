@@ -1,6 +1,10 @@
 package details
 
+import "github.com/driver005/gateway/core"
+
 // PaymentMethodDetailsKonbini
 type PaymentMethodDetailsKonbini struct {
-	Store PaymentMethodDetailsKonbiniStore1 `json:"store,omitempty"`
+	core.Model
+
+	StoreChain string `json:"store_chain,omitempty"`
 }

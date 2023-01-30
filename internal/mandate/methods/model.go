@@ -1,13 +1,19 @@
 package methods
 
+import (
+	"github.com/driver005/gateway/core"
+)
+
 type MandatePaymentMethodDetails struct {
-	AcssDebit   *MandateAcssDebit   `json:"acss_debit,omitempty"`
-	AuBecsDebit *MandateAuBecsDebit `json:"au_becs_debit,omitempty"`
-	BacsDebit   *MandateBacsDebit   `json:"bacs_debit,omitempty"`
-	Blik        *MandateBlik        `json:"blik,omitempty"`
-	Card *MandateCard `json:"card,omitempty"`
-	Link      *MandateLink `json:"link,omitempty"`
-	SepaDebit *MandateSepaDebit      `json:"sepa_debit,omitempty"`
-	UsBankAccount *MandateUsBankAccount `json:"us_bank_account,omitempty"`
-	Type string `json:"type"`
+	core.Model
+
+	AcssDebit     *MandateAcssDebit     `json:"acss_debit,omitempty" database:"foreignKey:id"`
+	AuBecsDebit   *MandateAuBecsDebit   `json:"au_becs_debit,omitempty" database:"foreignKey:id"`
+	BacsDebit     *MandateBacsDebit     `json:"bacs_debit,omitempty" database:"foreignKey:id"`
+	Blik          *MandateBlik          `json:"blik,omitempty" database:"foreignKey:id"`
+	Card          *MandateCard          `json:"card,omitempty" database:"foreignKey:id"`
+	Link          *MandateLink          `json:"link,omitempty" database:"foreignKey:id"`
+	SepaDebit     *MandateSepaDebit     `json:"sepa_debit,omitempty" database:"foreignKey:id"`
+	UsBankAccount *MandateUsBankAccount `json:"us_bank_account,omitempty" database:"foreignKey:id"`
+	Type          string                `json:"type,omitempty"`
 }
