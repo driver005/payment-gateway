@@ -11,12 +11,13 @@ import (
 type Discount struct {
 	core.Model
 
+	Amount          int            `json:"amount,omitempty"`
 	CheckoutSession string         `json:"checkout_session,omitempty"`
 	Coupon          *coupon.Coupon `json:"coupon"`
 	End             int            `json:"end,omitempty"`
 	Invoice         string         `json:"invoice,omitempty"`
 	InvoiceItem     string         `json:"invoice_item,omitempty"`
-	Start           int32          `json:"start"`
+	Start           int            `json:"start"`
 	Subscription    string         `json:"subscription,omitempty"`
 
 	CustomerId      uuid.UUID                `json:"customer_id" database:"default:null"`

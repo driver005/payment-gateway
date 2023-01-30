@@ -1,7 +1,11 @@
-package checkout
+package options
+
+import "github.com/driver005/gateway/core"
 
 // CheckoutSessionPaymentMethodOptions
 type CheckoutSessionPaymentMethodOptions struct {
+	core.Model
+
 	AcssDebit        *CheckoutAcssDebitPaymentMethodOptions        `json:"acss_debit,omitempty"`
 	Affirm           *CheckoutAffirmPaymentMethodOptions           `json:"affirm,omitempty"`
 	AfterpayClearpay *CheckoutAfterpayClearpayPaymentMethodOptions `json:"afterpay_clearpay,omitempty"`

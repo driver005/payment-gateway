@@ -8,34 +8,10 @@ import (
 	"github.com/driver005/gateway/internal/balance"
 	"github.com/driver005/gateway/internal/customer"
 	"github.com/driver005/gateway/internal/refund"
+	"github.com/driver005/gateway/products/discount"
 	"github.com/driver005/gateway/utils/tax"
 	"github.com/google/uuid"
 )
-
-// CreditNoteTaxAmount
-type CreditNoteTaxAmount struct {
-	core.Model
-
-	// The amount, in %s, of the tax.
-	Amount int `json:"amount,omitempty"`
-	// Whether this tax amount is inclusive or exclusive.
-	Inclusive bool        `json:"inclusive,omitempty"`
-	TaxRate   tax.TaxRate `json:"tax_rate,omitempty" database:"foreignKey:id"`
-}
-
-// CreditNoteLineItemParams struct for CreditNoteLineItemParams
-type CreditNoteLineItemParams struct {
-	core.Model
-
-	Amount            int     `json:"amount,omitempty"`
-	Description       string  `json:"description,omitempty"`
-	InvoiceLineItem   string  `json:"invoice_line_item,omitempty"`
-	Quantity          int     `json:"quantity,omitempty"`
-	TaxRates          string  `json:"tax_rates,omitempty"`
-	Type              string  `json:"type,omitempty"`
-	UnitAmount        int     `json:"unit_amount,omitempty"`
-	UnitAmountDecimal float64 `json:"unit_amount_decimal,omitempty"`
-}
 
 // CreditNoteLineItem
 type CreditNoteLineItem struct {
@@ -50,13 +26,13 @@ type CreditNoteLineItem struct {
 	// The integer amount in %s representing the discount being credited for this line item.
 	DiscountAmount int `json:"discount_amount,omitempty"`
 	// The amount of discount calculated per discount for this line item
-	// DiscountAmounts []DiscountsResourceDiscountAmount `json:"discount_amounts,omitempty"`
+	DiscountAmounts []discount.Discount `json:"discount_amounts,omitempty"`
 	// ID of the invoice line item being credited
 	InvoiceLineItem string `json:"invoice_line_item,omitempty"`
 	// The number of units of product being credited.
 	Quantity int `json:"quantity,omitempty"`
 	// The amount of tax calculated per tax rate for this line item
-	TaxAmounts []CreditNoteTaxAmount `json:"tax_amounts,omitempty" database:"foreignKey:id"`
+	TaxAmounts []tax.TaxRate `json:"tax_amounts,omitempty" database:"foreignKey:id"`
 	// The tax rates which apply to the line item.
 	TaxRates tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id"`
 	// The type of the credit note line item, one of `invoice_line_item` or `custom_line_item`. When the type is `invoice_line_item` there is an additional `invoice_line_item` property on the resource the value of which is the id of the credited line item on the invoice.
@@ -98,7 +74,7 @@ type CreditNote struct {
 	// The integer amount in %s representing the amount of the credit note, excluding all tax and invoice level discounts.
 	SubtotalExcludingTax int `json:"subtotal_excluding_tax,omitempty"`
 	// The aggregate amounts calculated per tax rate for all line items.
-	TaxAmounts []CreditNoteTaxAmount `json:"tax_amounts,omitempty" database:"foreignKey:id"`
+	TaxAmounts []tax.TaxRate `json:"tax_amounts,omitempty" database:"foreignKey:id"`
 	// The integer amount in %s representing the total amount of the credit note, including tax and all discount.
 	Total int `json:"total,omitempty"`
 	// The integer amount in %s representing the total amount of the credit note, excluding tax, but including discounts.

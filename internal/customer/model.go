@@ -6,18 +6,6 @@ import (
 	"github.com/driver005/gateway/utils/address"
 )
 
-// CustomerTaxLocation
-type CustomerTaxLocation struct {
-	core.Model
-
-	// The customer's country as identified by Stripe Tax.
-	Country string `json:"country,omitempty"`
-	// The data source used to infer the customer's location.
-	Source string `json:"source,omitempty"`
-	// The customer's state, county, province, or region as identified by Stripe Tax.
-	State string `json:"state,omitempty"`
-}
-
 // CustomerTax
 type CustomerTax struct {
 	core.Model
@@ -25,8 +13,13 @@ type CustomerTax struct {
 	// Surfaces if automatic tax computation is possible given the current customer location information.
 	AutomaticTax string `json:"automatic_tax,omitempty"`
 	// A recent IP address of the customer used for tax reporting and tax location inference.
-	IpAddress string               `json:"ip_address,omitempty"`
-	Location  *CustomerTaxLocation `json:"location,omitempty" database:"foreignKey:id"`
+	IpAddress string `json:"ip_address,omitempty"`
+	// The customer's country as identified by Stripe Tax.
+	Country string `json:"country,omitempty"`
+	// The data source used to infer the customer's location.
+	Source string `json:"source,omitempty"`
+	// The customer's state, county, province, or region as identified by Stripe Tax.
+	State string `json:"state,omitempty"`
 }
 
 type Customer struct {

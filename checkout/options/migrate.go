@@ -1,4 +1,4 @@
-package checkout
+package options
 
 import "github.com/driver005/database"
 
@@ -36,7 +36,6 @@ func Migrate(r Registry) {
 		&CheckoutSessionPaymentMethodOptions{},
 		&CheckoutSofortPaymentMethodOptions{},
 		&CheckoutUsBankAccountPaymentMethodOptions{},
-		&LinkedAccountOptionsUsBankAccount{},
 	)
 	if err != nil {
 		panic(err)

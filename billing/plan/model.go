@@ -57,8 +57,8 @@ type Plan struct {
 	// Each element represents a pricing tier. This parameter requires `billing_scheme` to be set to `tiered`. See also the documentation for `billing_scheme`.
 	Tiers []PlanTier `json:"tiers,omitempty" database:"foreignKey:id"`
 	// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price. In `graduated` tiering, pricing can change as the quantity grows.
-	TiersMode      string         `json:"tiers_mode,omitempty"`
-	TransformUsage TransformUsage `json:"transform_usage,omitempty" database:"foreignKey:id"`
+	TiersMode      string          `json:"tiers_mode,omitempty"`
+	TransformUsage *TransformUsage `json:"transform_usage,omitempty" database:"foreignKey:id"`
 	// Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
 	TrialPeriodDays int `json:"trial_period_days,omitempty"`
 	// Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.

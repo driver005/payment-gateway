@@ -12,7 +12,6 @@ func (h *Handler) Migrate() {
 	err := h.r.Context().AutoMigrate(
 		&SubscriptionItem{},
 		&SubscriptionItemBillingThresholds{},
-		&SubscriptionItemUpdateParams{},
 	)
 	if err != nil {
 		panic(err)

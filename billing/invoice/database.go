@@ -19,13 +19,6 @@ func (h *Handler) Migrate() {
 	err := h.r.Context().AutoMigrate(
 		&Invoice{},
 		&InvoiceThresholdReason{},
-		&InvoiceTaxAmount{},
-		&InvoiceMandateOptionsCard{},
-		&InvoiceLineItemPeriod{},
-		&InvoiceItemThresholdReason{},
-		&Period{},
-		&OneTimePriceData{},
-		&InvoiceItemPreviewParams{},
 	)
 	if err != nil {
 		panic(err)

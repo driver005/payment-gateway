@@ -1,10 +1,15 @@
-package checkout
+package options
 
-import "github.com/driver005/gateway/payment/method/options"
+import (
+	"github.com/driver005/gateway/core"
+	"github.com/driver005/gateway/payment/method/options"
+)
 
 // CheckoutCustomerBalanceBankTransferPaymentMethodOptions
 type CheckoutCustomerBalanceBankTransferPaymentMethodOptions struct {
-	EuBankTransfer *options.PaymentMethodOptionsCustomerBalanceEuBankAccount `json:"eu_bank_transfer,omitempty"`
+	core.Model
+
+	EuBankTransfer *options.PaymentMethodOptionsCustomerBalanceEuBankAccount `json:"eu_bank_transfer,omitempty" database:"foreignKey:id"`
 	// List of address types that should be returned in the financial_addresses response. If not specified, all valid types will be returned.  Permitted values include: `sort_code`, `zengin`, `iban`, or `spei`.
 	RequestedAddressTypes []string `json:"requested_address_types,omitempty"`
 	// The bank transfer type that this PaymentIntent is allowed to use for funding Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.

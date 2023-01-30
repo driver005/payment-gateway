@@ -8,17 +8,11 @@ import (
 	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/internal/customer"
 	"github.com/driver005/gateway/payment/method"
+	"github.com/driver005/gateway/products/coupon"
+	"github.com/driver005/gateway/products/price"
 	"github.com/driver005/gateway/utils/tax"
 	"github.com/google/uuid"
 )
-
-// SubscriptionSchedulesResourceDefaultSettingsAutomaticTax
-type SubscriptionSchedulesResourceDefaultSettingsAutomaticTax struct {
-	core.Model
-
-	// Whether Stripe automatically computes tax on invoices created during this phase.
-	Enabled bool `json:"enabled,omitempty"`
-}
 
 type InvoiceSettingSubscriptionScheduleSetting struct {
 	core.Model
@@ -32,17 +26,17 @@ type SubscriptionSchedulesResourceDefaultSettings struct {
 	core.Model
 
 	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account during this phase of the schedule.
-	ApplicationFeePercent float64                                                   `json:"application_fee_percent,omitempty"`
-	AutomaticTax          *SubscriptionSchedulesResourceDefaultSettingsAutomaticTax `json:"automatic_tax,omitempty" database:"foreignKey:id"`
+	ApplicationFeePercent float64 `json:"application_fee_percent,omitempty"`
+	AutomaticTax          bool    `json:"automatic_tax,omitempty"`
 	// Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
-	BillingCycleAnchor string                                             `json:"billing_cycle_anchor,omitempty"`
-	BillingThresholds  subscriptionItem.SubscriptionItemBillingThresholds `json:"billing_thresholds,omitempty" database:"foreignKey:id"`
+	BillingCycleAnchor string                                              `json:"billing_cycle_anchor,omitempty"`
+	BillingThresholds  *subscriptionItem.SubscriptionItemBillingThresholds `json:"billing_thresholds,omitempty" database:"foreignKey:id"`
 	// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
-	CollectionMethod     string               `json:"collection_method,omitempty"`
-	DefaultPaymentMethod method.PaymentMethod `json:"default_payment_method,omitempty" database:"foreignKey:id"`
+	CollectionMethod     string                `json:"collection_method,omitempty"`
+	DefaultPaymentMethod *method.PaymentMethod `json:"default_payment_method,omitempty" database:"foreignKey:id"`
 	// Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
-	Description     string                                    `json:"description,omitempty"`
-	InvoiceSettings InvoiceSettingSubscriptionScheduleSetting `json:"invoice_settings,omitempty" database:"foreignKey:id"`
+	Description     string                                     `json:"description,omitempty"`
+	InvoiceSettings *InvoiceSettingSubscriptionScheduleSetting `json:"invoice_settings,omitempty" database:"foreignKey:id"`
 }
 
 // SubscriptionScheduleAddInvoiceItem An Add Invoice Item describes the prices and quantities that will be added as pending invoice items when entering a phase.
@@ -53,20 +47,19 @@ type SubscriptionScheduleAddInvoiceItem struct {
 	// The quantity of the invoice item.
 	Quantity int `json:"quantity,omitempty"`
 	// The tax rates which apply to the item. When set, the `default_tax_rates` do not apply to this item.
-	TaxRates tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id"`
+	TaxRates *tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id"`
 }
 
 // SubscriptionScheduleConfigurationItem A phase item describes the price and quantity of a phase.
 type SubscriptionScheduleConfigurationItem struct {
 	core.Model
 
-	BillingThresholds subscriptionItem.SubscriptionItemBillingThresholds `json:"billing_thresholds,omitempty" database:"foreignKey:id"`
-	// Price Price `json:"price"`
-
+	BillingThresholds *subscriptionItem.SubscriptionItemBillingThresholds `json:"billing_thresholds,omitempty" database:"foreignKey:id"`
+	Price             *price.Price                                        `json:"price"`
 	// Quantity of the plan to which the customer should be subscribed.
 	Quantity int `json:"quantity,omitempty"`
 	// The tax rates which apply to this `phase_item`. When set, the `default_tax_rates` on the phase do not apply to this `phase_item`.
-	TaxRates tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id"`
+	TaxRates *tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id"`
 }
 
 // SubscriptionScheduleCurrentPhase
@@ -79,14 +72,6 @@ type SubscriptionScheduleCurrentPhase struct {
 	StartDate int `json:"start_date,omitempty"`
 }
 
-// SchedulesPhaseAutomaticTax
-type SchedulesPhaseAutomaticTax struct {
-	core.Model
-
-	// Whether Stripe automatically computes tax on invoices created during this phase.
-	Enabled bool `json:"enabled,omitempty"`
-}
-
 // SubscriptionSchedulePhaseConfiguration A phase describes the plans, coupon, and trialing status of a subscription for a predefined time period.
 type SubscriptionSchedulePhaseConfiguration struct {
 	core.Model
@@ -94,30 +79,26 @@ type SubscriptionSchedulePhaseConfiguration struct {
 	// A list of prices and quantities that will generate invoice items appended to the next invoice for this phase.
 	AddInvoiceItems []SubscriptionScheduleAddInvoiceItem `json:"add_invoice_items,omitempty" database:"foreignKey:id"`
 	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account during this phase of the schedule.
-	ApplicationFeePercent float64                     `json:"application_fee_percent,omitempty"`
-	AutomaticTax          *SchedulesPhaseAutomaticTax `json:"automatic_tax,omitempty" database:"foreignKey:id"`
+	ApplicationFeePercent float64 `json:"application_fee_percent,omitempty"`
+	AutomaticTax          bool    `json:"automatic_tax,omitempty"`
 	// Possible values are `phase_start` or `automatic`. If `phase_start` then billing cycle anchor of the subscription is set to the start of the phase when entering the phase. If `automatic` then the billing cycle anchor is automatically modified as needed when entering the phase. For more information, see the billing cycle [documentation](https://stripe.com/docs/billing/subscriptions/billing-cycle).
-	BillingCycleAnchor string                                             `json:"billing_cycle_anchor,omitempty"`
-	BillingThresholds  subscriptionItem.SubscriptionItemBillingThresholds `json:"billing_thresholds,omitempty" database:"foreignKey:id"`
+	BillingCycleAnchor string                                              `json:"billing_cycle_anchor,omitempty"`
+	BillingThresholds  *subscriptionItem.SubscriptionItemBillingThresholds `json:"billing_thresholds,omitempty" database:"foreignKey:id"`
 	// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay the underlying subscription at the end of each billing cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`.
-	CollectionMethod string `json:"collection_method,omitempty"`
-
-	// Coupon Coupon `json:"coupon,omitempty"`
-
+	CollectionMethod string         `json:"collection_method,omitempty"`
+	Coupon           *coupon.Coupon `json:"coupon,omitempty"`
 	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
-	Currency             string               `json:"currency,omitempty"`
-	DefaultPaymentMethod method.PaymentMethod `json:"default_payment_method,omitempty" database:"foreignKey:id"`
+	Currency             string                `json:"currency,omitempty"`
+	DefaultPaymentMethod *method.PaymentMethod `json:"default_payment_method,omitempty" database:"foreignKey:id"`
 	// The default tax rates to apply to the subscription during this phase of the subscription schedule.
-	DefaultTaxRates tax.TaxRate `json:"default_tax_rates,omitempty" database:"foreignKey:id"`
+	DefaultTaxRates *tax.TaxRate `json:"default_tax_rates,omitempty" database:"foreignKey:id"`
 	// Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.
 	Description string `json:"description,omitempty"`
 	// The end of this phase of the subscription schedule.
-	EndDate         int                                                `json:"end_date,omitempty"`
-	InvoiceSettings settings.InvoiceSettingSubscriptionScheduleSetting `json:"invoice_settings,omitempty" database:"foreignKey:id"`
+	EndDate         int                                                 `json:"end_date,omitempty"`
+	InvoiceSettings *settings.InvoiceSettingSubscriptionScheduleSetting `json:"invoice_settings,omitempty" database:"foreignKey:id"`
 	// Subscription items to configure the subscription to during this phase of the subscription schedule.
 	Items []SubscriptionScheduleConfigurationItem `json:"items,omitempty" database:"foreignKey:id"`
-	// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to a phase. Metadata on a schedule's phase will update the underlying subscription's `metadata` when the phase is entered. Updating the underlying subscription's `metadata` directly will not affect the current phase's `metadata`.
-	Metadata core.JSONB `json:"metadata,omitempty"`
 	// If the subscription schedule will prorate when transitioning to this phase. Possible values are `create_prorations` and `none`.
 	ProrationBehavior string `json:"proration_behavior,omitempty"`
 	// The start of this phase of the subscription schedule.
@@ -133,9 +114,9 @@ type SubscriptionSchedule struct {
 	// Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.
 	CanceledAt int `json:"canceled_at,omitempty"`
 	// Time at which the subscription schedule was completed. Measured in seconds since the Unix epoch.
-	CompletedAt     int                                          `json:"completed_at,omitempty"`
-	CurrentPhase    SubscriptionScheduleCurrentPhase             `json:"current_phase,omitempty" database:"foreignKey:id"`
-	DefaultSettings SubscriptionSchedulesResourceDefaultSettings `json:"default_settings,omitempty" database:"foreignKey:id"`
+	CompletedAt     int                                           `json:"completed_at,omitempty"`
+	CurrentPhase    *SubscriptionScheduleCurrentPhase             `json:"current_phase,omitempty" database:"foreignKey:id"`
+	DefaultSettings *SubscriptionSchedulesResourceDefaultSettings `json:"default_settings,omitempty" database:"foreignKey:id"`
 	// Behavior of the subscription schedule and underlying subscription when it ends. Possible values are `release` or `cancel` with the default being `release`. `release` will end the subscription schedule and keep the underlying subscription running.`cancel` will end the subscription schedule and cancel the underlying subscription.
 	EndBehavior string `json:"end_behavior,omitempty"`
 	// Configuration for the subscription schedule's phases.

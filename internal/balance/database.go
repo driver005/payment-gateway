@@ -15,7 +15,6 @@ func (h *Handler) Migrate() {
 		&BalanceAmountBySourceType{},
 		&BalanceDetail{},
 		&BalanceTransaction{},
-		&BalanceTransactionSource{},
 	)
 	if err != nil {
 		panic(err)

@@ -27,18 +27,6 @@ type TaxDeductedAtSource struct {
 	TaxDeductionAccountNumber string `json:"tax_deduction_account_number,omitempty"`
 }
 
-// TaxIdVerification
-type TaxIdVerification struct {
-	core.Model
-
-	// Verification status, one of `pending`, `verified`, `unverified`, or `unavailable`.
-	Status string `json:"status,omitempty"`
-	// Verified address.
-	VerifiedAddress string `json:"verified_address,omitempty"`
-	// Verified name.
-	VerifiedName string `json:"verified_name,omitempty"`
-}
-
 // TaxCode [Tax codes](https://stripe.com/docs/tax/tax-categories) classify goods and services for tax purposes.
 type TaxCode struct {
 	core.Model
@@ -55,6 +43,8 @@ type TaxCode struct {
 type TaxRate struct {
 	core.Model
 
+	// The amount, in %s, of the tax.
+	Amount int `json:"amount,omitempty"`
 	// Defaults to `true`. When set to `false`, this tax rate cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
 	Active bool `json:"active,omitempty"`
 	// Two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
@@ -81,11 +71,16 @@ type TaxId struct {
 
 	// Two-letter ISO code representing the country of the tax ID.
 	Country string `json:"country,omitempty"`
+	// The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
+	Type  string `json:"type,omitempty"`
+	Value string `json:"value,omitempty"`
+	// Verification status, one of `pending`, `verified`, `unverified`, or `unavailable`.
+	Status string `json:"status,omitempty"`
+	// Verified address.
+	VerifiedAddress string `json:"verified_address,omitempty"`
+	// Verified name.
+	VerifiedName string `json:"verified_name,omitempty"`
 
 	CustomerId uuid.UUID          `json:"customer_id" database:"default:null"`
 	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id"`
-
-	Type         string            `json:"type,omitempty"`
-	Value        string            `json:"value,omitempty"`
-	Verification TaxIdVerification `json:"verification,omitempty" database:"foreignKey:id"`
 }

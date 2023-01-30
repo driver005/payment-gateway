@@ -28,7 +28,7 @@ type Product struct {
 	StatementDescriptor string            `json:"statement_descriptor,omitempty"`
 	TaxCode             *tax.TaxCode      `json:"tax_code,omitempty"`
 	UnitLabel           string            `json:"unit_label,omitempty"`
-	Updated             int32             `json:"updated"`
+	Updated             int               `json:"updated"`
 	Url                 string            `json:"url,omitempty"`
 
 	DefaultPriceId uuid.UUID    `json:"default_price_id,omitempty"`

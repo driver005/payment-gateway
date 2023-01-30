@@ -11,8 +11,6 @@ import (
 func (h *Handler) Migrate() {
 	err := h.r.Context().AutoMigrate(
 		&CreditNote{},
-		&CreditNoteTaxAmount{},
-		&CreditNoteLineItemParams{},
 		&CreditNoteLineItem{},
 	)
 	if err != nil {

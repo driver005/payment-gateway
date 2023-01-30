@@ -12,7 +12,6 @@ func (h *Handler) Migrate() {
 	err := h.r.Context().AutoMigrate(
 		&Customer{},
 		&CustomerTax{},
-		&CustomerTaxLocation{},
 	)
 	if err != nil {
 		panic(err)

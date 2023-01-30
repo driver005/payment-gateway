@@ -5,6 +5,8 @@ import (
 	"github.com/driver005/gateway/billing/subscription"
 	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/internal/customer"
+	"github.com/driver005/gateway/products/discount"
+	"github.com/driver005/gateway/products/price"
 	"github.com/driver005/gateway/utils/tax"
 	"github.com/google/uuid"
 )
@@ -24,24 +26,24 @@ type Invoiceitem struct {
 	// If true, discounts will apply to this invoice item. Always false for prorations.
 	Discountable bool `json:"discountable,omitempty"`
 	// Unique identifier for the object.
-	Period invoice.InvoiceLineItemPeriod `json:"period,omitempty" database:"foreignKey:id"`
-	// Price  *Price              `json:"price,omitempty"`
+	PeriodEnd   int          `json:"period_end,omitempty"`
+	PeriodStart int          `json:"period_start,omitempty"`
+	Price       *price.Price `json:"price,omitempty"`
 	// Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.
 	Proration bool `json:"proration,omitempty"`
 	// Quantity of units for the invoice item. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.
 	Quantity int `json:"quantity,omitempty"`
-	// Subscription Subscription `json:"subscription,omitempty"`
 	// The subscription item that this invoice item has been created for, if any.
 	SubscriptionItem string `json:"subscription_item,omitempty"`
 	// The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
-	TaxRates tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id"`
+	TaxRates *tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id"`
 	// Unit amount (in the `currency` specified) of the invoice item.
 	UnitAmount int `json:"unit_amount,omitempty"`
 	// Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
 	UnitAmountDecimal float64 `json:"unit_amount_decimal,omitempty"`
 
 	// The discounts which apply to the invoice item. Item discounts are applied before invoice discounts. Use `expand[]=discounts` to expand each discount.
-	// Discounts []Discount `json:"discounts,omitempty"`
+	Discounts []discount.Discount `json:"discounts,omitempty"`
 
 	CustomerId     uuid.UUID                  `json:"customer_id" database:"default:null"`
 	Customer       *customer.Customer         `json:"customer,omitempty" database:"foreignKey:customer_id"`

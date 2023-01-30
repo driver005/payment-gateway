@@ -10,7 +10,6 @@ func Migrate(r Registry) {
 	err := r.Context().AutoMigrate(
 		&AutomaticTax{},
 		&TaxDeductedAtSource{},
-		&TaxIdVerification{},
 		&TaxCode{},
 		&TaxRate{},
 		&TaxId{},

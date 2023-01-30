@@ -15,6 +15,7 @@ import (
 	"github.com/driver005/gateway/billing/subscriptionItem"
 	"github.com/driver005/gateway/billing/subscriptionSchedule"
 	"github.com/driver005/gateway/billing/usageRecord"
+	"github.com/driver005/gateway/checkout"
 	db "github.com/driver005/gateway/database"
 	"github.com/driver005/gateway/driver"
 	"github.com/driver005/gateway/handler"
@@ -30,6 +31,7 @@ import (
 	"github.com/driver005/gateway/internal/refund"
 	"github.com/driver005/gateway/internal/setup/attempt"
 	setup_intent "github.com/driver005/gateway/internal/setup/intent"
+	"github.com/driver005/gateway/link"
 	"github.com/driver005/gateway/logger"
 	"github.com/driver005/gateway/payment/bank"
 	"github.com/driver005/gateway/payment/card"
@@ -38,6 +40,7 @@ import (
 	"github.com/driver005/gateway/payment/source"
 	"github.com/driver005/gateway/products/coupon"
 	"github.com/driver005/gateway/products/discount"
+	"github.com/driver005/gateway/products/item"
 	"github.com/driver005/gateway/products/price"
 	"github.com/driver005/gateway/products/product"
 	"github.com/driver005/gateway/products/promotion"
@@ -124,6 +127,13 @@ type Registry interface {
 	Price() *price.Handler
 	Product() *product.Handler
 	Promotion() *promotion.Handler
+	LineItem() *item.Handler
+
+	//checkout
+	Checkout() *checkout.Handler
+
+	//link
+	Link() *link.Handler
 
 	//utils
 	Utils() *utils.Handler
@@ -210,6 +220,13 @@ func CallRegistry(r Registry) {
 	r.Price()
 	r.Product()
 	r.Promotion()
+	r.LineItem()
+
+	//checkout
+	r.Checkout()
+
+	//link
+	r.Link()
 
 	//utils
 	r.Utils()

@@ -9,11 +9,7 @@ import (
 )
 
 func (h *Handler) Migrate() {
-	err := h.r.Context().AutoMigrate(
-		&Coupon{},
-		&CouponAppliesTo{},
-		&CouponCurrencyOption{},
-	)
+	err := h.r.Context().AutoMigrate(&Coupon{})
 	if err != nil {
 		panic(err)
 	}

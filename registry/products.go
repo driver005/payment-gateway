@@ -3,6 +3,7 @@ package registry
 import (
 	"github.com/driver005/gateway/products/coupon"
 	"github.com/driver005/gateway/products/discount"
+	"github.com/driver005/gateway/products/item"
 	"github.com/driver005/gateway/products/price"
 	"github.com/driver005/gateway/products/product"
 	"github.com/driver005/gateway/products/promotion"
@@ -41,4 +42,11 @@ func (m *Base) Promotion() *promotion.Handler {
 		m.promotion = promotion.NewHandler(m.r)
 	}
 	return m.promotion
+}
+
+func (m *Base) LineItem() *item.Handler {
+	if m.lineItem == nil {
+		m.lineItem = item.NewHandler(m.r)
+	}
+	return m.lineItem
 }

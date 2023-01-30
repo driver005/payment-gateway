@@ -6,22 +6,15 @@ import (
 	"github.com/google/uuid"
 )
 
-// type PayoutDestination struct {
-// 	core.Model
-
-// 	BankAccount *bank.BankAccount
-// 	Card        *card.Card
-// }
-
 type Payout struct {
 	core.Model
 
-	Amount      int    `json:"amount,omitempty"`
-	ArrivalDate int    `json:"arrival_date,omitempty"`
-	Automatic   bool   `json:"automatic,omitempty"`
-	Currency    string `json:"currency,omitempty"`
-	Description string `json:"description,omitempty"`
-	// Destination               *PayoutDestination          `json:"destination,omitempty" database:"foreignKey:id"`
+	Amount              int    `json:"amount,omitempty"`
+	ArrivalDate         int    `json:"arrival_date,omitempty"`
+	Automatic           bool   `json:"automatic,omitempty"`
+	Currency            string `json:"currency,omitempty"`
+	Description         string `json:"description,omitempty"`
+	Destination         string `json:"destination,omitempty"`
 	FailureCode         string `json:"failure_code,omitempty"`
 	FailureMessage      string `json:"failure_message,omitempty"`
 	Method              string `json:"method,omitempty"`

@@ -7,17 +7,11 @@ import (
 	"github.com/driver005/gateway/billing/subscriptionSchedule"
 	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/internal/customer"
+	"github.com/driver005/gateway/products/discount"
+	"github.com/driver005/gateway/products/item"
+	"github.com/driver005/gateway/utils/tax"
 	"github.com/google/uuid"
 )
-
-// QuotesResourceAutomaticTax
-type QuotesResourceAutomaticTax struct {
-	core.Model
-	// Automatically calculate taxes
-	Enabled bool `json:"enabled,omitempty"`
-	// The status of the most recent automated tax calculation for this quote.
-	Status string `json:"status,omitempty"`
-}
 
 // QuotesResourceSubscriptionDataSubscriptionData
 type QuotesResourceSubscriptionDataSubscriptionData struct {
@@ -44,10 +38,10 @@ type QuotesResourceStatusTransitions struct {
 // QuotesResourceTotalDetailsResourceBreakdown
 type QuotesResourceTotalDetailsResourceBreakdown struct {
 	core.Model
-	// // The aggregated discounts.
-	// Discounts []LineItemsDiscountAmount `json:"discounts,omitempty"`
-	// // The aggregated tax amounts by rate.
-	// Taxes []LineItemsTaxAmount `json:"taxes,omitempty"`
+	// The aggregated discounts.
+	Discounts []discount.Discount `json:"discounts,omitempty"`
+	// The aggregated tax amounts by rate.
+	Taxes []tax.TaxRate `json:"taxes,omitempty"`
 }
 
 // QuotesResourceTotalDetails
@@ -101,11 +95,11 @@ type Quote struct {
 	// Total before any discounts or taxes are applied.
 	AmountSubtotal int `json:"amount_subtotal,omitempty"`
 	// Total after discounts and taxes are applied.
-	AmountTotal  int                        `json:"amount_total,omitempty"`
-	AutomaticTax QuotesResourceAutomaticTax `json:"automatic_tax,omitempty" database:"foreignKey:id"`
+	AmountTotal  int  `json:"amount_total,omitempty"`
+	AutomaticTax bool `json:"automatic_tax,omitempty"`
 	// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
-	CollectionMethod string                 `json:"collection_method,omitempty"`
-	Computed         QuotesResourceComputed `json:"computed,omitempty" database:"foreignKey:id"`
+	CollectionMethod string                  `json:"collection_method,omitempty"`
+	Computed         *QuotesResourceComputed `json:"computed,omitempty" database:"foreignKey:id"`
 	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
 	Currency string `json:"currency,omitempty"`
 	// A description that will be displayed on the quote PDF.
@@ -118,7 +112,7 @@ type Quote struct {
 	Header string `json:"header,omitempty"`
 	// Unique identifier for the object.
 	InvoiceSettings *settings.InvoiceSettingQuoteSetting `json:"invoice_settings,omitempty" database:"foreignKey:id"`
-	// LineItems *Item `json:"line_items,omitempty"`
+	LineItems       []item.LineItem                      `json:"line_items,omitempty" database:"foreignKey:id"`
 	// A unique number that identifies this particular quote. This number is assigned once the quote is [finalized](https://stripe.com/docs/quotes/overview#finalize).
 	Number string `json:"number,omitempty"`
 	// The status of the quote.

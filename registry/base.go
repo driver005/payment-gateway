@@ -13,6 +13,7 @@ import (
 	"github.com/driver005/gateway/billing/subscriptionItem"
 	"github.com/driver005/gateway/billing/subscriptionSchedule"
 	"github.com/driver005/gateway/billing/usageRecord"
+	"github.com/driver005/gateway/checkout"
 	"github.com/driver005/gateway/database"
 	"github.com/driver005/gateway/driver"
 	"github.com/driver005/gateway/handler"
@@ -27,6 +28,7 @@ import (
 	"github.com/driver005/gateway/internal/refund"
 	setup_attempt "github.com/driver005/gateway/internal/setup/attempt"
 	setup_intent "github.com/driver005/gateway/internal/setup/intent"
+	"github.com/driver005/gateway/link"
 	"github.com/driver005/gateway/logger"
 	"github.com/driver005/gateway/payment/bank"
 	"github.com/driver005/gateway/payment/card"
@@ -36,6 +38,7 @@ import (
 	"github.com/driver005/gateway/pdf"
 	"github.com/driver005/gateway/products/coupon"
 	"github.com/driver005/gateway/products/discount"
+	"github.com/driver005/gateway/products/item"
 	"github.com/driver005/gateway/products/price"
 	"github.com/driver005/gateway/products/product"
 	"github.com/driver005/gateway/products/promotion"
@@ -104,6 +107,13 @@ type Base struct {
 	price     *price.Handler
 	product   *product.Handler
 	promotion *promotion.Handler
+	lineItem  *item.Handler
+
+	//checkout
+	checkout *checkout.Handler
+
+	//link
+	link *link.Handler
 
 	//utils
 	utils *utils.Handler
@@ -197,6 +207,8 @@ func (m *Base) RegisterRoutes(router *fiber.App) {
 	m.Price().SetRoutes(group)
 	m.Product().SetRoutes(group)
 	m.Promotion().SetRoutes(group)
+	m.Checkout().SetRoutes(group)
+	m.Link().SetRoutes(group)
 }
 
 func (m *Base) Handler() *handler.Handler {

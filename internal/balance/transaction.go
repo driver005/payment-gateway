@@ -5,25 +5,6 @@ import (
 	"github.com/driver005/gateway/utils/fee"
 )
 
-// TODO: Add sources
-// BalanceTransactionSource The Stripe object to which this transaction is related.
-type BalanceTransactionSource struct {
-	core.Model
-	// Charge *charge.Charge
-	// ConnectCollectionTransfer *ConnectCollectionTransfer
-	// Dispute                   *Dispute
-	// FeeRefund                 *FeeRefund
-	// IssuingAuthorization      *IssuingAuthorization
-	// IssuingDispute            *IssuingDispute
-	// IssuingTransaction        *IssuingTransaction
-	// Payout                    *Payout
-	// PlatformTaxFee            *PlatformTaxFee
-	// Refund                    *Refund
-	// ReserveTransaction        *ReserveTransaction
-	// TaxDeductedAtSource       *TaxDeductedAtSource
-	// Topup                     *Topup
-}
-
 // BalanceTransaction Balance transactions represent funds moving through your Stripe account. They're created for every type of transaction that comes into or flows out of your Stripe account balance.  Related guide: [Balance Transaction Types](https://stripe.com/docs/reports/balance-transaction-types).
 type BalanceTransaction struct {
 	core.Model
@@ -44,8 +25,8 @@ type BalanceTransaction struct {
 	// Net amount of the transaction, in %s.
 	Net int `json:"net,omitempty"`
 	// [Learn more](https://stripe.com/docs/reports/reporting-categories) about how reporting categories can help you understand balance transactions from an accounting perspective.
-	ReportingCategory string                    `json:"reporting_category,omitempty"`
-	Source            *BalanceTransactionSource `json:"source,omitempty" database:"foreignKey:id"`
+	ReportingCategory string `json:"reporting_category,omitempty"`
+	Source            string `json:"source,omitempty"`
 	// If the transaction's net funds are available in the Stripe balance yet. Either `available` or `pending`.
 	Status string `json:"status,omitempty"`
 	// Transaction type: `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `contribution`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_dispute`, `issuing_transaction`, `payment`, `payment_failure_refund`, `payment_refund`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`. [Learn more](https://stripe.com/docs/reports/balance-transaction-types) about balance transaction types and what they represent. If you are looking to classify transactions for accounting purposes, you might want to consider `reporting_category` instead.

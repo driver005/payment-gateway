@@ -18,7 +18,6 @@ func (h *Handler) Migrate() {
 		&SubscriptionsResourcePauseCollection{},
 		&SubscriptionsResourcePendingUpdate{},
 		&SubscriptionBillingThresholds{},
-		&SubscriptionAutomaticTax{},
 		&SubscriptionPendingInvoiceItemInterval{},
 	)
 	if err != nil {

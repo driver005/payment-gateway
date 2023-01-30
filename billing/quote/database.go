@@ -11,7 +11,6 @@ import (
 func (h *Handler) Migrate() {
 	err := h.r.Context().AutoMigrate(
 		&Quote{},
-		&QuotesResourceAutomaticTax{},
 		&QuotesResourceSubscriptionDataSubscriptionData{},
 		&QuotesResourceStatusTransitions{},
 		&QuotesResourceTotalDetailsResourceBreakdown{},

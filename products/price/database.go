@@ -10,8 +10,6 @@ import (
 
 func (h *Handler) Migrate() {
 	err := h.r.Context().AutoMigrate(
-		&CustomUnitAmount{},
-		&CurrencyOption{},
 		&TransformQuantity{},
 		&Recurring{},
 		&PriceTier{},
