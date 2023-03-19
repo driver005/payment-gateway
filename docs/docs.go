@@ -24,32 +24,6 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1//subscription_items/{id}/usage_record_summaries": {
-            "get": {
-                "description": "Get all existing UsageRecords.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "UsageRecord"
-                ],
-                "summary": "get all existing UsageRecords",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/usageRecord.UsageRecord"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/v1/balance": {
             "get": {
                 "description": "Get Balance by given ID or 404 error.",
@@ -1002,6 +976,22 @@ const docTemplate = `{
                     "CashBalance"
                 ],
                 "summary": "get all existing CashBalances",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "CashBalance ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1056,6 +1046,13 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1081,13 +1078,18 @@ const docTemplate = `{
                 "summary": "update CashBalance",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "CashBalance ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1113,13 +1115,18 @@ const docTemplate = `{
                 "summary": "delete CashBalance by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "CashBalance ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1530,6 +1537,13 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tax ID",
+                        "name": "tax_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1562,6 +1576,13 @@ const docTemplate = `{
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Tax ID",
+                        "name": "tax_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4937,6 +4958,32 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/subscription_items/{id}/usage_record_summaries": {
+            "get": {
+                "description": "Get all existing UsageRecords.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "UsageRecord"
+                ],
+                "summary": "get all existing UsageRecords",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/usageRecord.UsageRecord"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/v1/subscription_items/{id}/usage_records": {
             "get": {
                 "description": "Get UsageRecord by given ID or 404 error.",
@@ -4953,7 +5000,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "UsageRecord ID",
+                        "description": "SubscriptionItem ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -5361,13 +5408,11 @@ const docTemplate = `{
                 "summary": "update UsageRecord",
                 "parameters": [
                     {
-                        "description": "UsageRecord ID",
+                        "type": "string",
+                        "description": "SubscriptionItem ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -5393,13 +5438,11 @@ const docTemplate = `{
                 "summary": "delete UsageRecord by given ID",
                 "parameters": [
                     {
-                        "description": "UsageRecord ID",
+                        "type": "string",
+                        "description": "SubscriptionItem ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -9729,7 +9772,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "2.0",
-	Host:             "localhost:3000",
+	Host:             "localhost",
 	BasePath:         "/api",
 	Schemes:          []string{"http"},
 	Title:            "Fiber Swagger Example API",

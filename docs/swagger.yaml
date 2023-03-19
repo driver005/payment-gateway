@@ -3317,7 +3317,7 @@ definitions:
         description: Valid is true if UUID is not NULL
         type: boolean
     type: object
-host: localhost:3000
+host: localhost
 info:
   contact:
     email: support@swagger.io
@@ -3331,23 +3331,6 @@ info:
   title: Fiber Swagger Example API
   version: "2.0"
 paths:
-  /v1//subscription_items/{id}/usage_record_summaries:
-    get:
-      consumes:
-      - application/json
-      description: Get all existing UsageRecords.
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/usageRecord.UsageRecord'
-            type: array
-      summary: get all existing UsageRecords
-      tags:
-      - UsageRecord
   /v1/balance:
     get:
       consumes:
@@ -3969,6 +3952,17 @@ paths:
       consumes:
       - application/json
       description: Get all existing CashBalances.
+      parameters:
+      - description: CashBalance ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Customer ID
+        in: path
+        name: customer_id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -4002,11 +3996,15 @@ paths:
       description: Delete CashBalance by given ID.
       parameters:
       - description: CashBalance ID
-        in: body
+        in: path
         name: id
         required: true
-        schema:
-          type: string
+        type: string
+      - description: Customer ID
+        in: path
+        name: customer_id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -4027,6 +4025,11 @@ paths:
         name: id
         required: true
         type: string
+      - description: Customer ID
+        in: path
+        name: customer_id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -4043,11 +4046,15 @@ paths:
       description: Update CashBalance.
       parameters:
       - description: CashBalance ID
-        in: body
+        in: path
         name: id
         required: true
-        schema:
-          type: string
+        type: string
+      - description: Customer ID
+        in: path
+        name: customer_id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -4318,6 +4325,11 @@ paths:
         required: true
         schema:
           type: string
+      - description: Tax ID
+        in: path
+        name: tax_id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -4336,6 +4348,11 @@ paths:
       - description: Customer ID
         in: path
         name: id
+        required: true
+        type: string
+      - description: Tax ID
+        in: path
+        name: tax_id
         required: true
         type: string
       produces:
@@ -6552,13 +6569,30 @@ paths:
       summary: update SubscriptionItem
       tags:
       - SubscriptionItem
+  /v1/subscription_items/{id}/usage_record_summaries:
+    get:
+      consumes:
+      - application/json
+      description: Get all existing UsageRecords.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/usageRecord.UsageRecord'
+            type: array
+      summary: get all existing UsageRecords
+      tags:
+      - UsageRecord
   /v1/subscription_items/{id}/usage_records:
     get:
       consumes:
       - application/json
       description: Get UsageRecord by given ID or 404 error.
       parameters:
-      - description: UsageRecord ID
+      - description: SubscriptionItem ID
         in: path
         name: id
         required: true
@@ -6826,12 +6860,11 @@ paths:
       - application/json
       description: Delete UsageRecord by given ID.
       parameters:
-      - description: UsageRecord ID
-        in: body
+      - description: SubscriptionItem ID
+        in: path
         name: id
         required: true
-        schema:
-          type: string
+        type: string
       produces:
       - application/json
       responses:
@@ -6847,12 +6880,11 @@ paths:
       - application/json
       description: Update UsageRecord.
       parameters:
-      - description: UsageRecord ID
-        in: body
+      - description: SubscriptionItem ID
+        in: path
         name: id
         required: true
-        schema:
-          type: string
+        type: string
       produces:
       - application/json
       responses:
