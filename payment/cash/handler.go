@@ -16,6 +16,16 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Get("/customers/:id/cash_balance_transactions", h.RouteList)
 }
 
+// RouteGet func gets CashBalance by given ID or 404 error.
+// @Description Get CashBalance by given ID or 404 error.
+// @Summary get CashBalance by given ID or 404 error.
+// @Tags CashBalance
+// @Accept json
+// @Produce json
+// @Param id path string true "CashBalance ID"
+// @Param customer_id path string true "Customer ID"
+// @Success 200 {object} CashBalance
+// @Router /v1/customers/{id}/cash_balance/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -36,6 +46,16 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing CashBalances.
+// @Description Get all existing CashBalances.
+// @Summary get all existing CashBalances
+// @Tags CashBalance
+// @Accept json
+// @Produce json
+// @Param id path string true "CashBalance ID"
+// @Param customer_id path string true "Customer ID"
+// @Success 200 {array} CashBalance
+// @Router /v1/customers/{id}/cash_balance [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -65,6 +85,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new CashBalance.
+// @Description Create a new CashBalance.
+// @Summary create a new CashBalance
+// @Tags CashBalance
+// @Accept json
+// @Produce json
+// @Success 200 {object} CashBalance
+// @Router /v1/customers/{id}/cash_balance [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	var m CashBalance
 
@@ -86,6 +114,16 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates CashBalance by given ID.
+// @Description Update CashBalance.
+// @Summary update CashBalance
+// @Tags CashBalance
+// @Accept json
+// @Produce json
+// @Param id path string true "CashBalance ID"
+// @Param customer_id path string true "Customer ID"
+// @Success 200 {object} CashBalance
+// @Router /v1/customers/{id}/cash_balance/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	var m CashBalance
 
@@ -117,6 +155,16 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes CashBalance by given ID.
+// @Description Delete CashBalance by given ID.
+// @Summary delete CashBalance by given ID
+// @Tags CashBalance
+// @Accept json
+// @Produce json
+// @Param id path string true "CashBalance ID"
+// @Param customer_id path string true "Customer ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/customers/{id}/cash_balance/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

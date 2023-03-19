@@ -7,12 +7,13 @@ import (
 	"github.com/driver005/database/clause"
 	"github.com/driver005/gateway/helper"
 	"github.com/fatih/structs"
+	"github.com/lib/pq"
 )
 
 type Repositories struct {
 	db           *database.DB
-	defaultJoins []string
-	preloads     []string
+	defaultJoins pq.StringArray
+	preloads     pq.StringArray
 }
 
 // NewRepositories returns a new base repositories that implements TransactionRepositories
@@ -20,7 +21,7 @@ func NewRepositories(db *database.DB, defaultJoins ...string) TransactionReposit
 	return &Repositories{
 		defaultJoins: defaultJoins,
 		db:           db,
-		preloads:     []string{},
+		preloads:     pq.StringArray{},
 	}
 }
 

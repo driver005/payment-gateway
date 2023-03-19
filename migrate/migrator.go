@@ -13,6 +13,7 @@ import (
 
 	"github.com/cockroachdb/cockroach-go/v2/crdb"
 	"github.com/driver005/gateway/logger"
+	"github.com/lib/pq"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/trace"
@@ -241,7 +242,7 @@ func (m *Migrator) createTransactionalMigrationTable(ctx context.Context, c *pop
 	mtn := m.migrationTableName(ctx, c)
 	unprefixedMtn := m.migrationTableName(ctx, c)
 
-	if err := m.execMigrationTransaction(ctx, c, []string{
+	if err := m.execMigrationTransaction(ctx, c, pq.StringArray{
 		fmt.Sprintf(`CREATE TABLE %s (version VARCHAR (48) NOT NULL, version_self INT NOT NULL DEFAULT 0)`, mtn),
 		fmt.Sprintf(`CREATE UNIQUE INDEX %s_version_idx ON %s (version)`, unprefixedMtn, mtn),
 		fmt.Sprintf(`CREATE INDEX %s_version_self_idx ON %s (version_self)`, unprefixedMtn, mtn),
@@ -265,7 +266,7 @@ func (m *Migrator) migrateToTransactionalMigrationTable(ctx context.Context, c *
 	}
 
 	interimTable := fmt.Sprintf("%s_transactional", mtn)
-	workload := [][]string{
+	workload := []pq.StringArray{
 		{
 			fmt.Sprintf(`DROP INDEX %s_version_idx%s`, unprefixedMtn, withOn),
 			fmt.Sprintf(`CREATE TABLE %s (version VARCHAR (48) NOT NULL, version_self INT NOT NULL DEFAULT 0)`, interimTable),
@@ -323,7 +324,7 @@ func (m *Migrator) isolatedTransaction(ctx context.Context, direction string, fn
 	return err
 }
 
-func (m *Migrator) execMigrationTransaction(ctx context.Context, c *pop.Connection, transactions ...[]string) error {
+func (m *Migrator) execMigrationTransaction(ctx context.Context, c *pop.Connection, transactions ...pq.StringArray) error {
 	for _, statements := range transactions {
 		if err := m.isolatedTransaction(ctx, "init", func(tx *pop.Tx) error {
 			for _, statement := range statements {
@@ -376,14 +377,14 @@ type MigrationStatus struct {
 
 type MigrationStatuses []MigrationStatus
 
-func (m MigrationStatuses) Header() []string {
-	return []string{"Version", "Name", "Status"}
+func (m MigrationStatuses) Header() pq.StringArray {
+	return pq.StringArray{"Version", "Name", "Status"}
 }
 
-func (m MigrationStatuses) Table() [][]string {
-	t := make([][]string, len(m))
+func (m MigrationStatuses) Table() []pq.StringArray {
+	t := make([]pq.StringArray, len(m))
 	for i, s := range m {
-		t[i] = []string{s.Version, s.Name, s.State}
+		t[i] = pq.StringArray{s.Version, s.Name, s.State}
 	}
 	return t
 }
@@ -396,8 +397,8 @@ func (m MigrationStatuses) Len() int {
 	return len(m)
 }
 
-func (m MigrationStatuses) IDs() []string {
-	ids := make([]string, len(m))
+func (m MigrationStatuses) IDs() pq.StringArray {
+	ids := make(pq.StringArray, len(m))
 	for i, s := range m {
 		ids[i] = s.Version
 	}

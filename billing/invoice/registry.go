@@ -9,6 +9,7 @@ import (
 	"github.com/driver005/gateway/internal/customer"
 	"github.com/driver005/gateway/internal/intent"
 	"github.com/driver005/gateway/payment/method"
+	"github.com/driver005/gateway/products/price"
 )
 
 type Handler struct {
@@ -24,6 +25,7 @@ type Registry interface {
 	PaymentIntent() *intent.Handler
 	PaymentMethod() *method.Handler
 	Subscription() *subscription.Handler
+	Price() *price.Handler
 }
 
 func NewHandler(r Registry) *Handler {

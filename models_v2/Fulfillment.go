@@ -12,19 +12,19 @@ type Fulfillment struct {
 	core.Model
 
 	// The id of the Claim that the Fulfillment belongs to.
-	ClaimOrderId uuid.NullUUID `json:"claim_order_id" database:"default:null"`
+	ClaimOrderId uuid.NullUUID `json:"claim_order_id,omitempty"`
 
 	// A claim order object. Available if the relation `claim_order` is expanded.
 	ClaimOrder *ClaimOrder `json:"claim_order" database:"foreignKey:id;references:claim_order_id"`
 
 	// The id of the Swap that the Fulfillment belongs to.
-	SwapId uuid.NullUUID `json:"swap_id" database:"default:null"`
+	SwapId uuid.NullUUID `json:"swap_id,omitempty"`
 
 	// A swap object. Available if the relation `swap` is expanded.
 	Swap *Swap `json:"swap" database:"foreignKey:id;references:swap_id"`
 
 	// The id of the Order that the Fulfillment belongs to.
-	OrderId uuid.NullUUID `json:"order_id" database:"default:null"`
+	OrderId uuid.NullUUID `json:"order_id,omitempty"`
 
 	// An order object. Available if the relation `order` is expanded.
 	Order *Order `json:"order" database:"foreignKey:id;references:order_id"`

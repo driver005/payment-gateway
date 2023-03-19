@@ -18,6 +18,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/subscription_schedules/:id/release", h.RouteRelease)
 }
 
+// RouteGet func gets SubscriptionSchedule by given ID or 404 error.
+// @Description Get SubscriptionSchedule by given ID or 404 error.
+// @Summary get SubscriptionSchedule by given ID or 404 error.
+// @Tags SubscriptionSchedule
+// @Accept json
+// @Produce json
+// @Param id path string true "SubscriptionSchedule ID"
+// @Success 200 {object} SubscriptionSchedule
+// @Router /v1/subscription_schedules/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -38,6 +47,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing SubscriptionSchedules.
+// @Description Get all existing SubscriptionSchedules.
+// @Summary get all existing SubscriptionSchedules
+// @Tags SubscriptionSchedule
+// @Accept json
+// @Produce json
+// @Success 200 {array} SubscriptionSchedule
+// @Router /v1/subscription_schedules [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -67,6 +84,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new SubscriptionSchedule.
+// @Description Create a new SubscriptionSchedule.
+// @Summary create a new SubscriptionSchedule
+// @Tags SubscriptionSchedule
+// @Accept json
+// @Produce json
+// @Success 200 {object} SubscriptionSchedule
+// @Router /v1/subscription_schedules [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -87,6 +112,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates SubscriptionSchedule by given ID.
+// @Description Update SubscriptionSchedule.
+// @Summary update SubscriptionSchedule
+// @Tags SubscriptionSchedule
+// @Accept json
+// @Produce json
+// @Param id body string true "SubscriptionSchedule ID"
+// @Success 200 {object} SubscriptionSchedule
+// @Router /v1/subscription_schedules/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -117,6 +151,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes SubscriptionSchedule by given ID.
+// @Description Delete SubscriptionSchedule by given ID.
+// @Summary delete SubscriptionSchedule by given ID
+// @Tags SubscriptionSchedule
+// @Accept json
+// @Produce json
+// @Param id body string true "SubscriptionSchedule ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/subscription_schedules/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -137,6 +180,15 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusNoContent).JSON(nil)
 }
 
+// RouteCancel func for canceling SubscriptionSchedules by given ID.
+// @Description Cancel SubscriptionSchedule.
+// @Summary cancel SubscriptionSchedule
+// @Tags SubscriptionSchedule
+// @Accept json
+// @Produce json
+// @Param id body string true "SubscriptionSchedule ID"
+// @Success 200 {object} SubscriptionSchedule
+// @Router /v1/subscription_schedules/{id}/cancele [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 	var m SubscriptionSchedule
 
@@ -164,6 +216,15 @@ func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteRelease func for releasing SubscriptionSchedules by given ID.
+// @Description Release SubscriptionSchedule.
+// @Summary release SubscriptionSchedule
+// @Tags SubscriptionSchedule
+// @Accept json
+// @Produce json
+// @Param id body string true "SubscriptionSchedule ID"
+// @Success 200 {object} SubscriptionSchedule
+// @Router /v1/subscription_schedules/{id}/release [post]
 func (h *Handler) RouteRelease(context *fiber.Ctx) error {
 	var m SubscriptionSchedule
 

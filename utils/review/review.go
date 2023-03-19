@@ -43,13 +43,13 @@ type Review struct {
 	// The reason the review was closed, or null if it has not yet been closed. One of `approved`, `refunded`, `refunded_as_fraud`, `disputed`, or `redacted`.
 	ClosedReason string `json:"closed_reason,omitempty"`
 	// The IP address where the payment originated.
-	IpAddress         string                      `json:"ip_address,omitempty"`
-	IpAddressLocation RadarReviewResourceLocation `json:"ip_address_location,omitempty" database:"foreignKey:id"`
+	IpAddress         string                       `json:"ip_address,omitempty"`
+	IpAddressLocation *RadarReviewResourceLocation `json:"ip_address_location,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// If `true`, the review needs action.
 	Open bool `json:"open,omitempty"`
 	// The reason the review was opened. One of `rule` or `manual`.
 	OpenedReason string `json:"opened_reason,omitempty"`
 	// The reason the review is currently open or closed. One of `rule`, `manual`, `approved`, `refunded`, `refunded_as_fraud`, `disputed`, or `redacted`.
-	Reason  string                     `json:"reason,omitempty"`
-	Session RadarReviewResourceSession `json:"session,omitempty" database:"foreignKey:id"`
+	Reason  string                      `json:"reason,omitempty"`
+	Session *RadarReviewResourceSession `json:"session,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

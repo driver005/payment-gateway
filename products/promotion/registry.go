@@ -5,6 +5,7 @@ import (
 
 	"github.com/driver005/database"
 	"github.com/driver005/gateway/internal/customer"
+	"github.com/driver005/gateway/products/coupon"
 )
 
 type Handler struct {
@@ -16,6 +17,7 @@ type Registry interface {
 	Context() *database.DB
 	Migrate() bool
 	Customer() *customer.Handler
+	Coupon() *coupon.Handler
 }
 
 func NewHandler(r Registry) *Handler {

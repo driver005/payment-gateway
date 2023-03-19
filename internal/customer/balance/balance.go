@@ -22,13 +22,13 @@ type CustomerBalanceTransaction struct {
 	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
 	Currency string `json:"currency,omitempty"`
 
-	CustomerId uuid.UUID          `json:"customer_id" database:"default:null"`
-	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id"`
+	CustomerId *uuid.UUID         `json:"customer_id,omitempty" swaggerignore:"true"`
+	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
 
 	// An arbitrary string attached to the object. Often useful for displaying to users.
 	Description string `json:"description,omitempty"`
 	// The customer's `balance` after the transaction was applied. A negative value decreases the amount due on the customer's next invoice. A positive value increases the amount due on the customer's next invoice.
 	EndingBalance int `json:"ending_balance,omitempty"`
 	// Transaction type: `adjustment`, `applied_to_invoice`, `credit_note`, `initial`, `invoice_overpaid`, `invoice_too_large`, `invoice_too_small`, `unspent_receiver_credit`, or `unapplied_from_invoice`. See the [Customer Balance page](https://stripe.com/docs/billing/customer/balance#types) to learn more about transaction types.
-	Type string `json:"type,omitempty"`
+	Type Type `json:"type,omitempty"`
 }

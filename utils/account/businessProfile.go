@@ -11,7 +11,7 @@ type AccountBusinessProfile struct {
 	Mcc                string           `json:"mcc,omitempty"`
 	Name               string           `json:"name,omitempty"`
 	ProductDescription string           `json:"product_description,omitempty"`
-	SupportAddress     *address.Address `json:"support_address,omitempty" database:"foreignKey:id"`
+	SupportAddress     *address.Address `json:"support_address,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	SupportEmail       string           `json:"support_email,omitempty"`
 	SupportPhone       string           `json:"support_phone,omitempty"`
 	SupportUrl         string           `json:"support_url,omitempty"`

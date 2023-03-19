@@ -16,6 +16,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Delete("/customers/:id/sources/:id", h.RouteUpdate)
 }
 
+// RouteGet func gets Card by given ID or 404 error.
+// @Description Get Card by given ID or 404 error.
+// @Summary get Card by given ID or 404 error.
+// @Tags Card
+// @Accept json
+// @Produce json
+// @Param id path string true "Card ID"
+// @Success 200 {object} Card
+// @Router /v1/customers/{id}/sources/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -36,6 +45,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing Cards.
+// @Description Get all existing Cards.
+// @Summary get all existing Cards
+// @Tags Card
+// @Accept json
+// @Produce json
+// @Success 200 {array} Card
+// @Router /v1/customers/{id}/sources [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -65,6 +82,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new Card.
+// @Description Create a new Card.
+// @Summary create a new Card
+// @Tags Card
+// @Accept json
+// @Produce json
+// @Success 200 {object} Card
+// @Router /v1/customers/{id}/sources [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -85,6 +110,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates Card by given ID.
+// @Description Update Card.
+// @Summary update Card
+// @Tags Card
+// @Accept json
+// @Produce json
+// @Param id body string true "Card ID"
+// @Success 200 {object} Card
+// @Router /v1/customers/{id}/sources/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -115,6 +149,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes Card by given ID.
+// @Description Delete Card by given ID.
+// @Summary delete Card by given ID
+// @Tags Card
+// @Accept json
+// @Produce json
+// @Param id body string true "Card ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/customers/{id}/sources/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

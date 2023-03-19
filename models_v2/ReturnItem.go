@@ -28,7 +28,7 @@ type ReturnItem struct {
 	RecievedQuantity int `json:"recieved_quantity" database:"default:null"`
 
 	// The ID of the reason for returning the item.
-	ReasonId uuid.NullUUID `json:"reason_id" database:"default:null"`
+	ReasonId uuid.NullUUID `json:"reason_id,omitempty"`
 
 	Reason *ReturnReason `json:"reason" database:"foreignKey:id;references:reason_id"`
 

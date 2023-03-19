@@ -17,6 +17,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/setup_intents/:id/confirm", h.RouteConfirm)
 }
 
+// RouteGet func gets SetupIntent by given ID or 404 error.
+// @Description Get SetupIntent by given ID or 404 error.
+// @Summary get SetupIntent by given ID or 404 error.
+// @Tags SetupIntent
+// @Accept json
+// @Produce json
+// @Param id path string true "SetupIntent ID"
+// @Success 200 {object} SetupIntent
+// @Router /v1/setup_intents/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -37,6 +46,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing SetupIntents.
+// @Description Get all existing SetupIntents.
+// @Summary get all existing SetupIntents
+// @Tags SetupIntent
+// @Accept json
+// @Produce json
+// @Success 200 {array} SetupIntent
+// @Router /v1/setup_intents [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -66,6 +83,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new SetupIntent.
+// @Description Create a new SetupIntent.
+// @Summary create a new SetupIntent
+// @Tags SetupIntent
+// @Accept json
+// @Produce json
+// @Success 200 {object} SetupIntent
+// @Router /v1/setup_intents [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -86,6 +111,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates SetupIntent by given ID.
+// @Description Update SetupIntent.
+// @Summary update SetupIntent
+// @Tags SetupIntent
+// @Accept json
+// @Produce json
+// @Param id body string true "SetupIntent ID"
+// @Success 200 {object} SetupIntent
+// @Router /v1/setup_intents/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -116,6 +150,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes SetupIntent by given ID.
+// @Description Delete SetupIntent by given ID.
+// @Summary delete SetupIntent by given ID
+// @Tags SetupIntent
+// @Accept json
+// @Produce json
+// @Param id body string true "SetupIntent ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/setup_intents/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -136,6 +179,15 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusNoContent).JSON(nil)
 }
 
+// RouteCancel func for canceling SetupIntents by given ID.
+// @Description Cancel SetupIntent.
+// @Summary cancel SetupIntent
+// @Tags SetupIntent
+// @Accept json
+// @Produce json
+// @Param id body string true "SetupIntent ID"
+// @Success 200 {object} SetupIntent
+// @Router /v1/setup_intents/{id}/cancele [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 	var m SetupIntent
 
@@ -163,6 +215,15 @@ func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteConfirm func for confirming SetupIntents by given ID.
+// @Description Confirm SetupIntent.
+// @Summary confirm SetupIntent
+// @Tags SetupIntent
+// @Accept json
+// @Produce json
+// @Param id body string true "SetupIntent ID"
+// @Success 200 {object} SetupIntent
+// @Router /v1/setup_intents/{id}/confirm [post]
 func (h *Handler) RouteConfirm(context *fiber.Ctx) error {
 	var m SetupIntent
 

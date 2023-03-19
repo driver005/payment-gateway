@@ -17,7 +17,7 @@ type Fee struct {
 	// An arbitrary string attached to the object. Often useful for displaying to users.
 	Description string `json:"description,omitempty"`
 	// Type of the fee, one of: `application_fee`, `stripe_fee` or `tax`.
-	Type string `json:"type,omitempty"`
+	Type Type `json:"type,omitempty"`
 }
 
 // FeeRefund `Application Fee Refund` objects allow you to refund an application fee that has previously been created but not yet refunded. Funds will be refunded to the Stripe account from which the fee was originally collected.  Related guide: [Refunding Application Fees](https://stripe.com/docs/connect/destination-charges#refunding-app-fee).

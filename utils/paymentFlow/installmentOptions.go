@@ -10,5 +10,5 @@ type PaymentFlowsInstallmentOptions struct {
 	core.Model
 
 	Enabled bool                                          `json:"enabled,omitempty"`
-	Plan    *details.PaymentMethodDetailsCardInstallments `json:"plan,omitempty" database:"foreignKey:id"`
+	Plan    *details.PaymentMethodDetailsCardInstallments `json:"plan,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

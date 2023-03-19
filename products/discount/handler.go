@@ -9,12 +9,21 @@ import (
 )
 
 func (h *Handler) SetRoutes(r fiber.Router) {
-	r.Get("/prices", h.RouteList)
-	r.Post("/prices", h.RouteCreate)
-	r.Get("/prices/:id", h.RouteGet)
-	r.Post("/prices/:id", h.RouteUpdate)
+	// r.Get("/prices", h.RouteList)
+	// r.Post("/prices", h.RouteCreate)
+	// r.Get("/prices/:id", h.RouteGet)
+	// r.Post("/prices/:id", h.RouteUpdate)
 }
 
+// RouteGet func gets Discount by given ID or 404 error.
+// @Description Get Discount by given ID or 404 error.
+// @Summary get Discount by given ID or 404 error.
+// @Tags Discount
+// @Accept json
+// @Produce json
+// @Param id path string true "Discount ID"
+// @Success 200 {object} Discount
+// @Router /v1/customers/{id}/discount/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -35,6 +44,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing Discounts.
+// @Description Get all existing Discounts.
+// @Summary get all existing Discounts
+// @Tags Discount
+// @Accept json
+// @Produce json
+// @Success 200 {array} Discount
+// @Router /v1/customers/{id}/discount [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -64,6 +81,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new Discount.
+// @Description Create a new Discount.
+// @Summary create a new Discount
+// @Tags Discount
+// @Accept json
+// @Produce json
+// @Success 200 {object} Discount
+// @Router /v1/customers/{id}/discount [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -84,6 +109,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates Discount by given ID.
+// @Description Update Discount.
+// @Summary update Discount
+// @Tags Discount
+// @Accept json
+// @Produce json
+// @Param id body string true "Discount ID"
+// @Success 200 {object} Discount
+// @Router /v1/customers/{id}/discount/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -114,6 +148,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes Discount by given ID.
+// @Description Delete Discount by given ID.
+// @Summary delete Discount by given ID
+// @Tags Discount
+// @Accept json
+// @Produce json
+// @Param id body string true "Discount ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/customers/{id}/discount/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

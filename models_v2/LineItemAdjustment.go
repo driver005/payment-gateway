@@ -18,7 +18,7 @@ type LineItemAdjustment struct {
 	Description string `json:"description"`
 
 	// The ID of the discount associated with the adjustment
-	DiscountId uuid.NullUUID `json:"discount_id" database:"default:null"`
+	DiscountId uuid.NullUUID `json:"discount_id,omitempty"`
 
 	Discount *Discount `json:"discount" database:"foreignKey:id;references:discount_id"`
 

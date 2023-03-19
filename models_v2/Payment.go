@@ -12,19 +12,19 @@ type Payment struct {
 	core.Model
 
 	// The ID of the Swap that the Payment is used for.
-	SwapId uuid.NullUUID `json:"swap_id" database:"default:null"`
+	SwapId uuid.NullUUID `json:"swap_id,omitempty"`
 
 	// A swap object. Available if the relation `swap` is expanded.
 	Swap *Swap `json:"swap" database:"foreignKey:id;references:swap_id"`
 
 	// The id of the Cart that the Payment Session is created for.
-	CartId uuid.NullUUID `json:"cart_id" database:"default:null"`
+	CartId uuid.NullUUID `json:"cart_id,omitempty"`
 
 	// A cart object. Available if the relation `cart` is expanded.
 	Cart *Cart `json:"cart" database:"foreignKey:id;references:cart_id"`
 
 	// The ID of the Order that the Payment is used for.
-	OrderId uuid.NullUUID `json:"order_id" database:"default:null"`
+	OrderId uuid.NullUUID `json:"order_id,omitempty"`
 
 	// An order object. Available if the relation `order` is expanded.
 	Order *Order `json:"order" database:"foreignKey:id;references:order_id"`

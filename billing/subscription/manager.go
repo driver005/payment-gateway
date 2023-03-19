@@ -16,6 +16,7 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Subscription, error) {
 		DefaultPaymentMethod uuid.NullUUID `json:"default_payment_method,omitempty"`
 		PendingSetupIntent   uuid.NullUUID `json:"pending_setup_intent,omitempty"`
 		Schedule             uuid.NullUUID `json:"schedule,omitempty"`
+		Price                uuid.NullUUID `json:"price,omitempty"`
 	}{
 		Alias: (*Alias)(&m),
 	}
@@ -38,6 +39,12 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Subscription, error) {
 	}
 	if model.PendingSetupIntent.Valid {
 		m.PendingSetupIntent, err = h.r.SetupIntent().Retrive(context.Context(), model.PendingSetupIntent.UUID)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if model.Price.Valid {
+		m.Price, err = h.r.Price().Retrive(context.Context(), model.Price.UUID)
 		if err != nil {
 			return nil, err
 		}

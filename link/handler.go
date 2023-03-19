@@ -15,6 +15,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/payment_links/:id", h.RouteUpdate)
 }
 
+// RouteGet func gets PaymentLink by given ID or 404 error.
+// @Description Get PaymentLink by given ID or 404 error.
+// @Summary get PaymentLink by given ID or 404 error.
+// @Tags PaymentLink
+// @Accept json
+// @Produce json
+// @Param id path string true "PaymentLink ID"
+// @Success 200 {object} PaymentLink
+// @Router /v1/payment_links/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -35,6 +44,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing PaymentLinks.
+// @Description Get all existing PaymentLinks.
+// @Summary get all existing PaymentLinks
+// @Tags PaymentLink
+// @Accept json
+// @Produce json
+// @Success 200 {array} PaymentLink
+// @Router /v1/payment_links [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -64,6 +81,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new PaymentLink.
+// @Description Create a new PaymentLink.
+// @Summary create a new PaymentLink
+// @Tags PaymentLink
+// @Accept json
+// @Produce json
+// @Success 200 {object} PaymentLink
+// @Router /v1/payment_links [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	var m PaymentLink
 
@@ -85,6 +110,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates PaymentLink by given ID.
+// @Description Update PaymentLink.
+// @Summary update PaymentLink
+// @Tags PaymentLink
+// @Accept json
+// @Produce json
+// @Param id body string true "PaymentLink ID"
+// @Success 200 {object} PaymentLink
+// @Router /v1/payment_links/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	var m PaymentLink
 
@@ -116,6 +150,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes PaymentLink by given ID.
+// @Description Delete PaymentLink by given ID.
+// @Summary delete PaymentLink by given ID
+// @Tags PaymentLink
+// @Accept json
+// @Produce json
+// @Param id body string true "PaymentLink ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/payment_links/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

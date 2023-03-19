@@ -11,11 +11,8 @@ import (
 func (h *Handler) Migrate() {
 	err := h.r.Context().AutoMigrate(
 		&SubscriptionSchedule{},
-		&InvoiceSettingSubscriptionScheduleSetting{},
 		&SubscriptionSchedulesResourceDefaultSettings{},
-		&SubscriptionScheduleAddInvoiceItem{},
-		&SubscriptionScheduleConfigurationItem{},
-		&SubscriptionScheduleCurrentPhase{},
+		&SubscriptionScheduleSubscriptionItem{},
 		&SubscriptionSchedulePhaseConfiguration{},
 	)
 	if err != nil {

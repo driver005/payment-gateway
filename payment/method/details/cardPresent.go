@@ -37,6 +37,6 @@ type PaymentMethodDetailsCardPresent struct {
 	// Defines whether the authorized amount can be over-captured or not
 	OvercaptureSupported bool `json:"overcapture_supported,omitempty"`
 	// How card details were read in this transaction.
-	ReadMethod string                                 `json:"read_method,omitempty"`
-	Receipt    PaymentMethodDetailsCardPresentReceipt `json:"receipt,omitempty" database:"foreignKey:id"`
+	ReadMethod string                                  `json:"read_method,omitempty"`
+	Receipt    *PaymentMethodDetailsCardPresentReceipt `json:"receipt,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

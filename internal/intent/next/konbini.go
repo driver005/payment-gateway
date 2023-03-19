@@ -9,6 +9,6 @@ type PaymentIntentNextActionKonbini struct {
 	// The timestamp at which the pending Konbini payment expires.
 	ExpiresAt int `json:"expires_at"`
 	// The URL for the Konbini payment instructions page, which allows customers to view and print a Konbini voucher.
-	HostedVoucherUrl string                               `json:"hosted_voucher_url,omitempty"`
-	Stores           PaymentIntentNextActionKonbiniStores `json:"stores" database:"foreignKey:id"`
+	HostedVoucherUrl string                                `json:"hosted_voucher_url,omitempty"`
+	Stores           *PaymentIntentNextActionKonbiniStores `json:"stores" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

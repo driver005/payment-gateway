@@ -18,6 +18,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/payment_methods/:id/dettach", h.RouteDettach)
 }
 
+// RouteGet func gets PaymentMethod by given ID or 404 error.
+// @Description Get PaymentMethod by given ID or 404 error.
+// @Summary get PaymentMethod by given ID or 404 error.
+// @Tags PaymentMethod
+// @Accept json
+// @Produce json
+// @Param id path string true "PaymentMethod ID"
+// @Success 200 {object} PaymentMethod
+// @Router /v1/payment_methods/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -38,6 +47,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing PaymentMethods.
+// @Description Get all existing PaymentMethods.
+// @Summary get all existing PaymentMethods
+// @Tags PaymentMethod
+// @Accept json
+// @Produce json
+// @Success 200 {array} PaymentMethod
+// @Router /v1/payment_methods [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -67,6 +84,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new PaymentMethod.
+// @Description Create a new PaymentMethod.
+// @Summary create a new PaymentMethod
+// @Tags PaymentMethod
+// @Accept json
+// @Produce json
+// @Success 200 {object} PaymentMethod
+// @Router /v1/payment_methods [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -87,6 +112,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates PaymentMethod by given ID.
+// @Description Update PaymentMethod.
+// @Summary update PaymentMethod
+// @Tags PaymentMethod
+// @Accept json
+// @Produce json
+// @Param id body string true "PaymentMethod ID"
+// @Success 200 {object} PaymentMethod
+// @Router /v1/payment_methods/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -117,6 +151,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes PaymentMethod by given ID.
+// @Description Delete PaymentMethod by given ID.
+// @Summary delete PaymentMethod by given ID
+// @Tags PaymentMethod
+// @Accept json
+// @Produce json
+// @Param id body string true "PaymentMethod ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/payment_methods/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -137,6 +180,15 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusNoContent).JSON(nil)
 }
 
+// RouteAttach func for attaching PaymentMethod to Customer by given ID.
+// @Description Attaching PaymentMethod to Customer by given ID.
+// @Summary attaching PaymentMethod to Customer by given ID
+// @Tags PaymentMethod
+// @Accept json
+// @Produce json
+// @Param id body string true "PaymentMethod ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/payment_methods/{id}/attach [post]
 func (h *Handler) RouteAttach(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -157,6 +209,15 @@ func (h *Handler) RouteAttach(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDettach func for dettaching PaymentMethod from Customer by given ID.
+// @Description dettaching PaymentMethod from Customer by given ID.
+// @Summary dettaching PaymentMethod from Customer by given ID
+// @Tags PaymentMethod
+// @Accept json
+// @Produce json
+// @Param id body string true "PaymentMethod ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/payment_methods/{id}/dettach [post]
 func (h *Handler) RouteDettach(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

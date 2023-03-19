@@ -12,7 +12,7 @@ type Product struct {
 	Collection *ProductCollection `json:"collection" database:"foreignKey:id;references:collection_id"`
 
 	// The Product Collection that the Product belongs to
-	CollectionId uuid.NullUUID `json:"collection_id" database:"default:null"`
+	CollectionId uuid.NullUUID `json:"collection_id,omitempty"`
 
 	// A short description of the Product.
 	Description string `json:"description" database:"default:null"`
@@ -21,7 +21,7 @@ type Product struct {
 	Discountable bool `json:"discountable" database:"default:false"`
 
 	// The external ID of the product
-	ExternalId string `json:"external_id" database:"default:null"`
+	ExternalId string `json:"external_id,omitempty"`
 
 	// A unique identifier for the Product (e.g. for slug structure).
 	Handle string `json:"handle" database:"default:null"`
@@ -84,7 +84,7 @@ type Product struct {
 	Type *ProductType `json:"type" database:"foreignKey:id;references:type_id"`
 
 	// The Product type that the Product belongs to
-	TypeId uuid.NullUUID `json:"type_id" database:"default:null"`
+	TypeId uuid.NullUUID `json:"type_id,omitempty"`
 
 	// The Product Variants that belong to the Product. Each will have a unique combination of Product Option Values. Available if the relation `variants` is expanded.
 	Variants []ProductVariant `json:"variants" database:"foreignKey:id"`

@@ -15,6 +15,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/mandates/:id", h.RouteUpdate)
 }
 
+// RouteGet func gets Mandate by given ID or 404 error.
+// @Description Get Mandate by given ID or 404 error.
+// @Summary get Mandate by given ID or 404 error.
+// @Tags Mandate
+// @Accept json
+// @Produce json
+// @Param id path string true "Mandate ID"
+// @Success 200 {object} Mandate
+// @Router /v1/mandates/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -35,6 +44,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing Mandates.
+// @Description Get all existing Mandates.
+// @Summary get all existing Mandates
+// @Tags Mandate
+// @Accept json
+// @Produce json
+// @Success 200 {array} Mandate
+// @Router /v1/mandates [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -64,6 +81,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new Mandate.
+// @Description Create a new Mandate.
+// @Summary create a new Mandate
+// @Tags Mandate
+// @Accept json
+// @Produce json
+// @Success 200 {object} Mandate
+// @Router /v1/mandates [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -84,6 +109,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates Mandate by given ID.
+// @Description Update Mandate.
+// @Summary update Mandate
+// @Tags Mandate
+// @Accept json
+// @Produce json
+// @Param id body string true "Mandate ID"
+// @Success 200 {object} Mandate
+// @Router /v1/mandates/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -114,6 +148,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes Mandate by given ID.
+// @Description Delete Mandate by given ID.
+// @Summary delete Mandate by given ID
+// @Tags Mandate
+// @Accept json
+// @Produce json
+// @Param id body string true "Mandate ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/mandates/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

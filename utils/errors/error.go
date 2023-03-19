@@ -2,16 +2,8 @@ package errors
 
 import (
 	"github.com/driver005/gateway/core"
+	"github.com/driver005/gateway/payment/method"
 )
-
-// ApiErrorsSource The source object for errors returned on a request involving a source.
-type ApiErrorsSource struct {
-	core.Model
-
-	// BankAccount *bank.BankAccount
-	// Card        *card.Card
-	// Source      *source.Source
-}
 
 // ApiErrors
 type ApiErrors struct {
@@ -28,11 +20,12 @@ type ApiErrors struct {
 	// A human-readable message providing more details about the error. For card errors, these messages can be shown to your users.
 	Message string `json:"message,omitempty"`
 	// If the error is parameter-specific, the parameter related to the error. For example, you can use this to display a message near the correct form field.
-	Param string `json:"param,omitempty"`
+	Param         string                `json:"param,omitempty"`
+	PaymentMethod *method.PaymentMethod `json:"payment_method,omitempty"  database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// If the error is specific to the type of payment method, the payment method type that had a problem. This field is only populated for invoice-related errors.
 	PaymentMethodType string `json:"payment_method_type,omitempty"`
 	// A URL to the request log entry in your dashboard.
 	RequestLogUrl string `json:"request_log_url,omitempty"`
 	// The type of error returned. One of `api_error`, `card_error`, `idempotency_error`, or `invalid_request_error`
-	Type string `json:"type,omitempty"`
+	Type Type `json:"type,omitempty"`
 }

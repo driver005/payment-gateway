@@ -18,12 +18,12 @@ type OrderItemChange struct {
 	OrderEdit *OrderEdit `json:"order_edit" database:"foreignKey:id;references:order_edit_id"`
 
 	// The ID of the original line item in the order
-	OriginalLineItemId uuid.NullUUID `json:"original_line_item_id" database:"default:null"`
+	OriginalLineItemId uuid.NullUUID `json:"original_line_item_id,omitempty"`
 
 	OriginalLineItem *LineItem `json:"original_line_item" database:"foreignKey:id;references:original_line_item_id"`
 
 	// The ID of the cloned line item.
-	LineItemId uuid.NullUUID `json:"line_item_id" database:"default:null"`
+	LineItemId uuid.NullUUID `json:"line_item_id,omitempty"`
 
 	LineItem *LineItem `json:"line_item" database:"foreignKey:id;references:line_item_id"`
 }

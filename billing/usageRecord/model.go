@@ -24,8 +24,8 @@ type UsageRecordSummary struct {
 	// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	Livemode bool `json:"livemode,omitempty"`
 	// String representing the object's type. Objects of the same type share the same value.
-	Object string `json:"object,omitempty"`
-	Period Period `json:"period,omitempty" database:"foreignKey:id"`
+	Object string  `json:"object,omitempty"`
+	Period *Period `json:"period,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// The ID of the subscription item this summary is describing.
 	SubscriptionItem string `json:"subscription_item,omitempty"`
 	// The total usage within this usage period.

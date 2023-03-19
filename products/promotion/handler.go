@@ -15,6 +15,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/promotion_codes/:id", h.RouteUpdate)
 }
 
+// RouteGet func gets PromotionCode by given ID or 404 error.
+// @Description Get PromotionCode by given ID or 404 error.
+// @Summary get PromotionCode by given ID or 404 error.
+// @Tags PromotionCode
+// @Accept json
+// @Produce json
+// @Param id path string true "PromotionCode ID"
+// @Success 200 {object} PromotionCode
+// @Router /v1/promotion_codes/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -35,6 +44,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing PromotionCodes.
+// @Description Get all existing PromotionCodes.
+// @Summary get all existing PromotionCodes
+// @Tags PromotionCode
+// @Accept json
+// @Produce json
+// @Success 200 {array} PromotionCode
+// @Router /v1/promotion_codes [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -64,6 +81,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new PromotionCode.
+// @Description Create a new PromotionCode.
+// @Summary create a new PromotionCode
+// @Tags PromotionCode
+// @Accept json
+// @Produce json
+// @Success 200 {object} PromotionCode
+// @Router /v1/promotion_codes [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -84,6 +109,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates PromotionCode by given ID.
+// @Description Update PromotionCode.
+// @Summary update PromotionCode
+// @Tags PromotionCode
+// @Accept json
+// @Produce json
+// @Param id body string true "PromotionCode ID"
+// @Success 200 {object} PromotionCode
+// @Router /v1/promotion_codes/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -114,6 +148,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes PromotionCode by given ID.
+// @Description Delete PromotionCode by given ID.
+// @Summary delete PromotionCode by given ID
+// @Tags PromotionCode
+// @Accept json
+// @Produce json
+// @Param id body string true "PromotionCode ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/promotion_codes/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

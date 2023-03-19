@@ -8,5 +8,5 @@ type PaymentPagesCheckoutSessionInvoiceCreation struct {
 
 	// Indicates whether invoice creation is enabled for the Checkout Session.
 	Enabled     bool                                        `json:"enabled,omitempty"`
-	InvoiceData *PaymentPagesCheckoutSessionInvoiceSettings `json:"invoice_data,omitempty" database:"foreignKey:id"`
+	InvoiceData *PaymentPagesCheckoutSessionInvoiceSettings `json:"invoice_data,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

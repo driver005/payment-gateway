@@ -22,7 +22,7 @@ type Region struct {
 	TaxRate float64 `json:"tax_rate"`
 
 	// The tax rates that are included in the Region. Available if the relation `tax_rates` is expanded.
-	TaxRates tax.TaxRate `json:"tax_rates" database:"foreignKey:id"`
+	TaxRates *tax.TaxRate `json:"tax_rates" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 
 	// The tax code used on purchases in the Region. This may be used by other systems for accounting purposes.
 	TaxCode string `json:"tax_code" database:"default:null"`

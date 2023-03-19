@@ -16,6 +16,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/disputes/:id/close", h.RouteClose)
 }
 
+// RouteGet func gets Dispute by given ID or 404 error.
+// @Description Get Dispute by given ID or 404 error.
+// @Summary get Dispute by given ID or 404 error.
+// @Tags Dispute
+// @Accept json
+// @Produce json
+// @Param id path string true "Dispute ID"
+// @Success 200 {object} Dispute
+// @Router /v1/disputes/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -36,6 +45,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing Disputes.
+// @Description Get all existing Disputes.
+// @Summary get all existing Disputes
+// @Tags Dispute
+// @Accept json
+// @Produce json
+// @Success 200 {array} Dispute
+// @Router /v1/disputes [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -65,6 +82,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new Dispute.
+// @Description Create a new Dispute.
+// @Summary create a new Dispute
+// @Tags Dispute
+// @Accept json
+// @Produce json
+// @Success 200 {object} Dispute
+// @Router /v1/disputes [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -87,6 +112,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates Dispute by given ID.
+// @Description Update Dispute.
+// @Summary update Dispute
+// @Tags Dispute
+// @Accept json
+// @Produce json
+// @Param id body string true "Dispute ID"
+// @Success 200 {object} Dispute
+// @Router /v1/disputes/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -117,6 +151,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes Dispute by given ID.
+// @Description Delete Dispute by given ID.
+// @Summary delete Dispute by given ID
+// @Tags Dispute
+// @Accept json
+// @Produce json
+// @Param id body string true "Dispute ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/disputes/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -137,6 +180,15 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusNoContent).JSON(nil)
 }
 
+// RouteClose func for closing Disputes by given ID.
+// @Description Close Dispute.
+// @Summary close Dispute
+// @Tags Dispute
+// @Accept json
+// @Produce json
+// @Param id body string true "Dispute ID"
+// @Success 200 {object} Dispute
+// @Router /v1/disputes/{id}/close [post]
 func (h *Handler) RouteClose(context *fiber.Ctx) error {
 	var m Dispute
 

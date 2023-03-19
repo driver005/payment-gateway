@@ -18,7 +18,7 @@ type Discount struct {
 	IsDynamic bool `json:"is_dynamic"`
 
 	// The Discount Rule that governs the behaviour of the Discount
-	RuleId uuid.NullUUID `json:"rule_id" database:"default:null"`
+	RuleId uuid.NullUUID `json:"rule_id,omitempty"`
 
 	Rule *DiscountRule `json:"rule" database:"foreignKey:id;references:rule_id"`
 
@@ -26,7 +26,7 @@ type Discount struct {
 	IsDisabled bool `json:"is_disabled" database:"default:null"`
 
 	// The Discount that the discount was created from. This will always be a dynamic discount
-	ParentDiscountId uuid.NullUUID `json:"parent_discount_id" database:"default:null"`
+	ParentDiscountId uuid.NullUUID `json:"parent_discount_id,omitempty"`
 
 	ParentDiscount *Discount `json:"parent_discount" database:"foreignKey:id;references:parent_discount_id"`
 

@@ -4,18 +4,20 @@ import (
 	"fmt"
 	"strings"
 	"unicode"
+
+	"github.com/lib/pq"
 )
 
 type (
 	RegisteredCases struct {
-		cases  []string
+		cases  pq.StringArray
 		actual string
 	}
 	errUnknownCase struct {
 		*RegisteredCases
 	}
 	RegisteredPrefixes struct {
-		prefixes []string
+		prefixes pq.StringArray
 		actual   string
 	}
 	errUnknownPrefix struct {
@@ -75,9 +77,9 @@ func DefaultIfEmpty(s string, defaultValue string) string {
 
 // Split is a special case of strings.Split
 // which returns an empty slice if the string is empty
-func Split(s, sep string) []string {
+func Split(s, sep string) pq.StringArray {
 	if s == "" {
-		return []string{}
+		return pq.StringArray{}
 	}
 
 	return strings.Split(s, sep)

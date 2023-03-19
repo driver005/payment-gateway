@@ -1,6 +1,9 @@
 package invoices
 
-import "github.com/driver005/gateway/core"
+import (
+	"github.com/driver005/gateway/core"
+	"github.com/lib/pq"
+)
 
 // InvoicesLineItemsCreditedItems
 type InvoicesLineItemsCreditedItems struct {
@@ -8,5 +11,5 @@ type InvoicesLineItemsCreditedItems struct {
 	// Invoice containing the credited invoice line items
 	Invoice string `json:"invoice,omitempty"`
 	// Credited invoice line items
-	InvoiceLineItems []string `json:"invoice_line_items,omitempty" database:"type:text[]"`
+	InvoiceLineItems pq.StringArray `json:"invoice_line_items,omitempty" database:"type:varchar(64)[]"`
 }

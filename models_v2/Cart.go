@@ -15,12 +15,12 @@ type Cart struct {
 	Email string `json:"email" database:"default:null"`
 
 	// The billing address's ID
-	BillingAddressId uuid.NullUUID `json:"billing_address_id" database:"default:null"`
+	BillingAddressId uuid.NullUUID `json:"billing_address_id,omitempty"`
 
 	BillingAddress *Address `json:"billing_address" database:"foreignKey:id;references:billing_address_id"`
 
 	// The shipping address's ID
-	ShippingAddressId uuid.NullUUID `json:"shipping_address_id" database:"default:null"`
+	ShippingAddressId uuid.NullUUID `json:"shipping_address_id,omitempty"`
 
 	ShippingAddress *Address `json:"shipping_address" database:"foreignKey:id;references:shipping_address_id"`
 
@@ -28,7 +28,7 @@ type Cart struct {
 	Items []LineItem `json:"items" database:"foreignKey:id"`
 
 	// The region's ID
-	RegionId uuid.NullUUID `json:"region_id" database:"default:null"`
+	RegionId uuid.NullUUID `json:"region_id,omitempty"`
 
 	// A region object. Available if the relation `region` is expanded.
 	Region *Region `json:"region" database:"foreignKey:id;references:region_id"`
@@ -40,7 +40,7 @@ type Cart struct {
 	GiftCards []GiftCard `json:"gift_cards" database:"foreignKey:id"`
 
 	// The customer's ID
-	CustomerId uuid.NullUUID `json:"customer_id" database:"default:null"`
+	CustomerId uuid.NullUUID `json:"customer_id,omitempty"`
 
 	// A customer object. Available if the relation `customer` is expanded.
 	Customer *Customer `json:"customer" database:"foreignKey:id;references:customer_id"`
@@ -51,7 +51,7 @@ type Cart struct {
 	PaymentSessions []PaymentSession `json:"payment_sessions" database:"foreignKey:id"`
 
 	// The payment's ID if available
-	PaymentId uuid.NullUUID `json:"payment_id" database:"default:null"`
+	PaymentId uuid.NullUUID `json:"payment_id,omitempty"`
 
 	Payment *Payment `json:"payment" database:"foreignKey:id;references:payment_id"`
 
@@ -74,7 +74,7 @@ type Cart struct {
 	Context JSONB `json:"context" database:"default:null"`
 
 	// The sales channel ID the cart is associated with.
-	SalesChannelId uuid.NullUUID `json:"sales_channel_id" database:"default:null"`
+	SalesChannelId uuid.NullUUID `json:"sales_channel_id,omitempty"`
 
 	// A sales channel object. Available if the relation `sales_channel` is expanded.
 	SalesChannel *SalesChannel `json:"sales_channel" database:"foreignKey:id;references:sales_channel_id"`

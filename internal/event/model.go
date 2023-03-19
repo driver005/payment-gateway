@@ -22,10 +22,10 @@ type NotificationEventRequest struct {
 type Event struct {
 	core.Model
 
-	Account         account.Account          `json:"account,omitempty" database:"foreignKey:id"`
-	ApiVersion      string                   `json:"api_version,omitempty"`
-	Data            NotificationEventData    `json:"data" database:"foreignKey:id"`
-	PendingWebhooks int                      `json:"pending_webhooks,omitempty"`
-	Request         NotificationEventRequest `json:"request,omitempty" database:"foreignKey:id"`
-	Type            string                   `json:"type,omitempty"`
+	Account         *account.Account          `json:"account,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	ApiVersion      string                    `json:"api_version,omitempty"`
+	Data            *NotificationEventData    `json:"data" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	PendingWebhooks int                       `json:"pending_webhooks,omitempty"`
+	Request         *NotificationEventRequest `json:"request,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Type            string                    `json:"type,omitempty"`
 }

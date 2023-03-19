@@ -1,6 +1,7 @@
 package core
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/driver005/database"
@@ -18,9 +19,17 @@ type Model struct {
 }
 
 func (m *Model) BeforeCreate(tx *database.DB) (err error) {
-	m.Id, err = uuid.NewUUID()
-	if err != nil {
-		return err
+	fmt.Print(tx.Statement.Schema.Table + " : ")
+	fmt.Println("core")
+	if m.Id == uuid.Nil {
+		m.Id, err = uuid.NewUUID()
+		if err != nil {
+			return err
+		}
+	}
+
+	if m.Object == "" {
+		m.Object = tx.Statement.Schema.Table
 	}
 
 	m.CreatedAt = time.Now().UTC().Round(time.Second)

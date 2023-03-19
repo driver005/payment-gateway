@@ -9,7 +9,6 @@ type Registry interface {
 func Migrate(r Registry) {
 	err := r.Context().AutoMigrate(
 		&ApiErrors{},
-		&ApiErrorsSource{},
 	)
 	if err != nil {
 		panic(err)

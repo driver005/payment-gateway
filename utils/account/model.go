@@ -12,7 +12,7 @@ import (
 type Account struct {
 	core.Model
 
-	BusinessProfile *AccountBusinessProfile `json:"business_profile,omitempty" database:"foreignKey:id"`
+	BusinessProfile *AccountBusinessProfile `json:"business_profile,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// BusinessType       string                               `json:"business_type,omitempty"`
 	// Capabilities       *AccountCapabilities                 `json:"capabilities,omitempty"`
 	// ChargesEnabled     bool                                `json:"charges_enabled,omitempty"`

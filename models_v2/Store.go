@@ -30,7 +30,7 @@ type Store struct {
 	InviteLinkTemplate string `json:"invite_link_template" database:"default:null"`
 
 	// The sales channel ID the cart is associated with.
-	DefaultSalesChannelId uuid.NullUUID `json:"default_sales_channel_id" database:"default:null"`
+	DefaultSalesChannelId uuid.NullUUID `json:"default_sales_channel_id,omitempty"`
 
 	// A sales channel object. Available if the relation `default_sales_channel` is expanded.
 	DefaultSalesChannel *SalesChannel `json:"default_sales_channel" database:"foreignKey:id;references:default_sales_channel_id"`

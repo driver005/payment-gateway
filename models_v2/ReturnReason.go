@@ -19,7 +19,7 @@ type ReturnReason struct {
 	Value string `json:"value"`
 
 	// The ID of the parent reason.
-	ParentReturnReasonId uuid.NullUUID `json:"parent_return_reason_id" database:"default:null"`
+	ParentReturnReasonId uuid.NullUUID `json:"parent_return_reason_id,omitempty"`
 
 	ParentReturnReason *ReturnReason `json:"parent_return_reason" database:"foreignKey:id;references:parent_return_reason_id"`
 

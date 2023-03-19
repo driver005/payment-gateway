@@ -13,7 +13,7 @@ import (
 type RefundNextAction struct {
 	core.Model
 
-	EmailSent email.EmailSent `json:"email_sent,omitempty" database:"foreignKey:id"`
+	EmailSent *email.EmailSent `json:"email_sent,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// The expiry timestamp.
 	ExpiresAt int `json:"expires_at,omitempty"`
 	// Type of the next action to perform.
@@ -26,19 +26,19 @@ type Refund struct {
 	Amount            int               `json:"amount,omitempty"`
 	Currency          string            `json:"currency,omitempty"`
 	Description       string            `json:"description,omitempty"`
-	FailureReason     string            `json:"failure_reason,omitempty"`
+	FailureReason     FailureReason     `json:"failure_reason,omitempty"`
 	InstructionsEmail string            `json:"instructions_email,omitempty"`
-	NextAction        *RefundNextAction `json:"next_action,omitempty" database:"foreignKey:id"`
-	Reason            string            `json:"reason,omitempty"`
+	NextAction        *RefundNextAction `json:"next_action,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Reason            Reason            `json:"reason,omitempty"`
 	ReceiptNumber     string            `json:"receipt_number,omitempty"`
-	Status            string            `json:"status,omitempty"`
+	Status            Status            `json:"status,omitempty"`
 
-	ChargeId                    uuid.UUID                   `json:"charge_id,omitempty"`
-	Charge                      *charge.Charge              `json:"charge,omitempty" database:"foreignKey:charge_id"`
-	PaymentIntentId             uuid.UUID                   `json:"payment_intent_id,omitempty"`
-	PaymentIntent               *intent.PaymentIntent       `json:"payment_intent,omitempty" database:"foreignKey:payment_intent_id"`
-	BalanceTransactionId        uuid.UUID                   `json:"balance_transaction_id,omitempty"`
-	BalanceTransaction          *balance.BalanceTransaction `json:"balance_transaction,omitempty" database:"foreignKey:balance_transaction_id"`
-	FailureBalanceTransactionId uuid.UUID                   `json:"failure_balance_transaction_id,omitempty"`
-	FailureBalanceTransaction   *balance.BalanceTransaction `json:"failure_balance_transaction,omitempty" database:"foreignKey:failure_balance_transaction_id"`
+	ChargeId                    *uuid.UUID                  `json:"charge_id,omitempty" swaggerignore:"true"`
+	Charge                      *charge.Charge              `json:"charge,omitempty" database:"foreignKey:charge_id" swaggertype:"primitive,string" format:"uuid"`
+	PaymentIntentId             *uuid.UUID                  `json:"payment_intent_id,omitempty" swaggerignore:"true"`
+	PaymentIntent               *intent.PaymentIntent       `json:"payment_intent,omitempty" database:"foreignKey:payment_intent_id" swaggertype:"primitive,string" format:"uuid"`
+	BalanceTransactionId        *uuid.UUID                  `json:"balance_transaction_id,omitempty" swaggerignore:"true"`
+	BalanceTransaction          *balance.BalanceTransaction `json:"balance_transaction,omitempty" database:"foreignKey:balance_transaction_id" swaggertype:"primitive,string" format:"uuid"`
+	FailureBalanceTransactionId *uuid.UUID                  `json:"failure_balance_transaction_id,omitempty" swaggerignore:"true"`
+	FailureBalanceTransaction   *balance.BalanceTransaction `json:"failure_balance_transaction,omitempty" database:"foreignKey:failure_balance_transaction_id" swaggertype:"primitive,string" format:"uuid"`
 }

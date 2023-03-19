@@ -62,7 +62,7 @@ type TaxRate struct {
 	// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, \"NY\" for New York, United States.
 	State string `json:"state,omitempty"`
 	// The high-level tax type, such as `vat` or `sales_tax`.
-	TaxType string `json:"tax_type,omitempty"`
+	TaxType TaxType `json:"tax_type,omitempty"`
 }
 
 // TaxId You can add one or multiple tax IDs to a [customer](https://stripe.com/docs/api/customers). A customer's tax IDs are displayed on invoices and credit notes issued for the customer.  Related guide: [Customer Tax Identification Numbers](https://stripe.com/docs/billing/taxes/tax-ids).
@@ -72,15 +72,15 @@ type TaxId struct {
 	// Two-letter ISO code representing the country of the tax ID.
 	Country string `json:"country,omitempty"`
 	// The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
-	Type  string `json:"type,omitempty"`
+	Type  Type   `json:"type,omitempty"`
 	Value string `json:"value,omitempty"`
 	// Verification status, one of `pending`, `verified`, `unverified`, or `unavailable`.
-	Status string `json:"status,omitempty"`
+	Status Status `json:"status,omitempty"`
 	// Verified address.
 	VerifiedAddress string `json:"verified_address,omitempty"`
 	// Verified name.
 	VerifiedName string `json:"verified_name,omitempty"`
 
-	CustomerId uuid.UUID          `json:"customer_id" database:"default:null"`
-	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id"`
+	CustomerId *uuid.UUID         `json:"customer_id,omitempty" swaggerignore:"true"`
+	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
 }

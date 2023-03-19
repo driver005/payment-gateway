@@ -9,5 +9,5 @@ import (
 type SetupAttemptPaymentMethodDetailsCardPresent struct {
 	core.Model
 
-	GeneratedCard method.PaymentMethod `json:"generated_card,omitempty" database:"foreignKey:id"`
+	GeneratedCard *method.PaymentMethod `json:"generated_card,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/driver005/database"
 	"github.com/driver005/gateway/internal/customer"
+	"github.com/driver005/gateway/products/coupon"
 	"github.com/driver005/gateway/products/promotion"
 )
 
@@ -18,6 +19,7 @@ type Registry interface {
 	Migrate() bool
 	Customer() *customer.Handler
 	Promotion() *promotion.Handler
+	Coupon() *coupon.Handler
 }
 
 func NewHandler(r Registry) *Handler {

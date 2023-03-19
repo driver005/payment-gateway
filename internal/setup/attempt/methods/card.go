@@ -9,5 +9,5 @@ import (
 type SetupAttemptPaymentMethodDetailsCard struct {
 	core.Model
 
-	ThreeDSecure details.ThreeDSecureDetails `json:"three_d_secure,omitempty" database:"foreignKey:id"`
+	ThreeDSecure *details.ThreeDSecureDetails `json:"three_d_secure,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

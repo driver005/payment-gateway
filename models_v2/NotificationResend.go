@@ -16,10 +16,10 @@ type NotificationResend struct {
 	ResourceType string `json:"resource_type" database:"default:null"`
 
 	// The ID of the resource that the Notification refers to.
-	ResourceId uuid.NullUUID `json:"resource_id" database:"default:null"`
+	ResourceId uuid.NullUUID `json:"resource_id,omitempty"`
 
 	// The ID of the Customer that the Notification was sent to.
-	CustomerId uuid.NullUUID `json:"customer_id" database:"default:null"`
+	CustomerId uuid.NullUUID `json:"customer_id,omitempty"`
 
 	// A customer object. Available if the relation `customer` is expanded.
 	Customer *Customer `json:"customer" database:"foreignKey:id;references:customer_id"`
@@ -31,12 +31,12 @@ type NotificationResend struct {
 	Data JSONB `json:"data" database:"default:null"`
 
 	// The ID of the Notification that was originally sent.
-	ParentId uuid.NullUUID `json:"parent_id" database:"default:null"`
+	ParentId uuid.NullUUID `json:"parent_id,omitempty"`
 
 	ParentNotification *Notification `json:"parent_notification" database:"foreignKey:id;references:parent_id"`
 
 	// The ID of the Notification Provider that handles the Notification.
-	ProviderId uuid.NullUUID `json:"provider_id" database:"default:null"`
+	ProviderId uuid.NullUUID `json:"provider_id,omitempty"`
 
 	Provider *NotificationProvider `json:"provider" database:"foreignKey:id;references:provider_id"`
 }

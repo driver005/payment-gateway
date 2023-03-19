@@ -1,6 +1,9 @@
 package options
 
-import "github.com/driver005/gateway/core"
+import (
+	"github.com/driver005/gateway/core"
+	"github.com/lib/pq"
+)
 
 // PaymentMethodOptionsCardMandateOptions
 type PaymentMethodOptionsCardMandateOptions struct {
@@ -23,5 +26,5 @@ type PaymentMethodOptionsCardMandateOptions struct {
 	// Start date of the mandate or subscription. Start date should not be lesser than yesterday.
 	StartDate int `json:"start_date,omitempty"`
 	// Specifies the type of mandates supported. Possible values are `india`.
-	SupportedTypes []string `json:"supported_types,omitempty" database:"type:text[]"`
+	SupportedTypes pq.StringArray `json:"supported_types,omitempty" database:"type:varchar(64)[]"`
 }

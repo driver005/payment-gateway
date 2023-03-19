@@ -16,7 +16,7 @@ type GiftCardTransaction struct {
 	GiftCard *GiftCard `json:"gift_card" database:"foreignKey:id;references:gift_card_id"`
 
 	// The ID of the Order that the Gift Card was used to pay for.
-	OrderId uuid.NullUUID `json:"order_id" database:"default:null"`
+	OrderId uuid.NullUUID `json:"order_id,omitempty"`
 
 	// An order object. Available if the relation `order` is expanded.
 	Order *Order `json:"order" database:"foreignKey:id;references:order_id"`

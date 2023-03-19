@@ -16,6 +16,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Delete("/subscriptions/:id", h.RouteDelete)
 }
 
+// RouteGet func gets Subscription by given ID or 404 error.
+// @Description Get Subscription by given ID or 404 error.
+// @Summary get Subscription by given ID or 404 error.
+// @Tags Subscription
+// @Accept json
+// @Produce json
+// @Param id path string true "Subscription ID"
+// @Success 200 {object} Subscription
+// @Router /v1/subscriptions/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -36,6 +45,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing Subscriptions.
+// @Description Get all existing Subscriptions.
+// @Summary get all existing Subscriptions
+// @Tags Subscription
+// @Accept json
+// @Produce json
+// @Success 200 {array} Subscription
+// @Router /v1/subscriptions [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -65,6 +82,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new Subscription.
+// @Description Create a new Subscription.
+// @Summary create a new Subscription
+// @Tags Subscription
+// @Accept json
+// @Produce json
+// @Success 200 {object} Subscription
+// @Router /v1/subscriptions [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -85,6 +110,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates Subscription by given ID.
+// @Description Update Subscription.
+// @Summary update Subscription
+// @Tags Subscription
+// @Accept json
+// @Produce json
+// @Param id body string true "Subscription ID"
+// @Success 200 {object} Subscription
+// @Router /v1/subscriptions/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -115,6 +149,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes Subscription by given ID.
+// @Description Delete Subscription by given ID.
+// @Summary delete Subscription by given ID
+// @Tags Subscription
+// @Accept json
+// @Produce json
+// @Param id body string true "Subscription ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/subscriptions/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

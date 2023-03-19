@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/lib/pq"
 	"github.com/valyala/fasthttp"
 )
 
@@ -104,7 +105,7 @@ func Header(c *fiber.Ctx, u *fasthttp.URI, pageSize int64, limit, offset int) {
 	// Check for last page
 	if offset >= lastOffset {
 		if total == 0 {
-			c.Set("Link", strings.Join([]string{
+			c.Set("Link", strings.Join(pq.StringArray{
 				header(u, "first", limit, 0),
 				header(u, "next", limit, ((offset/limit)+1)*limit),
 				header(u, "prev", limit, ((offset/limit)-1)*limit),
@@ -117,7 +118,7 @@ func Header(c *fiber.Ctx, u *fasthttp.URI, pageSize int64, limit, offset int) {
 			return
 		}
 
-		c.Set("Link", strings.Join([]string{
+		c.Set("Link", strings.Join(pq.StringArray{
 			header(u, "first", limit, 0),
 			header(u, "prev", limit, lastOffset-limit),
 		}, ","))
@@ -125,14 +126,14 @@ func Header(c *fiber.Ctx, u *fasthttp.URI, pageSize int64, limit, offset int) {
 	}
 
 	if offset < limit {
-		c.Set("Link", strings.Join([]string{
+		c.Set("Link", strings.Join(pq.StringArray{
 			header(u, "next", limit, limit),
 			header(u, "last", limit, lastOffset),
 		}, ","))
 		return
 	}
 
-	c.Set("Link", strings.Join([]string{
+	c.Set("Link", strings.Join(pq.StringArray{
 		header(u, "first", limit, 0),
 		header(u, "next", limit, ((offset/limit)+1)*limit),
 		header(u, "prev", limit, ((offset/limit)-1)*limit),

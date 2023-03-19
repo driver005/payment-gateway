@@ -16,7 +16,7 @@ type PaymentPagesCheckoutSessionShippingCost struct {
 	AmountTax int `json:"amount_tax"`
 	// Total shipping cost after discounts and taxes are applied.
 	AmountTotal  int                    `json:"amount_total"`
-	ShippingRate *shipping.ShippingRate `json:"shipping_rate,omitempty" database:"foreignKey:id"`
+	ShippingRate *shipping.ShippingRate `json:"shipping_rate,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// The taxes applied to the shipping rate.
-	Taxes []tax.TaxRate `json:"taxes,omitempty" database:"foreignKey:id"`
+	Taxes []tax.TaxRate `json:"taxes,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 }

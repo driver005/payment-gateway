@@ -19,7 +19,7 @@ type Notification struct {
 	ResourceId uuid.NullUUID `json:"resource_id"`
 
 	// The ID of the Customer that the Notification was sent to.
-	CustomerId uuid.NullUUID `json:"customer_id" database:"default:null"`
+	CustomerId uuid.NullUUID `json:"customer_id,omitempty"`
 
 	// A customer object. Available if the relation `customer` is expanded.
 	Customer *Customer `json:"customer" database:"foreignKey:id;references:customer_id"`
@@ -34,7 +34,7 @@ type Notification struct {
 	Resends []NotificationResend `json:"resends" database:"foreignKey:id"`
 
 	// The id of the Notification Provider that handles the Notification.
-	ProviderId uuid.NullUUID `json:"provider_id" database:"default:null"`
+	ProviderId uuid.NullUUID `json:"provider_id,omitempty"`
 
 	Provider *NotificationProvider `json:"provider" database:"foreignKey:id;references:provider_id"`
 }

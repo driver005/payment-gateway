@@ -10,25 +10,25 @@ type LineItem struct {
 	core.Model
 
 	// The ID of the Cart that the Line Item belongs to.
-	CartId uuid.NullUUID `json:"cart_id" database:"default:null"`
+	CartId uuid.NullUUID `json:"cart_id,omitempty"`
 
 	// A cart object. Available if the relation `cart` is expanded.
 	Cart *Cart `json:"cart" database:"foreignKey:id;references:cart_id"`
 
 	// The ID of the Order that the Line Item belongs to.
-	OrderId uuid.NullUUID `json:"order_id" database:"default:null"`
+	OrderId uuid.NullUUID `json:"order_id,omitempty"`
 
 	// An order object. Available if the relation `order` is expanded.
 	Order *Order `json:"order" database:"foreignKey:id;references:order_id"`
 
 	// The id of the Swap that the Line Item belongs to.
-	SwapId uuid.NullUUID `json:"swap_id" database:"default:null"`
+	SwapId uuid.NullUUID `json:"swap_id,omitempty"`
 
 	// A swap object. Available if the relation `swap` is expanded.
 	Swap *Swap `json:"swap" database:"foreignKey:id;references:swap_id"`
 
 	// The id of the Claim that the Line Item belongs to.
-	ClaimOrderId uuid.NullUUID `json:"claim_order_id" database:"default:null"`
+	ClaimOrderId uuid.NullUUID `json:"claim_order_id,omitempty"`
 
 	// A claim order object. Available if the relation `claim_order` is expanded.
 	ClaimOrder *ClaimOrder `json:"claim_order" database:"foreignKey:id;references:claim_order_id"`
@@ -67,7 +67,7 @@ type LineItem struct {
 	UnitPrice int `json:"unit_price"`
 
 	// The id of the Product Variant contained in the Line Item.
-	VariantId uuid.NullUUID `json:"variant_id" database:"default:null"`
+	VariantId uuid.NullUUID `json:"variant_id,omitempty"`
 
 	// A product variant object. The Product Variant contained in the Line Item. Available if the relation `variant` is expanded.
 	Variant *ProductVariant `json:"variant" database:"foreignKey:id;references:variant_id"`

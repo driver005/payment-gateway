@@ -15,6 +15,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/payment_intents/:id", h.RouteUpdate)
 }
 
+// RouteGet func gets PaymentIntent by given ID or 404 error.
+// @Description Get PaymentIntent by given ID or 404 error.
+// @Summary get PaymentIntent by given ID or 404 error.
+// @Tags PaymentIntent
+// @Accept json
+// @Produce json
+// @Param id path string true "PaymentIntent ID"
+// @Success 200 {object} PaymentIntent
+// @Router /v1/payment_intents/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -35,6 +44,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing PaymentIntents.
+// @Description Get all existing PaymentIntents.
+// @Summary get all existing PaymentIntents
+// @Tags PaymentIntent
+// @Accept json
+// @Produce json
+// @Success 200 {array} PaymentIntent
+// @Router /v1/payment_intents [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -64,8 +81,16 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new PaymentIntent.
+// @Description Create a new PaymentIntent.
+// @Summary create a new PaymentIntent
+// @Tags PaymentIntent
+// @Accept json
+// @Produce json
+// @Success 200 {object} PaymentIntent
+// @Router /v1/payment_intents [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
-	m, err := h.Bind(context, false, true)
+	m, err := h.Bind(context, true)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -76,8 +101,17 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteUpdate func for updates PaymentIntent by given ID.
+// @Description Update PaymentIntent.
+// @Summary update PaymentIntent
+// @Tags PaymentIntent
+// @Accept json
+// @Produce json
+// @Param id body string true "PaymentIntent ID"
+// @Success 200 {object} PaymentIntent
+// @Router /v1/payment_intents/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
-	m, err := h.Bind(context, false, false)
+	m, err := h.Bind(context, false)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -114,6 +148,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes PaymentIntent by given ID.
+// @Description Delete PaymentIntent by given ID.
+// @Summary delete PaymentIntent by given ID
+// @Tags PaymentIntent
+// @Accept json
+// @Produce json
+// @Param id body string true "PaymentIntent ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/payment_intents/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -135,7 +178,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 }
 
 func (h *Handler) RouteConfirm(context *fiber.Ctx) error {
-	m, err := h.Bind(context, false, false)
+	m, err := h.Bind(context, false)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),

@@ -14,6 +14,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	// r.Post("subscription_items/:id/usage_records", h.RouteCreate)
 }
 
+// RouteGet func gets UsageRecord by given ID or 404 error.
+// @Description Get UsageRecord by given ID or 404 error.
+// @Summary get UsageRecord by given ID or 404 error.
+// @Tags UsageRecord
+// @Accept json
+// @Produce json
+// @Param id path string true "SubscriptionItem ID"
+// @Success 200 {object} UsageRecord
+// @Router /v1/subscription_items/{id}/usage_records [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -34,6 +43,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing UsageRecords.
+// @Description Get all existing UsageRecords.
+// @Summary get all existing UsageRecords
+// @Tags UsageRecord
+// @Accept json
+// @Produce json
+// @Success 200 {array} UsageRecord
+// @Router /v1/subscription_items/{id}/usage_record_summaries [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -63,6 +80,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new UsageRecord.
+// @Description Create a new UsageRecord.
+// @Summary create a new UsageRecord
+// @Tags UsageRecord
+// @Accept json
+// @Produce json
+// @Success 200 {object} UsageRecord
+// @Router /v1/usage_record [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	var m UsageRecord
 
@@ -84,6 +109,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates UsageRecord by given ID.
+// @Description Update UsageRecord.
+// @Summary update UsageRecord
+// @Tags UsageRecord
+// @Accept json
+// @Produce json
+// @Param id path string true "SubscriptionItem ID"
+// @Success 200 {object} UsageRecord
+// @Router /v1/usage_record/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	var m UsageRecord
 
@@ -115,6 +149,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes UsageRecord by given ID.
+// @Description Delete UsageRecord by given ID.
+// @Summary delete UsageRecord by given ID
+// @Tags UsageRecord
+// @Accept json
+// @Produce json
+// @Param id path string true "SubscriptionItem ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/usage_record/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

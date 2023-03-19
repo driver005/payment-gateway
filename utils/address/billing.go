@@ -6,7 +6,7 @@ import "github.com/driver005/gateway/core"
 type BillingDetails struct {
 	core.Model
 
-	Address *Address `json:"address,omitempty" database:"foreignKey:id"`
+	Address *Address `json:"address,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// Email address.
 	Email string `json:"email,omitempty"`
 	// Full name.

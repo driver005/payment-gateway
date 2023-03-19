@@ -17,7 +17,7 @@ type PaymentPagesCheckoutSessionTotalDetails struct {
 	// This is the sum of all the tax amounts.
 	AmountTax int `json:"amount_tax,omitempty"`
 	// The aggregated discounts.
-	Discounts []discount.Discount `json:"discounts,omitempty" database:"foreignKey:id"`
+	Discounts []discount.Discount `json:"discounts,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 	// The aggregated tax amounts by rate.
-	Taxes []tax.TaxRate `json:"taxes,omitempty" database:"foreignKey:id"`
+	Taxes []tax.TaxRate `json:"taxes,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 }

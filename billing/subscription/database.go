@@ -6,17 +6,16 @@ import (
 	"github.com/driver005/database"
 	"github.com/driver005/database/clause"
 	"github.com/driver005/gateway/billing/subscription/options"
+	"github.com/driver005/gateway/billing/subscription/subscriptions"
 	"github.com/google/uuid"
 )
 
 func (h *Handler) Migrate() {
 	options.Migrate(h.r)
+	subscriptions.Migrate(h.r)
 
 	err := h.r.Context().AutoMigrate(
 		&Subscription{},
-		&SubscriptionsResourcePaymentSettings{},
-		&SubscriptionsResourcePauseCollection{},
-		&SubscriptionsResourcePendingUpdate{},
 		&SubscriptionBillingThresholds{},
 		&SubscriptionPendingInvoiceItemInterval{},
 	)

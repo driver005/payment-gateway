@@ -16,6 +16,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Delete("/invoiceitems/:id", h.RouteDelete)
 }
 
+// RouteGet func gets Invoiceitem by given ID or 404 error.
+// @Description Get Invoiceitem by given ID or 404 error.
+// @Summary get Invoiceitem by given ID or 404 error.
+// @Tags Invoiceitem
+// @Accept json
+// @Produce json
+// @Param id path string true "Invoiceitem ID"
+// @Success 200 {object} Invoiceitem
+// @Router /v1/invoiceitems/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -36,6 +45,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing Invoiceitems.
+// @Description Get all existing Invoiceitems.
+// @Summary get all existing Invoiceitems
+// @Tags Invoiceitem
+// @Accept json
+// @Produce json
+// @Success 200 {array} Invoiceitem
+// @Router /v1/invoiceitems [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -65,6 +82,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new Invoiceitem.
+// @Description Create a new Invoiceitem.
+// @Summary create a new Invoiceitem
+// @Tags Invoiceitem
+// @Accept json
+// @Produce json
+// @Success 200 {object} Invoiceitem
+// @Router /v1/invoiceitems [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -85,6 +110,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates Invoiceitem by given ID.
+// @Description Update Invoiceitem.
+// @Summary update Invoiceitem
+// @Tags Invoiceitem
+// @Accept json
+// @Produce json
+// @Param id body string true "Invoiceitem ID"
+// @Success 200 {object} Invoiceitem
+// @Router /v1/invoiceitems/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -115,6 +149,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes Invoiceitem by given ID.
+// @Description Delete Invoiceitem by given ID.
+// @Summary delete Invoiceitem by given ID
+// @Tags Invoiceitem
+// @Accept json
+// @Produce json
+// @Param id body string true "Invoiceitem ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/invoiceitems/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

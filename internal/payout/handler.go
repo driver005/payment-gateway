@@ -17,6 +17,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/payouts/:id/reverse", h.RouteReverse)
 }
 
+// RouteGet func gets Payout by given ID or 404 error.
+// @Description Get Payout by given ID or 404 error.
+// @Summary get Payout by given ID or 404 error.
+// @Tags Payout
+// @Accept json
+// @Produce json
+// @Param id path string true "Payout ID"
+// @Success 200 {object} Payout
+// @Router /v1/payouts/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -37,6 +46,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing Payouts.
+// @Description Get all existing Payouts.
+// @Summary get all existing Payouts
+// @Tags Payout
+// @Accept json
+// @Produce json
+// @Success 200 {array} Payout
+// @Router /v1/payouts [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -66,6 +83,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new Payout.
+// @Description Create a new Payout.
+// @Summary create a new Payout
+// @Tags Payout
+// @Accept json
+// @Produce json
+// @Success 200 {object} Payout
+// @Router /v1/payouts [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -86,6 +111,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates Payout by given ID.
+// @Description Update Payout.
+// @Summary update Payout
+// @Tags Payout
+// @Accept json
+// @Produce json
+// @Param id body string true "Payout ID"
+// @Success 200 {object} Payout
+// @Router /v1/payouts/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -116,6 +150,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes Payout by given ID.
+// @Description Delete Payout by given ID.
+// @Summary delete Payout by given ID
+// @Tags Payout
+// @Accept json
+// @Produce json
+// @Param id body string true "Payout ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/payouts/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -136,6 +179,15 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusNoContent).JSON(nil)
 }
 
+// RouteCancel func for canceling Payouts by given ID.
+// @Description Cancel Payout.
+// @Summary cancel Payout
+// @Tags Payout
+// @Accept json
+// @Produce json
+// @Param id body string true "Payout ID"
+// @Success 200 {object} Payout
+// @Router /v1/payouts/{id}/cancele [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 	var m Payout
 
@@ -161,6 +213,15 @@ func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteReverse func for reversing Payouts by given ID.
+// @Description Reverse Payout.
+// @Summary reverse Payout
+// @Tags Payout
+// @Accept json
+// @Produce json
+// @Param id body string true "Payout ID"
+// @Success 200 {object} Payout
+// @Router /v1/payouts/{id}/reverse [post]
 func (h *Handler) RouteReverse(context *fiber.Ctx) error {
 	var m Payout
 

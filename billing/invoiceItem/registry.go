@@ -6,7 +6,9 @@ import (
 	"github.com/driver005/database"
 	"github.com/driver005/gateway/billing/invoice"
 	"github.com/driver005/gateway/billing/subscription"
+	"github.com/driver005/gateway/billing/subscriptionItem"
 	"github.com/driver005/gateway/internal/customer"
+	"github.com/driver005/gateway/products/price"
 )
 
 type Handler struct {
@@ -19,7 +21,9 @@ type Registry interface {
 	Migrate() bool
 	Customer() *customer.Handler
 	Invoice() *invoice.Handler
+	SubscriptionItem() *subscriptionItem.Handler
 	Subscription() *subscription.Handler
+	Price() *price.Handler
 }
 
 func NewHandler(r Registry) *Handler {

@@ -82,10 +82,5 @@ func (h *Handler) Pay(ctx context.Context, m *intent.PaymentIntent) (*intent.Pay
 		return nil, err
 	}
 
-	r, err := h.r.PaymentIntent().Upsert(ctx, resp)
-	if err != nil {
-		return nil, err
-	}
-
-	return r, nil
+	return resp, nil
 }

@@ -8,7 +8,7 @@ type FundingInstructionsBankTransfer struct {
 	// The country of the bank account to fund
 	Country string `json:"country,omitempty"`
 	// A list of financial addresses that can be used to fund a particular balance
-	FinancialAddresses []FundingInstructionsBankTransferFinancialAddress `json:"financial_addresses,omitempty" database:"foreignKey:id"`
+	FinancialAddresses []FundingInstructionsBankTransferFinancialAddress `json:"financial_addresses,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 	// The bank_transfer type
 	Type string `json:"type,omitempty"`
 }

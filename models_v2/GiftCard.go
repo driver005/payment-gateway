@@ -27,7 +27,7 @@ type GiftCard struct {
 	Region *Region `json:"region" database:"foreignKey:id;references:region_id"`
 
 	// The id of the Order that the Gift Card was purchased in.
-	OrderId uuid.NullUUID `json:"order_id" database:"default:null"`
+	OrderId uuid.NullUUID `json:"order_id,omitempty"`
 
 	// An order object. Available if the relation `order` is expanded.
 	Order *Order `json:"order" database:"foreignKey:id;references:order_id"`

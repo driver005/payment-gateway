@@ -23,18 +23,18 @@ type PriceListPricesInner struct {
 	MaxQuantity int `json:"max_quantity" database:"default:null"`
 
 	// The ID of the price list associated with the money amount
-	PriceListId uuid.NullUUID `json:"price_list_id" database:"default:null"`
+	PriceListId uuid.NullUUID `json:"price_list_id,omitempty"`
 
 	PriceList *PriceList `json:"price_list" database:"foreignKey:id;references:price_list_id"`
 
 	// The id of the Product Variant contained in the Line Item.
-	VariantId uuid.NullUUID `json:"variant_id" database:"default:null"`
+	VariantId uuid.NullUUID `json:"variant_id,omitempty"`
 
 	// The Product Variant contained in the Line Item. Available if the relation `variant` is expanded.
 	Variant *ProductVariant `json:"variant" database:"foreignKey:id;references:variant_id"`
 
 	// The region's ID
-	RegionId uuid.NullUUID `json:"region_id" database:"default:null"`
+	RegionId uuid.NullUUID `json:"region_id,omitempty"`
 
 	// A region object. Available if the relation `region` is expanded.
 	Region *Region `json:"region" database:"foreignKey:id;references:region_id"`

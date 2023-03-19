@@ -19,7 +19,7 @@ type CustomShippingOption struct {
 	ShippingOption *ShippingOption `json:"shipping_option" database:"foreignKey:id;references:shipping_option_id"`
 
 	// The ID of the Cart that the custom shipping option is attached to
-	CartId uuid.NullUUID `json:"cart_id" database:"default:null"`
+	CartId uuid.NullUUID `json:"cart_id,omitempty"`
 
 	// A cart object. Available if the relation `cart` is expanded.
 	Cart *Cart `json:"cart" database:"foreignKey:id;references:cart_id"`

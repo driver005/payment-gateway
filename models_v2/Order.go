@@ -21,10 +21,10 @@ type Order struct {
 	PaymentStatus string `json:"payment_status" database:"default:null"`
 
 	// The order's display ID
-	DisplayId int `json:"display_id" database:"default:null"`
+	DisplayId int `json:"display_id,omitempty"`
 
 	// The ID of the cart associated with the order
-	CartId uuid.NullUUID `json:"cart_id" database:"default:null"`
+	CartId uuid.NullUUID `json:"cart_id,omitempty"`
 
 	// A cart object. Available if the relation `cart` is expanded.
 	Cart *Cart `json:"cart" database:"foreignKey:id;references:cart_id"`
@@ -39,12 +39,12 @@ type Order struct {
 	Email string `json:"email"`
 
 	// The ID of the billing address associated with the order
-	BillingAddressId uuid.NullUUID `json:"billing_address_id" database:"default:null"`
+	BillingAddressId uuid.NullUUID `json:"billing_address_id,omitempty"`
 
 	BillingAddress *Address `json:"billing_address" database:"foreignKey:id;references:billing_address_id"`
 
 	// The ID of the shipping address associated with the order
-	ShippingAddressId uuid.NullUUID `json:"shipping_address_id" database:"default:null"`
+	ShippingAddressId uuid.NullUUID `json:"shipping_address_id,omitempty"`
 
 	ShippingAddress *Address `json:"shipping_address" database:"foreignKey:id;references:shipping_address_id"`
 
@@ -90,7 +90,7 @@ type Order struct {
 	Swaps []Swap `json:"swaps" database:"foreignKey:id"`
 
 	// The ID of the draft order this order is associated with.
-	DraftOrderId uuid.NullUUID `json:"draft_order_id" database:"default:null"`
+	DraftOrderId uuid.NullUUID `json:"draft_order_id,omitempty"`
 
 	// A draft order object. Available if the relation `draft_order` is expanded.
 	DraftOrder *DraftOrder `json:"draft_order" database:"foreignKey:id;references:draft_order_id"`
@@ -114,10 +114,10 @@ type Order struct {
 	IdempotencyKey string `json:"idempotency_key" database:"default:null"`
 
 	// The ID of an external order.
-	ExternalId uuid.NullUUID `json:"external_id" database:"default:null"`
+	ExternalId uuid.NullUUID `json:"external_id,omitempty"`
 
 	// The ID of the sales channel this order is associated with.
-	SalesChannelId uuid.NullUUID `json:"sales_channel_id" database:"default:null"`
+	SalesChannelId uuid.NullUUID `json:"sales_channel_id,omitempty"`
 
 	// A sales channel object. Available if the relation `sales_channel` is expanded.
 	SalesChannel *SalesChannel `json:"sales_channel" database:"foreignKey:id;references:sales_channel_id"`

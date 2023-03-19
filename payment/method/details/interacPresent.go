@@ -1,6 +1,9 @@
 package details
 
-import "github.com/driver005/gateway/core"
+import (
+	"github.com/driver005/gateway/core"
+	"github.com/lib/pq"
+)
 
 // PaymentMethodDetailsInteracPresent
 type PaymentMethodDetailsInteracPresent struct {
@@ -29,8 +32,8 @@ type PaymentMethodDetailsInteracPresent struct {
 	// Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
 	Network string `json:"network,omitempty"`
 	// EMV tag 5F2D. Preferred languages specified by the integrated circuit chip.
-	PreferredLocales []string `json:"preferred_locales,omitempty" database:"type:text[]"`
+	PreferredLocales pq.StringArray `json:"preferred_locales,omitempty" database:"type:varchar(64)[]"`
 	// How card details were read in this transaction.
-	ReadMethod string                                    `json:"read_method,omitempty"`
-	Receipt    PaymentMethodDetailsInteracPresentReceipt `json:"receipt,omitempty" database:"foreignKey:id"`
+	ReadMethod string                                     `json:"read_method,omitempty"`
+	Receipt    *PaymentMethodDetailsInteracPresentReceipt `json:"receipt,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

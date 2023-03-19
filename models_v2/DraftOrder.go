@@ -15,16 +15,16 @@ type DraftOrder struct {
 	Status DraftOrderStatus `json:"status" database:"default:open"`
 
 	// The draft order's display ID
-	DisplayId uuid.NullUUID `json:"display_id" database:"default:null"`
+	DisplayId uuid.NullUUID `json:"display_id,omitempty"`
 
 	// The ID of the cart associated with the draft order.
-	CartId uuid.NullUUID `json:"cart_id" database:"default:null"`
+	CartId uuid.NullUUID `json:"cart_id,omitempty"`
 
 	// A cart object. Available if the relation `cart` is expanded.
 	Cart Cart `json:"cart" database:"default:null"`
 
 	// The ID of the order associated with the draft order.
-	OrderId uuid.NullUUID `json:"order_id" database:"default:null"`
+	OrderId uuid.NullUUID `json:"order_id,omitempty"`
 
 	// An order object. Available if the relation `order` is expanded.
 	Order *Order `json:"order" database:"foreignKey:id;references:order_id"`

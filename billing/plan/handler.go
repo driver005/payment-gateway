@@ -16,6 +16,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Delete("/plans/:id", h.RouteDelete)
 }
 
+// RouteGet func gets Plan by given ID or 404 error.
+// @Description Get Plan by given ID or 404 error.
+// @Summary get Plan by given ID or 404 error.
+// @Tags Plan
+// @Accept json
+// @Produce json
+// @Param id path string true "Plan ID"
+// @Success 200 {object} Plan
+// @Router /v1/plans/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -36,6 +45,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing Plans.
+// @Description Get all existing Plans.
+// @Summary get all existing Plans
+// @Tags Plan
+// @Accept json
+// @Produce json
+// @Success 200 {array} Plan
+// @Router /v1/plans [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -65,6 +82,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new Plan.
+// @Description Create a new Plan.
+// @Summary create a new Plan
+// @Tags Plan
+// @Accept json
+// @Produce json
+// @Success 200 {object} Plan
+// @Router /v1/plans [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -85,6 +110,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates Plan by given ID.
+// @Description Update Plan.
+// @Summary update Plan
+// @Tags Plan
+// @Accept json
+// @Produce json
+// @Param id body string true "Plan ID"
+// @Success 200 {object} Plan
+// @Router /v1/plans/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -115,6 +149,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes Plan by given ID.
+// @Description Delete Plan by given ID.
+// @Summary delete Plan by given ID
+// @Tags Plan
+// @Accept json
+// @Produce json
+// @Param id body string true "Plan ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/plans/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

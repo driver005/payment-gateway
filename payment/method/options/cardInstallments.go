@@ -10,8 +10,8 @@ type PaymentMethodOptionsCardInstallments struct {
 	core.Model
 
 	// Installment plans that may be selected for this PaymentIntent.
-	AvailablePlans []details.PaymentMethodDetailsCardInstallments `json:"available_plans,omitempty" database:"foreignKey:id"`
+	AvailablePlans []details.PaymentMethodDetailsCardInstallments `json:"available_plans,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 	// Whether Installments are enabled for this PaymentIntent.
 	Enabled bool                                          `json:"enabled,omitempty"`
-	Plan    *details.PaymentMethodDetailsCardInstallments `json:"plan,omitempty" database:"foreignKey:id"`
+	Plan    *details.PaymentMethodDetailsCardInstallments `json:"plan,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

@@ -38,7 +38,7 @@ type Swap struct {
 	DifferenceDue int `json:"difference_due" database:"default:null"`
 
 	// The Address to send the new Line Items to - in most cases this will be the same as the shipping address on the Order.
-	ShippingAddressId uuid.NullUUID `json:"shipping_address_id" database:"default:null"`
+	ShippingAddressId uuid.NullUUID `json:"shipping_address_id,omitempty"`
 
 	ShippingAddress *Address `json:"shipping_address" database:"foreignKey:id;references:shipping_address_id"`
 
@@ -46,7 +46,7 @@ type Swap struct {
 	ShippingMethods []ShippingMethod `json:"shipping_methods" database:"foreignKey:id"`
 
 	// The id of the Cart that the Customer will use to confirm the Swap.
-	CartId uuid.NullUUID `json:"cart_id" database:"default:null"`
+	CartId uuid.NullUUID `json:"cart_id,omitempty"`
 
 	// A cart object. Available if the relation `cart` is expanded.
 	Cart *Cart `json:"cart" database:"foreignKey:id;references:cart_id"`

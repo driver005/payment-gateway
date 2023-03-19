@@ -8,7 +8,7 @@ import (
 type FundingInstructions struct {
 	core.Model
 
-	BankTransfer FundingInstructionsBankTransfer `json:"bank_transfer,omitempty" database:"foreignKey:id"`
+	BankTransfer *FundingInstructionsBankTransfer `json:"bank_transfer,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
 	Currency string `json:"currency,omitempty"`
 	// The `funding_type` of the returned instructions

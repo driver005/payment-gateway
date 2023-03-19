@@ -37,7 +37,7 @@ type Address struct {
 	Customer *Customer `json:"customer" database:"foreignKey:id;references:customer_id"`
 
 	// ID of the customer this address belongs to
-	CustomerId uuid.NullUUID `json:"customer_id" database:"default:null"`
+	CustomerId uuid.NullUUID `json:"customer_id,omitempty"`
 
 	// First name
 	FirstName string `json:"first_name" database:"default:null"`

@@ -19,7 +19,7 @@ type Note struct {
 	Value string `json:"value"`
 
 	// The ID of the author (user)
-	AuthorId uuid.NullUUID `json:"author_id" database:"default:null"`
+	AuthorId uuid.NullUUID `json:"author_id,omitempty"`
 
 	Author *User `json:"author" database:"foreignKey:id;references:author_id"`
 

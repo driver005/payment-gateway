@@ -19,7 +19,7 @@ type Customer struct {
 	LastName string `json:"last_name" database:"default:null"`
 
 	// The customer's billing address ID
-	BillingAddressId uuid.NullUUID `json:"billing_address_id" database:"default:null"`
+	BillingAddressId uuid.NullUUID `json:"billing_address_id,omitempty"`
 
 	BillingAddress *Address `json:"billing_address" database:"foreignKey:id;references:billing_address_id"`
 

@@ -51,6 +51,7 @@ import (
 	"github.com/gernest/wow"
 	"github.com/gernest/wow/spin"
 	"github.com/gofiber/fiber/v2"
+	"github.com/lib/pq"
 	"github.com/pkg/errors"
 )
 
@@ -203,6 +204,9 @@ func CallRegistry(r Registry) {
 	r.SetupAttempt()
 	r.SetupIntent()
 
+	//utils
+	r.Utils()
+
 	//billing
 	r.Credit()
 	r.Invoice()
@@ -228,8 +232,5 @@ func CallRegistry(r Registry) {
 	//link
 	r.Link()
 
-	//utils
-	r.Utils()
-
-	w.PersistWith(spin.Spinner{Frames: []string{"✅"}}, " Finished")
+	w.PersistWith(spin.Spinner{Frames: pq.StringArray{"✅"}}, " Finished")
 }

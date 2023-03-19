@@ -16,6 +16,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Delete("/subscription_items/:id", h.RouteDelete)
 }
 
+// RouteGet func gets SubscriptionItem by given ID or 404 error.
+// @Description Get SubscriptionItem by given ID or 404 error.
+// @Summary get SubscriptionItem by given ID or 404 error.
+// @Tags SubscriptionItem
+// @Accept json
+// @Produce json
+// @Param id path string true "SubscriptionItem ID"
+// @Success 200 {object} SubscriptionItem
+// @Router /v1/subscription_items/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -36,6 +45,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing SubscriptionItems.
+// @Description Get all existing SubscriptionItems.
+// @Summary get all existing SubscriptionItems
+// @Tags SubscriptionItem
+// @Accept json
+// @Produce json
+// @Success 200 {array} SubscriptionItem
+// @Router /v1/subscription_items [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -65,6 +82,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new SubscriptionItem.
+// @Description Create a new SubscriptionItem.
+// @Summary create a new SubscriptionItem
+// @Tags SubscriptionItem
+// @Accept json
+// @Produce json
+// @Success 200 {object} SubscriptionItem
+// @Router /v1/subscription_items [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	var m SubscriptionItem
 
@@ -86,6 +111,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates SubscriptionItem by given ID.
+// @Description Update SubscriptionItem.
+// @Summary update SubscriptionItem
+// @Tags SubscriptionItem
+// @Accept json
+// @Produce json
+// @Param id body string true "SubscriptionItem ID"
+// @Success 200 {object} SubscriptionItem
+// @Router /v1/subscription_items/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	var m SubscriptionItem
 
@@ -117,6 +151,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes SubscriptionItem by given ID.
+// @Description Delete SubscriptionItem by given ID.
+// @Summary delete SubscriptionItem by given ID
+// @Tags SubscriptionItem
+// @Accept json
+// @Produce json
+// @Param id body string true "SubscriptionItem ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/subscription_items/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

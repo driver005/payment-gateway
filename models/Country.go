@@ -29,7 +29,7 @@ type Country struct {
 	DisplayName string `json:"display_name"`
 
 	// The region ID this country is associated with.
-	RegionId uuid.NullUUID `json:"region_id" database:"default:null"`
+	RegionId uuid.NullUUID `json:"region_id,omitempty"`
 
 	// A region object. Available if the relation `region` is expanded.
 	Region Region `json:"region" database:"default:null"`

@@ -47,10 +47,12 @@ import (
 	"github.com/driver005/gateway/utils"
 
 	// "github.com/driver005/gateway/service"
+	_ "github.com/driver005/gateway/docs"
 	"github.com/driver005/gateway/sql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	fiber_logger "github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/swagger"
 	"github.com/gofiber/template/html"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/trace"
@@ -278,6 +280,10 @@ func (m *Base) Setup() {
 	// public.Use(csrf.New())
 	public.Use(fiber_logger.New())
 	// public.Use(limiter.New())
+	public.Get("/swagger/*", swagger.HandlerDefault)
+	// public.Get("/swagger/*", swagger.New(swagger.Config{
+	// 	Layout: ,
+	// }))
 
 	public.Listen("localhost:80")
 }

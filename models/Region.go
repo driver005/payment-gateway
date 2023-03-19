@@ -36,7 +36,7 @@ type Region struct {
 	Countries []Country `json:"countries" database:"foreignKey:id"`
 
 	// The ID of the tax provider used in this region
-	TaxProviderId uuid.NullUUID `json:"tax_provider_id" database:"default:null"`
+	TaxProviderId uuid.NullUUID `json:"tax_provider_id,omitempty"`
 
 	TaxProvider *TaxProvider `json:"tax_provider" database:"foreignKey:id;references:tax_provider_id"`
 

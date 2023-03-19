@@ -13,6 +13,7 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Discount, error) {
 	model := struct {
 		*Alias
 		Customer      uuid.NullUUID `json:"customer,omitempty"`
+		Coupon        uuid.NullUUID `json:"coupon,omitempty"`
 		PromotionCode uuid.NullUUID `json:"promotion_code,omitempty"`
 	}{
 		Alias: (*Alias)(&m),
@@ -24,6 +25,12 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Discount, error) {
 
 	if model.Customer.Valid {
 		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if model.Coupon.Valid {
+		m.Coupon, err = h.r.Coupon().Retrive(context.Context(), model.Coupon.UUID)
 		if err != nil {
 			return nil, err
 		}

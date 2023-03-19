@@ -14,6 +14,7 @@ import (
 	"github.com/driver005/gateway/sql"
 	"github.com/gernest/wow"
 	"github.com/gernest/wow/spin"
+	"github.com/lib/pq"
 	_ "github.com/lib/pq"
 )
 
@@ -85,7 +86,7 @@ func (m *SQL) DeleteTabels(db *database.DB) error {
 		}
 	}
 
-	w.PersistWith(spin.Spinner{Frames: []string{"✅"}}, " Finished")
+	w.PersistWith(spin.Spinner{Frames: pq.StringArray{"✅"}}, " Finished")
 
 	return nil
 }

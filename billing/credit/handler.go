@@ -18,6 +18,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Get("/credit_notes/:id/void", h.RouteVoid)
 }
 
+// RouteGet func gets CreditNote by given ID or 404 error.
+// @Description Get CreditNote by given ID or 404 error.
+// @Summary get CreditNote by given ID or 404 error.
+// @Tags CreditNote
+// @Accept json
+// @Produce json
+// @Param id path string true "CreditNote ID"
+// @Success 200 {object} CreditNote
+// @Router /v1/credit_notes/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -38,6 +47,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing CreditNotes.
+// @Description Get all existing CreditNotes.
+// @Summary get all existing CreditNotes
+// @Tags CreditNote
+// @Accept json
+// @Produce json
+// @Success 200 {array} CreditNote
+// @Router /v1/credit_notes [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -67,6 +84,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new CreditNote.
+// @Description Create a new CreditNote.
+// @Summary create a new CreditNote
+// @Tags CreditNote
+// @Accept json
+// @Produce json
+// @Success 200 {object} CreditNote
+// @Router /v1/credit_notes [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -87,6 +112,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates CreditNote by given ID.
+// @Description Update CreditNote.
+// @Summary update CreditNote
+// @Tags CreditNote
+// @Accept json
+// @Produce json
+// @Param id body string true "CreditNote ID"
+// @Success 200 {object} CreditNote
+// @Router /v1/credit_notes/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -117,6 +151,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes CreditNote by given ID.
+// @Description Delete CreditNote by given ID.
+// @Summary delete CreditNote by given ID
+// @Tags CreditNote
+// @Accept json
+// @Produce json
+// @Param id body string true "CreditNote ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/credit_notes/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -137,6 +180,15 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusNoContent).JSON(nil)
 }
 
+// RouteLines func gets CreditNote by given ID and return his Linitems.
+// @Description Get CreditNote by given ID and return his Linitems.
+// @Summary get CreditNote by given ID and return his Linitems.
+// @Tags CreditNote
+// @Accept json
+// @Produce json
+// @Param id path string true "CreditNote ID"
+// @Success 200 {object} CreditNote
+// @Router /v1/credit_notes/{id}/lines [get]
 func (h *Handler) RouteLines(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -154,9 +206,18 @@ func (h *Handler) RouteLines(context *fiber.Ctx) error {
 		})
 	}
 
-	return context.Status(fiber.StatusOK).JSON(&m.Lines)
+	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteVoid func for updates CreditNote by given ID to status void.
+// @Description Update CreditNote to status void.
+// @Summary update CreditNote to status void
+// @Tags CreditNote
+// @Accept json
+// @Produce json
+// @Param id body string true "CreditNote ID"
+// @Success 200 {object} CreditNote
+// @Router /v1/credit_notes/{id}/void [get]
 func (h *Handler) RouteVoid(context *fiber.Ctx) error {
 	var m CreditNote
 

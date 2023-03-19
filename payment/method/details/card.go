@@ -36,14 +36,14 @@ type PaymentMethodDetailsCard struct {
 	// Uniquely identifies this particular card number. You can use this attribute to check whether two customers who’ve signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.  *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
 	Fingerprint string `json:"fingerprint,omitempty"`
 	// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
-	Funding      string                               `json:"funding,omitempty"`
-	Installments PaymentMethodDetailsCardInstallments `json:"installments,omitempty" database:"foreignKey:id"`
+	Funding      string                                `json:"funding,omitempty"`
+	Installments *PaymentMethodDetailsCardInstallments `json:"installments,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// The last four digits of the card.
 	Last4 string `json:"last4,omitempty"`
 	// ID of the mandate used to make this payment or created by it.
 	Mandate string `json:"mandate,omitempty"`
 	// Identifies which network this charge was processed on. Can be `amex`, `cartes_bancaires`, `diners`, `discover`, `interac`, `jcb`, `mastercard`, `unionpay`, `visa`, or `unknown`.
-	Network      string                         `json:"network,omitempty"`
-	ThreeDSecure ThreeDSecureDetails            `json:"three_d_secure,omitempty" database:"foreignKey:id"`
-	Wallet       PaymentMethodDetailsCardWallet `json:"wallet,omitempty" database:"foreignKey:id"`
+	Network      string                          `json:"network,omitempty"`
+	ThreeDSecure *ThreeDSecureDetails            `json:"three_d_secure,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Wallet       *PaymentMethodDetailsCardWallet `json:"wallet,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 }

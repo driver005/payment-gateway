@@ -10,8 +10,8 @@ import (
 
 func (h *Handler) Migrate() {
 	err := h.r.Context().AutoMigrate(
-		&CreditNote{},
 		&CreditNoteLineItem{},
+		&CreditNote{},
 	)
 	if err != nil {
 		panic(err)

@@ -16,6 +16,15 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/refunds/:id/cancele", h.RouteCancel)
 }
 
+// RouteGet func gets Refund by given ID or 404 error.
+// @Description Get Refund by given ID or 404 error.
+// @Summary get Refund by given ID or 404 error.
+// @Tags Refund
+// @Accept json
+// @Produce json
+// @Param id path string true "Refund ID"
+// @Success 200 {object} Refund
+// @Router /v1/refunds/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -36,6 +45,14 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteList func gets all existing Refunds.
+// @Description Get all existing Refunds.
+// @Summary get all existing Refunds
+// @Tags Refund
+// @Accept json
+// @Produce json
+// @Success 200 {array} Refund
+// @Router /v1/refunds [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -65,6 +82,14 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&m)
 }
 
+// RouteCreate func for creates a new Refund.
+// @Description Create a new Refund.
+// @Summary create a new Refund
+// @Tags Refund
+// @Accept json
+// @Produce json
+// @Success 200 {object} Refund
+// @Router /v1/refunds [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -85,6 +110,15 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteUpdate func for updates Refund by given ID.
+// @Description Update Refund.
+// @Summary update Refund
+// @Tags Refund
+// @Accept json
+// @Produce json
+// @Param id body string true "Refund ID"
+// @Success 200 {object} Refund
+// @Router /v1/refunds/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -115,6 +149,15 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteDelete func for deletes Refund by given ID.
+// @Description Delete Refund by given ID.
+// @Summary delete Refund by given ID
+// @Tags Refund
+// @Accept json
+// @Produce json
+// @Param id body string true "Refund ID"
+// @Success 204 {string} status "ok"
+// @Router /v1/refunds/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -135,6 +178,15 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusNoContent).JSON(nil)
 }
 
+// RouteCancel func for canceling Refunds by given ID.
+// @Description Cancel Refund.
+// @Summary cancel Refund
+// @Tags Refund
+// @Accept json
+// @Produce json
+// @Param id body string true "Refund ID"
+// @Success 200 {object} Refund
+// @Router /v1/refunds/{id}/cancele [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 	var m Refund
 

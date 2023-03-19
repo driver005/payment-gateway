@@ -12,7 +12,7 @@ type FileLink struct {
 	Expired bool `json:"expired,omitempty"`
 	// Time at which the link expires.
 	ExpiresAt int   `json:"expires_at,omitempty"`
-	File      *File `json:"file,omitempty" database:"foreignKey:id"`
+	File      *File `json:"file,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// The publicly accessible URL to download the file.
 	Url string `json:"url,omitempty"`
 }
@@ -25,9 +25,9 @@ type File struct {
 	ExpiresAt int `json:"expires_at,omitempty"`
 	// A filename for the file, suitable for saving to a filesystem.
 	Filename string    `json:"filename,omitempty"`
-	Links    *FileLink `json:"links,omitempty" database:"foreignKey:id"`
+	Links    *FileLink `json:"links,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// The [purpose](https://stripe.com/docs/file-upload#uploading-a-file) of the uploaded file.
-	Purpose string `json:"purpose,omitempty"`
+	Purpose Purpose `json:"purpose,omitempty"`
 	// The size in bytes of the file object.
 	Size int `json:"size,omitempty"`
 	// A user friendly title for the document.

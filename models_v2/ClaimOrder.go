@@ -34,7 +34,7 @@ type ClaimOrder struct {
 	ReturnOrder *Return `json:"return_order" database:"foreignKey:id"`
 
 	// The ID of the address that the new items should be shipped to
-	ShippingAddressId uuid.NullUUID `json:"shipping_address_id" database:"default:null"`
+	ShippingAddressId uuid.NullUUID `json:"shipping_address_id,omitempty"`
 
 	ShippingAddress *Address `json:"shipping_address" database:"foreignKey:id;references:shipping_address_id"`
 

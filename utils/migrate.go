@@ -14,6 +14,7 @@ import (
 	"github.com/driver005/gateway/utils/region"
 	"github.com/driver005/gateway/utils/review"
 	"github.com/driver005/gateway/utils/rule"
+	"github.com/driver005/gateway/utils/shipping"
 	"github.com/driver005/gateway/utils/tax"
 )
 
@@ -31,5 +32,6 @@ func (h *Handler) Migrate() {
 	region.Migrate(h.r)
 	review.Migrate(h.r)
 	rule.Migrate(h.r)
+	shipping.Migrate(h.r)
 	tax.Migrate(h.r)
 }

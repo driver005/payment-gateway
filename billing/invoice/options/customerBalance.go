@@ -6,7 +6,7 @@ import "github.com/driver005/gateway/core"
 type InvoicePaymentMethodOptionsCustomerBalance struct {
 	core.Model
 
-	BankTransfer *InvoicePaymentMethodOptionsCustomerBalanceBankTransfer `json:"bank_transfer,omitempty" database:"foreignKey:id"`
+	BankTransfer *InvoicePaymentMethodOptionsCustomerBalanceBankTransfer `json:"bank_transfer,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 	// The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: `bank_transfer`.
 	FundingType string `json:"funding_type,omitempty"`
 }
