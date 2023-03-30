@@ -82,6 +82,11 @@ type CreditNote struct {
 	// The time that the credit note was voided.
 	VoidedAt time.Time `json:"voided_at,omitempty"`
 
+	CustomerReq                   uuid.NullUUID `json:"customer,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+	CustomerBalanceTransactionReq uuid.NullUUID `json:"customer_balance_transaction,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+	InvoiceReq                    uuid.NullUUID `json:"invoice,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+	RefundReq                     uuid.NullUUID `json:"refund,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+
 	CustomerId                   *uuid.UUID                  `json:"customer_id,omitempty" swaggerignore:"true"`
 	Customer                     *customer.Customer          `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
 	CustomerBalanceTransactionId *uuid.UUID                  `json:"customer_balance_transaction_id,omitempty" swaggerignore:"true"`
