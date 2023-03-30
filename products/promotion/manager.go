@@ -12,8 +12,8 @@ func (h *Handler) Bind(context *fiber.Ctx) (*PromotionCode, error) {
 
 	model := struct {
 		*Alias
-		Customer uuid.NullUUID `json:"customer,omitempty"`
-		Coupon   uuid.NullUUID `json:"coupon,omitempty"`
+		Customer uuid.NullUUID `json:"customer,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+		Coupon   uuid.NullUUID `json:"coupon,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
 	}{
 		Alias: (*Alias)(&m),
 	}

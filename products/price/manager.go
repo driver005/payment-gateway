@@ -12,7 +12,7 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Price, error) {
 
 	model := struct {
 		*Alias
-		Product uuid.NullUUID `json:"product,omitempty"`
+		Product uuid.NullUUID `json:"product,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
 	}{
 		Alias: (*Alias)(&m),
 	}

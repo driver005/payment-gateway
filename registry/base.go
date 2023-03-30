@@ -51,6 +51,9 @@ import (
 	"github.com/driver005/gateway/sql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+
+	// "github.com/gofiber/fiber/v2/middleware/csrf"
+	"github.com/gofiber/fiber/v2/middleware/favicon"
 	fiber_logger "github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/swagger"
 	"github.com/gofiber/template/html"
@@ -274,8 +277,7 @@ func (m *Base) Setup() {
 		Views:          html.New("./views", ".html"),
 	})
 
-	m.RegisterRoutes(public)
-
+	public.Use(favicon.New())
 	public.Use(cors.New())
 	// public.Use(csrf.New())
 	public.Use(fiber_logger.New())
@@ -284,6 +286,8 @@ func (m *Base) Setup() {
 	// public.Get("/swagger/*", swagger.New(swagger.Config{
 	// 	Layout: ,
 	// }))
+
+	m.RegisterRoutes(public)
 
 	public.Listen("localhost:80")
 }

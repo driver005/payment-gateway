@@ -12,9 +12,9 @@ func (h *Handler) Bind(context *fiber.Ctx) (*SetupAttempt, error) {
 
 	model := struct {
 		*Alias
-		Customer      uuid.NullUUID `json:"customer,omitempty"`
-		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty"`
-		SetupIntent   uuid.NullUUID `json:"setup_intent,omitempty"`
+		Customer      uuid.NullUUID `json:"customer,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+		SetupIntent   uuid.NullUUID `json:"setup_intent,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
 	}{
 		Alias: (*Alias)(&m),
 	}

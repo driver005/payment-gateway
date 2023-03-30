@@ -12,10 +12,10 @@ func (h *Handler) Bind(context *fiber.Ctx) (*CreditNote, error) {
 
 	model := struct {
 		*Alias
-		Customer                   uuid.NullUUID `json:"customer,omitempty"`
-		CustomerBalanceTransaction uuid.NullUUID `json:"customer_balance_transaction,omitempty"`
-		Invoice                    uuid.NullUUID `json:"invoice,omitempty"`
-		Refund                     uuid.NullUUID `json:"refund,omitempty"`
+		Customer                   uuid.NullUUID `json:"customer,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+		CustomerBalanceTransaction uuid.NullUUID `json:"customer_balance_transaction,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+		Invoice                    uuid.NullUUID `json:"invoice,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+		Refund                     uuid.NullUUID `json:"refund,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
 	}{
 		Alias: (*Alias)(&m),
 	}
