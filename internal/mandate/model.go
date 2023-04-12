@@ -10,11 +10,11 @@ import (
 type Mandate struct {
 	core.Model
 
-	PaymentMethodDetails *methods.MandatePaymentMethodDetails `json:"payment_method_details,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	SingleUse            *methods.MandateSingleUse            `json:"single_use,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	PaymentMethodDetails *methods.MandatePaymentMethodDetails `json:"payment_method_details,omitempty" database:"foreignKey:id"`
+	SingleUse            *methods.MandateSingleUse            `json:"single_use,omitempty" database:"foreignKey:id"`
 	Status               Status                               `json:"status,omitempty"`
 	Type                 Type                                 `json:"type,omitempty"`
 
 	PaymentMethodId *uuid.UUID            `json:"payment_method_id,omitempty" swaggerignore:"true"`
-	PaymentMethod   *method.PaymentMethod `json:"payment_method,omitempty" database:"foreignKey:payment_method_id" swaggertype:"primitive,string" format:"uuid"`
+	PaymentMethod   *method.PaymentMethod `json:"payment_method,omitempty" database:"foreignKey:payment_method_id"`
 }

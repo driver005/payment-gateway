@@ -8,10 +8,10 @@ import (
 type SubscriptionsResourcePaymentMethodOptions struct {
 	core.Model
 
-	AcssDebit       *SubscriptionsResourcePaymentMethodOptionsAcssDebit       `json:"acss_debit,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Bancontact      *SubscriptionsResourcePaymentMethodOptionsBancontact      `json:"bancontact,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Card            *SubscriptionsResourcePaymentMethodOptionsCard            `json:"card,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	CustomerBalance *SubscriptionsResourcePaymentMethodOptionsCustomerBalance `json:"customer_balance,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Konbini         *SubscriptionsResourcePaymentMethodOptionsKonbini         `json:"konbini,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	UsBankAccount   *SubscriptionsResourcePaymentMethodOptionsUsBankAccount   `json:"us_bank_account,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	AcssDebit       *SubscriptionsResourcePaymentMethodOptionsAcssDebit       `json:"acss_debit,omitempty" database:"foreignKey:id"`
+	Bancontact      *SubscriptionsResourcePaymentMethodOptionsBancontact      `json:"bancontact,omitempty" database:"foreignKey:id"`
+	Card            *SubscriptionsResourcePaymentMethodOptionsCard            `json:"card,omitempty" database:"foreignKey:id"`
+	CustomerBalance *SubscriptionsResourcePaymentMethodOptionsCustomerBalance `json:"customer_balance,omitempty" database:"foreignKey:id"`
+	Konbini         *SubscriptionsResourcePaymentMethodOptionsKonbini         `json:"konbini,omitempty" database:"foreignKey:id"`
+	UsBankAccount   *SubscriptionsResourcePaymentMethodOptionsUsBankAccount   `json:"us_bank_account,omitempty" database:"foreignKey:id"`
 }

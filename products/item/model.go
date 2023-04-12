@@ -24,7 +24,7 @@ type LineItem struct {
 	PeriodStart            time.Time                                `json:"period_start,omitempty"`
 	PeriodEnd              time.Time                                `json:"period_end,omitempty"`
 	Proration              bool                                     `json:"proration,omitempty"`
-	ProrationDetails       *invoices.InvoicesLineItemsCreditedItems `json:"proration_details,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	ProrationDetails       *invoices.InvoicesLineItemsCreditedItems `json:"proration_details,omitempty" database:"foreignKey:id"`
 	Quantity               int                                      `json:"quantity,omitempty"`
 	Subscription           string                                   `json:"subscription,omitempty"`
 	SubscriptionItem       string                                   `json:"subscription_item,omitempty"`
@@ -33,7 +33,7 @@ type LineItem struct {
 	UnitAmountExcludingTax float64                                  `json:"unit_amount_excluding_tax,omitempty"`
 
 	ProductId *uuid.UUID       `json:"product_id,omitempty" swaggerignore:"true"`
-	Product   *product.Product `json:"product,omitempty" database:"foreignKey:product_id" swaggertype:"primitive,string" format:"uuid"`
+	Product   *product.Product `json:"product,omitempty" database:"foreignKey:product_id"`
 	PriceId   *uuid.UUID       `json:"price_id,omitempty" swaggerignore:"true"`
-	Price     *price.Price     `json:"price,omitempty" database:"foreignKey:price_id" swaggertype:"primitive,string" format:"uuid"`
+	Price     *price.Price     `json:"price,omitempty" database:"foreignKey:price_id"`
 }

@@ -64,9 +64,9 @@ type CreditNote struct {
 	// The link to download the PDF of the credit note.
 	Pdf string `json:"pdf,omitempty"`
 	// Reason for issuing this credit note, one of `duplicate`, `fraudulent`, `order_change`, or `product_unsatisfactory`
-	Reason Reason `json:"reason,omitempty" swaggertype:"primitive,string" format:"uuid"`
+	Reason Reason `json:"reason,omitempty"`
 	// Status of this credit note, one of `issued` or `void`. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).
-	Status Status `json:"status,omitempty" swaggertype:"primitive,string" format:"uuid"`
+	Status Status `json:"status,omitempty"`
 	// The integer amount in %s representing the amount of the credit note, excluding exclusive tax and invoice level discounts.
 	Subtotal int `json:"subtotal,omitempty"`
 	// The integer amount in %s representing the amount of the credit note, excluding all tax and invoice level discounts.
@@ -82,17 +82,12 @@ type CreditNote struct {
 	// The time that the credit note was voided.
 	VoidedAt time.Time `json:"voided_at,omitempty"`
 
-	CustomerReq                   uuid.NullUUID `json:"customer,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-	CustomerBalanceTransactionReq uuid.NullUUID `json:"customer_balance_transaction,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-	InvoiceReq                    uuid.NullUUID `json:"invoice,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-	RefundReq                     uuid.NullUUID `json:"refund,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-
 	CustomerId                   *uuid.UUID                  `json:"customer_id,omitempty" swaggerignore:"true"`
-	Customer                     *customer.Customer          `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
+	Customer                     *customer.Customer          `json:"customer,omitempty" database:"foreignKey:customer_id"`
 	CustomerBalanceTransactionId *uuid.UUID                  `json:"customer_balance_transaction_id,omitempty" swaggerignore:"true"`
-	CustomerBalanceTransaction   *balance.BalanceTransaction `json:"customer_balance_transaction,omitempty" database:"foreignKey:customer_balance_transaction_id" swaggertype:"primitive,string" format:"uuid"`
+	CustomerBalanceTransaction   *balance.BalanceTransaction `json:"customer_balance_transaction,omitempty" database:"foreignKey:customer_balance_transaction_id"`
 	InvoiceId                    *uuid.UUID                  `json:"invoice_id,omitempty" swaggerignore:"true"`
-	Invoice                      *invoice.Invoice            `json:"invoice,omitempty" database:"foreignKey:invoice_id" swaggertype:"primitive,string" format:"uuid"`
+	Invoice                      *invoice.Invoice            `json:"invoice,omitempty" database:"foreignKey:invoice_id"`
 	RefundId                     *uuid.UUID                  `json:"refund_id,omitempty" swaggerignore:"true"`
-	Refund                       *refund.Refund              `json:"refund,omitempty" database:"foreignKey:refund_id" swaggertype:"primitive,string" format:"uuid"`
+	Refund                       *refund.Refund              `json:"refund,omitempty" database:"foreignKey:refund_id"`
 }

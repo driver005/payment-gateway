@@ -34,7 +34,7 @@ type Invoiceitem struct {
 	// Quantity of units for the invoice item. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.
 	Quantity int `json:"quantity,omitempty"`
 	// The tax rates which apply to the invoice item. When set, the `default_tax_rates` on the invoice do not apply to this invoice item.
-	TaxRates *tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	TaxRates *tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id"`
 	// Unit amount (in the `currency` specified) of the invoice item.
 	UnitAmount int `json:"unit_amount,omitempty"`
 	// Same as `unit_amount`, but contains a decimal value with at most 12 decimal places.
@@ -44,13 +44,13 @@ type Invoiceitem struct {
 	Discounts []discount.Discount `json:"discounts,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 
 	CustomerId         *uuid.UUID                         `json:"customer_id,omitempty" swaggerignore:"true"`
-	Customer           *customer.Customer                 `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
+	Customer           *customer.Customer                 `json:"customer,omitempty" database:"foreignKey:customer_id"`
 	InvoiceId          *uuid.UUID                         `json:"invoice_id,omitempty" swaggerignore:"true"`
-	Invoice            *invoice.Invoice                   `json:"invoice,omitempty" database:"foreignKey:invoice_id" swaggertype:"primitive,string" format:"uuid"`
+	Invoice            *invoice.Invoice                   `json:"invoice,omitempty" database:"foreignKey:invoice_id"`
 	PriceId            *uuid.UUID                         `json:"price_id,omitempty" swaggerignore:"true"`
-	Price              *price.Price                       `json:"price,omitempty" database:"foreignKey:price_id" swaggertype:"primitive,string" format:"uuid"`
+	Price              *price.Price                       `json:"price,omitempty" database:"foreignKey:price_id"`
 	SubscriptionId     *uuid.UUID                         `json:"subscription_id,omitempty" swaggerignore:"true"`
-	Subscription       *subscription.Subscription         `json:"subscription,omitempty" database:"foreignKey:subscription_id" swaggertype:"primitive,string" format:"uuid"`
+	Subscription       *subscription.Subscription         `json:"subscription,omitempty" database:"foreignKey:subscription_id"`
 	SubscriptionItemId *uuid.UUID                         `json:"subscription_item_id,omitempty" swaggerignore:"true"`
-	SubscriptionItem   *subscriptionItem.SubscriptionItem `json:"subscription_item,omitempty" database:"foreignKey:subscription_item_id" swaggertype:"primitive,string" format:"uuid"`
+	SubscriptionItem   *subscriptionItem.SubscriptionItem `json:"subscription_item,omitempty" database:"foreignKey:subscription_item_id"`
 }

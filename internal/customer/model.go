@@ -26,7 +26,7 @@ type CustomerTax struct {
 type Customer struct {
 	core.Model
 
-	Address *address.Address `json:"address,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Address *address.Address `json:"address,omitempty" database:"foreignKey:id"`
 	Balance int              `json:"balance,omitempty"`
 	// CashBalance          *CashBalance                     `json:"cash_balance,omitempty"`
 	Currency    string `json:"currency,omitempty"`
@@ -36,15 +36,15 @@ type Customer struct {
 	Email                string                                  `json:"email,omitempty"`
 	InvoiceCreditBalance core.JSONB                              `json:"invoice_credit_balance,omitempty"`
 	InvoicePrefix        string                                  `json:"invoice_prefix,omitempty"`
-	InvoiceSettings      *settings.InvoiceSettingCustomerSetting `json:"invoice_settings,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	InvoiceSettings      *settings.InvoiceSettingCustomerSetting `json:"invoice_settings,omitempty" database:"foreignKey:id"`
 	Name                 string                                  `json:"name,omitempty"`
 	NextInvoiceSequence  int                                     `json:"next_invoice_sequence,omitempty"`
 	Phone                string                                  `json:"phone,omitempty"`
 	PreferredLocales     pq.StringArray                          `json:"preferred_locales,omitempty" database:"type:varchar(64)[]"`
-	Shipping             *address.Shipping                       `json:"shipping,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Shipping             *address.Shipping                       `json:"shipping,omitempty" database:"foreignKey:id"`
 	// Sources              *ApmsSourcesSourceList                  `json:"sources,omitempty"`
 	// Subscriptions        *SubscriptionList                       `json:"subscriptions,omitempty"`
-	Tax       *CustomerTax `json:"tax,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Tax       *CustomerTax `json:"tax,omitempty" database:"foreignKey:id"`
 	TaxExempt TaxExempt    `json:"tax_exempt,omitempty"`
 	// TaxIds               *TaxIDsList                             `json:"tax_ids,omitempty"`
 }

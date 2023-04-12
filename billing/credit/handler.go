@@ -90,6 +90,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags CreditNote
 // @Accept json
 // @Produce json
+// @Param credit_note body model true "CreditNote Data"
 // @Success 200 {object} CreditNote
 // @Router /v1/credit_notes [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {

@@ -13,27 +13,27 @@ func (h *Handler) Bind(context *fiber.Ctx) (*PaymentMethod, error) {
 
 	model := struct {
 		*Alias
-		Customer                    uuid.NullUUID `json:"customer,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		AccountNumber               string        `json:"account_number,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		AccountHolderType           string        `json:"account_holder_type,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		AccountType                 string        `json:"account_type,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		FinancialConnectionsAccount string        `json:"financial_connections_account,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		RoutingNumber               string        `json:"routing_number,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		InstitutionNumber           string        `json:"institution_number,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		TransitNumber               string        `json:"transit_number,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		BsbNumber                   string        `json:"bsb_number,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		SortCode                    string        `json:"sort_code,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		TaxId                       string        `json:"tax_id,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		ExpMonth                    int           `json:"exp_month,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		ExpYear                     int           `json:"exp_year,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Number                      string        `json:"number,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Cvc                         string        `json:"cvc,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Bank                        string        `json:"bank,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Day                         int           `json:"day,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Month                       int           `json:"month,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Year                        int           `json:"year,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Iban                        string        `json:"iban,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Country                     string        `json:"country,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+		Customer                    uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
+		AccountNumber               string        `json:"account_number,omitempty gorm:"-:all"`
+		AccountHolderType           string        `json:"account_holder_type,omitempty gorm:"-:all"`
+		AccountType                 string        `json:"account_type,omitempty gorm:"-:all"`
+		FinancialConnectionsAccount string        `json:"financial_connections_account,omitempty gorm:"-:all"`
+		RoutingNumber               string        `json:"routing_number,omitempty gorm:"-:all"`
+		InstitutionNumber           string        `json:"institution_number,omitempty gorm:"-:all"`
+		TransitNumber               string        `json:"transit_number,omitempty gorm:"-:all"`
+		BsbNumber                   string        `json:"bsb_number,omitempty gorm:"-:all"`
+		SortCode                    string        `json:"sort_code,omitempty gorm:"-:all"`
+		TaxId                       string        `json:"tax_id,omitempty gorm:"-:all"`
+		ExpMonth                    int           `json:"exp_month,omitempty gorm:"-:all"`
+		ExpYear                     int           `json:"exp_year,omitempty gorm:"-:all"`
+		Number                      string        `json:"number,omitempty gorm:"-:all"`
+		Cvc                         string        `json:"cvc,omitempty gorm:"-:all"`
+		Bank                        string        `json:"bank,omitempty gorm:"-:all"`
+		Day                         int           `json:"day,omitempty gorm:"-:all"`
+		Month                       int           `json:"month,omitempty gorm:"-:all"`
+		Year                        int           `json:"year,omitempty gorm:"-:all"`
+		Iban                        string        `json:"iban,omitempty gorm:"-:all"`
+		Country                     string        `json:"country,omitempty gorm:"-:all"`
 	}{
 		Alias: (*Alias)(&m),
 	}

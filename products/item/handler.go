@@ -23,7 +23,7 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 // @Produce json
 // @Param id path string true "LineItem ID"
 // @Success 200 {object} LineItem
-// @Router /v1/credit_notes/{id} [get]
+// @Router /v1/lineItem/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -51,7 +51,7 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Success 200 {array} LineItem
-// @Router /v1/credit_notes [get]
+// @Router /v1/lineItem [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -88,7 +88,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Accept json
 // @Produce json
 // @Success 200 {object} LineItem
-// @Router /v1/credit_notes [post]
+// @Router /v1/lineItem [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -117,7 +117,7 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Produce json
 // @Param id body string true "LineItem ID"
 // @Success 200 {object} LineItem
-// @Router /v1/credit_notes/{id} [post]
+// @Router /v1/lineItem/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -156,7 +156,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Produce json
 // @Param id body string true "LineItem ID"
 // @Success 204 {string} status "ok"
-// @Router /v1/credit_notes/{id} [delete]
+// @Router /v1/lineItem/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

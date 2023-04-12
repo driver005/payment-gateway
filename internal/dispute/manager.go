@@ -12,8 +12,8 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Dispute, error) {
 
 	model := struct {
 		*Alias
-		Charge        uuid.NullUUID `json:"charge,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		PaymentIntent uuid.NullUUID `json:"payment_intent,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+		Charge        uuid.NullUUID `json:"charge,omitempty gorm:"-:all"`
+		PaymentIntent uuid.NullUUID `json:"payment_intent,omitempty gorm:"-:all"`
 	}{
 		Alias: (*Alias)(&m),
 	}

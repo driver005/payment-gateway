@@ -20,7 +20,7 @@ type PromotionCode struct {
 	TimesRedeemed         int    `json:"times_redeemed,omitempty"`
 
 	CustomerId *uuid.UUID         `json:"customer_id,omitempty" swaggerignore:"true"`
-	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
+	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id"`
 	CouponId   *uuid.UUID         `json:"coupon_id,omitempty" swaggerignore:"true"`
-	Coupon     *coupon.Coupon     `json:"coupon,omitempty" database:"foreignKey:coupon_id" swaggertype:"primitive,string" format:"uuid"`
+	Coupon     *coupon.Coupon     `json:"coupon,omitempty" database:"foreignKey:coupon_id"`
 }

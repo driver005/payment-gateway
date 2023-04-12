@@ -15,10 +15,10 @@ type SubscriptionItem struct {
 	// The [quantity](https://stripe.com/docs/subscriptions/quantities) of the plan to which the customer should be subscribed.
 	Quantity int `json:"quantity,omitempty"`
 	// The tax rates which apply to this `subscription_item`. When set, the `default_tax_rates` on the subscription do not apply to this `subscription_item`.
-	TaxRates *tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	TaxRates *tax.TaxRate `json:"tax_rates,omitempty" database:"foreignKey:id"`
 
 	PriceId        *uuid.UUID                 `json:"price_id,omitempty" swaggerignore:"true"`
-	Price          *price.Price               `json:"price,omitempty" database:"foreignKey:price_id" swaggertype:"primitive,string" format:"uuid"`
+	Price          *price.Price               `json:"price,omitempty" database:"foreignKey:price_id"`
 	SubscriptionId *uuid.UUID                 `json:"subscription_id,omitempty" swaggerignore:"true"`
-	Subscription   *subscription.Subscription `json:"subscription,omitempty" database:"foreignKey:subscription_id" swaggertype:"primitive,string" format:"uuid"`
+	Subscription   *subscription.Subscription `json:"subscription,omitempty" database:"foreignKey:subscription_id"`
 }

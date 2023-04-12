@@ -20,9 +20,9 @@ type Discount struct {
 	Subscription    string `json:"subscription,omitempty"`
 
 	CustomerId      *uuid.UUID               `json:"customer_id,omitempty" swaggerignore:"true"`
-	Customer        *customer.Customer       `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
+	Customer        *customer.Customer       `json:"customer,omitempty" database:"foreignKey:customer_id"`
 	CouponId        *uuid.UUID               `json:"coupon_id,omitempty" swaggerignore:"true"`
-	Coupon          *coupon.Coupon           `json:"coupon,omitempty" database:"foreignKey:coupon_id" swaggertype:"primitive,string" format:"uuid"`
+	Coupon          *coupon.Coupon           `json:"coupon,omitempty" database:"foreignKey:coupon_id"`
 	PromotionCodeId *uuid.UUID               `json:"promotion_code_id,omitempty" swaggerignore:"true"`
-	PromotionCode   *promotion.PromotionCode `json:"promotion_code,omitempty" database:"foreignKey:promotion_code_id" swaggertype:"primitive,string" format:"uuid"`
+	PromotionCode   *promotion.PromotionCode `json:"promotion_code,omitempty" database:"foreignKey:promotion_code_id"`
 }

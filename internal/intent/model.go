@@ -22,14 +22,14 @@ import (
 type PaymentIntentCardProcessing struct {
 	core.Model
 
-	CustomerNotification *PaymentIntentProcessingCustomerNotification `json:"customer_notification,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	CustomerNotification *PaymentIntentProcessingCustomerNotification `json:"customer_notification,omitempty" database:"foreignKey:id"`
 }
 
 // PaymentIntentProcessing
 type PaymentIntentProcessing struct {
 	core.Model
 
-	Card *PaymentIntentCardProcessing `json:"card,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Card *PaymentIntentCardProcessing `json:"card,omitempty" database:"foreignKey:id"`
 	// Type of the payment method for which payment is in `processing` state, one of `card`.
 	Type string `json:"type,omitempty"`
 }
@@ -49,7 +49,7 @@ type PaymentIntent struct {
 
 	Amount                    int                                        `json:"amount,omitempty"`
 	AmountCapturable          int                                        `json:"amount_capturable,omitempty"`
-	AmountDetails             *paymentFlow.PaymentFlowsAmountDetails     `json:"amount_details,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	AmountDetails             *paymentFlow.PaymentFlowsAmountDetails     `json:"amount_details,omitempty" database:"foreignKey:id"`
 	AmountReceived            int                                        `json:"amount_received,omitempty"`
 	AutomaticPaymentMethods   bool                                       `json:"automatic_payment_methods,omitempty"`
 	CanceledAt                int                                        `json:"canceled_at,omitempty"`
@@ -59,24 +59,24 @@ type PaymentIntent struct {
 	ConfirmationMethod        ConfirmationMethod                         `json:"confirmation_method,omitempty" database:"default:automatic"`
 	Currency                  string                                     `json:"currency,omitempty"`
 	Description               string                                     `json:"description,omitempty"`
-	LastPaymentError          *errors.ApiErrors                          `json:"last_payment_error,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	LatestCharge              *charge.Charge                             `json:"latest_charge,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	NextAction                *next.PaymentIntentNextAction              `json:"next_action,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	PaymentMethodOptions      *methods.PaymentIntentPaymentMethodOptions `json:"payment_method_options,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	LastPaymentError          *errors.ApiErrors                          `json:"last_payment_error,omitempty" database:"foreignKey:id"`
+	LatestCharge              *charge.Charge                             `json:"latest_charge,omitempty" database:"foreignKey:id"`
+	NextAction                *next.PaymentIntentNextAction              `json:"next_action,omitempty" database:"foreignKey:id"`
+	PaymentMethodOptions      *methods.PaymentIntentPaymentMethodOptions `json:"payment_method_options,omitempty" database:"foreignKey:id"`
 	PaymentMethodTypes        pq.StringArray                             `json:"payment_method_types,omitempty" database:"type:varchar(64)[]"`
-	Processing                *PaymentIntentProcessing                   `json:"processing,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Processing                *PaymentIntentProcessing                   `json:"processing,omitempty" database:"foreignKey:id"`
 	ReceiptEmail              string                                     `json:"receipt_email,omitempty"`
-	Review                    *review.Review                             `json:"review,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Review                    *review.Review                             `json:"review,omitempty" database:"foreignKey:id"`
 	SetupFutureUsage          SetupFutureUsage                           `json:"setup_future_usage,omitempty"`
-	Shipping                  *address.Shipping                          `json:"shipping,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Shipping                  *address.Shipping                          `json:"shipping,omitempty" database:"foreignKey:id"`
 	StatementDescriptor       string                                     `json:"statement_descriptor,omitempty"`
 	StatementDescriptorSuffix string                                     `json:"statement_descriptor_suffix,omitempty"`
 	Status                    Status                                     `json:"status,omitempty"`
 
 	CustomerId      *uuid.UUID            `json:"customer_id,omitempty" swaggerignore:"true"`
-	Customer        *customer.Customer    `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
+	Customer        *customer.Customer    `json:"customer,omitempty" database:"foreignKey:customer_id"`
 	PaymentMethodId *uuid.UUID            `json:"payment_method_id,omitempty" swaggerignore:"true"`
-	PaymentMethod   *method.PaymentMethod `json:"payment_method,omitempty" database:"foreignKey:payment_method_id" swaggertype:"primitive,string" format:"uuid"`
+	PaymentMethod   *method.PaymentMethod `json:"payment_method,omitempty" database:"foreignKey:payment_method_id"`
 }
 
 func (m *PaymentIntent) BeforeCreate(tx *database.DB) (err error) {

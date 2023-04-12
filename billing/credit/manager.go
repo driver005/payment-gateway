@@ -2,41 +2,54 @@ package credit
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
+type Alias CreditNote
+
+var m CreditNote
+
+var model = struct {
+	*Alias
+	Customer                   uuid.NullUUID `json:"customer,omitempty"`
+	CustomerBalanceTransaction uuid.NullUUID `json:"customer_balance_transaction,omitempty"`
+	Invoice                    uuid.NullUUID `json:"invoice,omitempty"`
+	Refund                     uuid.NullUUID `json:"refund,omitempty"`
+}{
+	Alias: (*Alias)(&m),
+}
+
 func (h *Handler) Bind(context *fiber.Ctx) (*CreditNote, error) {
-	type Alias CreditNote
-	var model CreditNote
 	var err error
 
 	if err = context.BodyParser(&model); err != nil {
 		return nil, err
 	}
 
-	if model.CustomerReq.Valid {
-		model.Customer, err = h.r.Customer().Retrive(context.Context(), model.CustomerReq.UUID)
+	if model.Customer.Valid {
+		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
-	if model.CustomerBalanceTransactionReq.Valid {
-		model.CustomerBalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context.Context(), model.CustomerBalanceTransactionReq.UUID)
+	if model.CustomerBalanceTransaction.Valid {
+		m.CustomerBalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context.Context(), model.CustomerBalanceTransaction.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
-	if model.InvoiceReq.Valid {
-		model.Invoice, err = h.r.Invoice().Retrive(context.Context(), model.InvoiceReq.UUID)
+	if model.Invoice.Valid {
+		m.Invoice, err = h.r.Invoice().Retrive(context.Context(), model.Invoice.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
-	if model.RefundReq.Valid {
-		model.Refund, err = h.r.Refund().Retrive(context.Context(), model.RefundReq.UUID)
+	if model.Refund.Valid {
+		m.Refund, err = h.r.Refund().Retrive(context.Context(), model.Refund.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	return &model, nil
+	return &m, nil
 }

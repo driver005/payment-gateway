@@ -58,12 +58,12 @@ type Plan struct {
 	Tiers []PlanTier `json:"tiers,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 	// Defines if the tiering price should be `graduated` or `volume` based. In `volume`-based tiering, the maximum quantity within a period determines the per unit price. In `graduated` tiering, pricing can change as the quantity grows.
 	TiersMode      string          `json:"tiers_mode,omitempty"`
-	TransformUsage *TransformUsage `json:"transform_usage,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	TransformUsage *TransformUsage `json:"transform_usage,omitempty" database:"foreignKey:id"`
 	// Default number of trial days when subscribing a customer to this plan using [`trial_from_plan=true`](https://stripe.com/docs/api#create_subscription-trial_from_plan).
 	TrialPeriodDays int `json:"trial_period_days,omitempty"`
 	// Configures how the quantity per period should be determined. Can be either `metered` or `licensed`. `licensed` automatically bills the `quantity` set when adding it to a subscription. `metered` aggregates the total usage based on usage records. Defaults to `licensed`.
 	UsageType string `json:"usage_type,omitempty"`
 
 	ProductId *uuid.UUID       `json:"product_id,omitempty" swaggerignore:"true"`
-	Product   *product.Product `json:"product,omitempty" database:"foreignKey:product_id" swaggertype:"primitive,string" format:"uuid"`
+	Product   *product.Product `json:"product,omitempty" database:"foreignKey:product_id"`
 }

@@ -34,11 +34,11 @@ type SourceReceiverFlow struct {
 type SourceOwner struct {
 	core.Model
 
-	Address         *address.Address `json:"address,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Address         *address.Address `json:"address,omitempty" database:"foreignKey:id"`
 	Email           string           `json:"email,omitempty"`
 	Name            string           `json:"name,omitempty"`
 	Phone           string           `json:"phone,omitempty"`
-	VerifiedAddress *address.Address `json:"verified_address,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	VerifiedAddress *address.Address `json:"verified_address,omitempty" database:"foreignKey:id"`
 	VerifiedEmail   string           `json:"verified_email,omitempty"`
 	VerifiedName    string           `json:"verified_name,omitempty"`
 	VerifiedPhone   string           `json:"verified_phone,omitempty"`
@@ -64,7 +64,7 @@ type SourceOrder struct {
 	Currency string            `json:"currency,omitempty"`
 	Email    string            `json:"email,omitempty"`
 	Items    []SourceOrderItem `json:"items,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
-	Shipping *address.Shipping `json:"shipping,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Shipping *address.Shipping `json:"shipping,omitempty" database:"foreignKey:id"`
 }
 
 // SourceCodeVerificationFlow
@@ -79,38 +79,38 @@ type SourceCodeVerificationFlow struct {
 type Source struct {
 	core.Model
 
-	AchCreditTransfer   *types.SourceTypeAchCreditTransfer `json:"ach_credit_transfer,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	AchDebit            *types.SourceTypeAchDebit          `json:"ach_debit,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	AcssDebit           *types.SourceTypeAcssDebit         `json:"acss_debit,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Alipay              *types.SourceTypeAlipay            `json:"alipay,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	AchCreditTransfer   *types.SourceTypeAchCreditTransfer `json:"ach_credit_transfer,omitempty" database:"foreignKey:id"`
+	AchDebit            *types.SourceTypeAchDebit          `json:"ach_debit,omitempty" database:"foreignKey:id"`
+	AcssDebit           *types.SourceTypeAcssDebit         `json:"acss_debit,omitempty" database:"foreignKey:id"`
+	Alipay              *types.SourceTypeAlipay            `json:"alipay,omitempty" database:"foreignKey:id"`
 	Amount              int                                `json:"amount,omitempty"`
-	AuBecsDebit         *types.SourceTypeAuBecsDebit       `json:"au_becs_debit,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Bancontact          *types.SourceTypeBancontact        `json:"bancontact,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Card                *types.SourceTypeCard              `json:"card,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	CardPresent         *types.SourceTypeCardPresent       `json:"card_present,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	AuBecsDebit         *types.SourceTypeAuBecsDebit       `json:"au_becs_debit,omitempty" database:"foreignKey:id"`
+	Bancontact          *types.SourceTypeBancontact        `json:"bancontact,omitempty" database:"foreignKey:id"`
+	Card                *types.SourceTypeCard              `json:"card,omitempty" database:"foreignKey:id"`
+	CardPresent         *types.SourceTypeCardPresent       `json:"card_present,omitempty" database:"foreignKey:id"`
 	ClientSecret        string                             `json:"client_secret,omitempty"`
-	CodeVerification    *SourceCodeVerificationFlow        `json:"code_verification,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	CodeVerification    *SourceCodeVerificationFlow        `json:"code_verification,omitempty" database:"foreignKey:id"`
 	Currency            string                             `json:"currency,omitempty"`
-	Eps                 *types.SourceTypeEps               `json:"eps,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Eps                 *types.SourceTypeEps               `json:"eps,omitempty" database:"foreignKey:id"`
 	Flow                Flow                               `json:"flow,omitempty"`
-	Giropay             *types.SourceTypeGiropay           `json:"giropay,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Ideal               *types.SourceTypeIdeal             `json:"ideal,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Klarna              *types.SourceTypeKlarna            `json:"klarna,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Multibanco          *types.SourceTypeMultibanco        `json:"multibanco,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Owner               *SourceOwner                       `json:"owner,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	P24                 *types.SourceTypeP24               `json:"p24,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Receiver            *SourceReceiverFlow                `json:"receiver,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Redirect            *SourceRedirectFlow                `json:"redirect,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	SepaDebit           *types.SourceTypeSepaDebit         `json:"sepa_debit,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Sofort              *types.SourceTypeSofort            `json:"sofort,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	SourceOrder         *SourceOrder                       `json:"source_order,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Giropay             *types.SourceTypeGiropay           `json:"giropay,omitempty" database:"foreignKey:id"`
+	Ideal               *types.SourceTypeIdeal             `json:"ideal,omitempty" database:"foreignKey:id"`
+	Klarna              *types.SourceTypeKlarna            `json:"klarna,omitempty" database:"foreignKey:id"`
+	Multibanco          *types.SourceTypeMultibanco        `json:"multibanco,omitempty" database:"foreignKey:id"`
+	Owner               *SourceOwner                       `json:"owner,omitempty" database:"foreignKey:id"`
+	P24                 *types.SourceTypeP24               `json:"p24,omitempty" database:"foreignKey:id"`
+	Receiver            *SourceReceiverFlow                `json:"receiver,omitempty" database:"foreignKey:id"`
+	Redirect            *SourceRedirectFlow                `json:"redirect,omitempty" database:"foreignKey:id"`
+	SepaDebit           *types.SourceTypeSepaDebit         `json:"sepa_debit,omitempty" database:"foreignKey:id"`
+	Sofort              *types.SourceTypeSofort            `json:"sofort,omitempty" database:"foreignKey:id"`
+	SourceOrder         *SourceOrder                       `json:"source_order,omitempty" database:"foreignKey:id"`
 	StatementDescriptor string                             `json:"statement_descriptor,omitempty"`
 	Status              Status                             `json:"status,omitempty"`
-	ThreeDSecure        *types.SourceTypeThreeDSecure      `json:"three_d_secure,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	ThreeDSecure        *types.SourceTypeThreeDSecure      `json:"three_d_secure,omitempty" database:"foreignKey:id"`
 	Type                Type                               `json:"type,omitempty"`
 	Usage               Usage                              `json:"usage,omitempty"`
-	Wechat              *types.SourceTypeWechat            `json:"wechat,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Wechat              *types.SourceTypeWechat            `json:"wechat,omitempty" database:"foreignKey:id"`
 
 	CustomerId *uuid.UUID         `json:"customer_id,omitempty" swaggerignore:"true"`
-	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
+	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id"`
 }

@@ -53,7 +53,7 @@ type QuotesResourceTotalDetails struct {
 	AmountShipping int `json:"amount_shipping,omitempty"`
 	// This is the sum of all the tax amounts.
 	AmountTax int                                          `json:"amount_tax,omitempty"`
-	Breakdown *QuotesResourceTotalDetailsResourceBreakdown `json:"breakdown,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Breakdown *QuotesResourceTotalDetailsResourceBreakdown `json:"breakdown,omitempty" database:"foreignKey:id"`
 }
 
 // QuotesResourceRecurring
@@ -67,14 +67,14 @@ type QuotesResourceRecurring struct {
 	Interval string `json:"interval,omitempty"`
 	// The number of intervals (specified in the `interval` attribute) between subscription billings. For example, `interval=month` and `interval_count=3` bills every 3 months.
 	IntervalCount int                         `json:"interval_count,omitempty"`
-	TotalDetails  *QuotesResourceTotalDetails `json:"total_details,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	TotalDetails  *QuotesResourceTotalDetails `json:"total_details,omitempty" database:"foreignKey:id"`
 }
 
 // QuotesResourceComputed
 type QuotesResourceComputed struct {
 	core.Model
-	Recurring *QuotesResourceRecurring `json:"recurring,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	Upfront   *QuotesResourceUpfront   `json:"upfront,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Recurring *QuotesResourceRecurring `json:"recurring,omitempty" database:"foreignKey:id"`
+	Upfront   *QuotesResourceUpfront   `json:"upfront,omitempty" database:"foreignKey:id"`
 }
 
 // QuotesResourceUpfront
@@ -85,7 +85,7 @@ type QuotesResourceUpfront struct {
 	// Total after discounts and taxes are applied.
 	AmountTotal int `json:"amount_total,omitempty"`
 	// LineItems    *Item                      `json:"line_items,omitempty"`
-	TotalDetails *QuotesResourceTotalDetails `json:"total_details,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	TotalDetails *QuotesResourceTotalDetails `json:"total_details,omitempty" database:"foreignKey:id"`
 }
 
 // Quote A Quote is a way to model prices that you'd like to provide to a customer. Once accepted, it will automatically create an invoice, subscription or subscription schedule.
@@ -99,7 +99,7 @@ type Quote struct {
 	AutomaticTax bool `json:"automatic_tax,omitempty"`
 	// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.
 	CollectionMethod string                  `json:"collection_method,omitempty"`
-	Computed         *QuotesResourceComputed `json:"computed,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Computed         *QuotesResourceComputed `json:"computed,omitempty" database:"foreignKey:id"`
 	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
 	Currency string `json:"currency,omitempty"`
 	// A description that will be displayed on the quote PDF.
@@ -111,25 +111,25 @@ type Quote struct {
 	// A header that will be displayed on the quote PDF.
 	Header string `json:"header,omitempty"`
 	// Unique identifier for the object.
-	InvoiceSettings *settings.InvoiceSettingQuoteSetting `json:"invoice_settings,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	InvoiceSettings *settings.InvoiceSettingQuoteSetting `json:"invoice_settings,omitempty" database:"foreignKey:id"`
 	LineItems       []item.LineItem                      `json:"line_items,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 	// A unique number that identifies this particular quote. This number is assigned once the quote is [finalized](https://stripe.com/docs/quotes/overview#finalize).
 	Number string `json:"number,omitempty"`
 	// The status of the quote.
 	Status            string                                          `json:"status,omitempty"`
-	StatusTransitions *QuotesResourceStatusTransitions                `json:"status_transitions,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	SubscriptionData  *QuotesResourceSubscriptionDataSubscriptionData `json:"subscription_data,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
-	TotalDetails      *QuotesResourceTotalDetails                     `json:"total_details,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	StatusTransitions *QuotesResourceStatusTransitions                `json:"status_transitions,omitempty" database:"foreignKey:id"`
+	SubscriptionData  *QuotesResourceSubscriptionDataSubscriptionData `json:"subscription_data,omitempty" database:"foreignKey:id"`
+	TotalDetails      *QuotesResourceTotalDetails                     `json:"total_details,omitempty" database:"foreignKey:id"`
 
 	DefaultTaxRates []tax.TaxRate       `json:"default_tax_rates,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 	Discounts       []discount.Discount `json:"discounts,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 
 	CustomerId             *uuid.UUID                                 `json:"customer_id,omitempty" swaggerignore:"true"`
-	Customer               *customer.Customer                         `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
+	Customer               *customer.Customer                         `json:"customer,omitempty" database:"foreignKey:customer_id"`
 	InvoiceId              *uuid.UUID                                 `json:"invoice_id,omitempty" swaggerignore:"true"`
-	Invoice                *invoice.Invoice                           `json:"invoice,omitempty" database:"foreignKey:invoice_id" swaggertype:"primitive,string" format:"uuid"`
+	Invoice                *invoice.Invoice                           `json:"invoice,omitempty" database:"foreignKey:invoice_id"`
 	SubscriptionId         *uuid.UUID                                 `json:"subscription_id,omitempty" swaggerignore:"true"`
-	Subscription           *subscription.Subscription                 `json:"subscription,omitempty" database:"foreignKey:subscription_id" swaggertype:"primitive,string" format:"uuid"`
+	Subscription           *subscription.Subscription                 `json:"subscription,omitempty" database:"foreignKey:subscription_id"`
 	SubscriptionScheduleId *uuid.UUID                                 `json:"subscription_schedule_id,omitempty" swaggerignore:"true"`
-	SubscriptionSchedule   *subscriptionSchedule.SubscriptionSchedule `json:"subscription_schedule,omitempty" database:"foreignKey:subscription_schedule_id" swaggertype:"primitive,string" format:"uuid"`
+	SubscriptionSchedule   *subscriptionSchedule.SubscriptionSchedule `json:"subscription_schedule,omitempty" database:"foreignKey:subscription_schedule_id"`
 }

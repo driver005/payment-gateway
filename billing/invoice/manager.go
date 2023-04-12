@@ -18,13 +18,13 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Invoice, error) {
 
 	model := struct {
 		*Alias
-		Customer             uuid.NullUUID `json:"customer,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Charge               uuid.NullUUID `json:"charge,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		DefaultPaymentMethod uuid.NullUUID `json:"default_payment_method,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		PaymentIntent        uuid.NullUUID `json:"payment_intent,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Price                uuid.NullUUID `json:"price,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		LatestRevision       uuid.NullUUID `json:"latest_revision,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
-		Subscription         uuid.NullUUID `json:"subscription,omitempty" gorm:"-:all" swaggertype:"primitive,string" format:"uuid"`
+		Customer             uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
+		Charge               uuid.NullUUID `json:"charge,omitempty gorm:"-:all"`
+		DefaultPaymentMethod uuid.NullUUID `json:"default_payment_method,omitempty gorm:"-:all"`
+		PaymentIntent        uuid.NullUUID `json:"payment_intent,omitempty gorm:"-:all"`
+		Price                uuid.NullUUID `json:"price,omitempty gorm:"-:all"`
+		LatestRevision       uuid.NullUUID `json:"latest_revision,omitempty gorm:"-:all"`
+		Subscription         uuid.NullUUID `json:"subscription,omitempty gorm:"-:all"`
 	}{
 		Alias: (*Alias)(&m),
 	}

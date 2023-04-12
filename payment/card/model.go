@@ -36,7 +36,7 @@ type Card struct {
 	TokenizationMethod     TokenizationMethod `json:"tokenization_method,omitempty"`
 
 	AccountId  *uuid.UUID         `json:"account_id,omitempty" swaggerignore:"true"`
-	Account    *account.Account   `json:"account,omitempty" database:"foreignKey:account_id" swaggertype:"primitive,string" format:"uuid"`
+	Account    *account.Account   `json:"account,omitempty" database:"foreignKey:account_id"`
 	CustomerId *uuid.UUID         `json:"customer_id" swaggerignore:"true"`
-	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id" swaggertype:"primitive,string" format:"uuid"`
+	Customer   *customer.Customer `json:"customer,omitempty" database:"foreignKey:customer_id"`
 }

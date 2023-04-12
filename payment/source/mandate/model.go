@@ -27,7 +27,7 @@ type SourceMandateNotification struct {
 	// Time at which the object was created. Measured in seconds since the Unix epoch.
 	// The reason of the mandate notification. Valid reasons are `mandate_confirmed` or `debit_initiated`.
 	Reason    string                                  `json:"reason,omitempty"`
-	SepaDebit *SourceMandateNotificationSepaDebitData `json:"sepa_debit,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	SepaDebit *SourceMandateNotificationSepaDebitData `json:"sepa_debit,omitempty" database:"foreignKey:id"`
 	// Source    source.Source                           `json:"source,omitempty" database:"foreignKey:id"`
 	// The status of the mandate notification. Valid statuses are `pending` or `submitted`.
 	Status string `json:"status,omitempty"`

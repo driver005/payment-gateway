@@ -24,11 +24,11 @@ type Payout struct {
 	Type                Type       `json:"type,omitempty"`
 
 	BalanceTransactionId        *uuid.UUID                  `json:"balance_transaction_id,omitempty" swaggerignore:"true"`
-	BalanceTransaction          *balance.BalanceTransaction `json:"balance_transaction,omitempty" database:"foreignKey:balance_transaction_id" swaggertype:"primitive,string" format:"uuid"`
+	BalanceTransaction          *balance.BalanceTransaction `json:"balance_transaction,omitempty" database:"foreignKey:balance_transaction_id"`
 	FailureBalanceTransactionId *uuid.UUID                  `json:"failure_balance_transaction_id,omitempty" swaggerignore:"true"`
-	FailureBalanceTransaction   *balance.BalanceTransaction `json:"failure_balance_transaction,omitempty" database:"foreignKey:failure_balance_transaction_id" swaggertype:"primitive,string" format:"uuid"`
+	FailureBalanceTransaction   *balance.BalanceTransaction `json:"failure_balance_transaction,omitempty" database:"foreignKey:failure_balance_transaction_id"`
 	OriginalPayoutId            *uuid.UUID                  `json:"original_payout_id,omitempty" swaggerignore:"true"`
-	OriginalPayout              *Payout                     `json:"original_payout,omitempty" database:"foreignKey:original_payout_id" swaggertype:"primitive,string" format:"uuid"`
+	OriginalPayout              *Payout                     `json:"original_payout,omitempty" database:"foreignKey:original_payout_id"`
 	ReversedById                *uuid.UUID                  `json:"reversed_by_id,omitempty" swaggerignore:"true"`
-	ReversedBy                  *Payout                     `json:"reversed_by,omitempty" database:"foreignKey:reversed_by_id" swaggertype:"primitive,string" format:"uuid"`
+	ReversedBy                  *Payout                     `json:"reversed_by,omitempty" database:"foreignKey:reversed_by_id"`
 }

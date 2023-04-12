@@ -40,15 +40,15 @@ type Price struct {
 	Currency          string             `json:"currency,omitempty"`
 	LookupKey         string             `json:"lookup_key,omitempty"`
 	Nickname          string             `json:"nickname,omitempty"`
-	Recurring         *Recurring         `json:"recurring,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	Recurring         *Recurring         `json:"recurring,omitempty" database:"foreignKey:id"`
 	TaxBehavior       TaxBehavior        `json:"tax_behavior,omitempty"`
 	Tiers             []PriceTier        `json:"tiers,omitempty" database:"foreignKey:id" swaggertype:"array,string" format:"uuid"`
 	TiersMode         TiersMode          `json:"tiers_mode,omitempty"`
-	TransformQuantity *TransformQuantity `json:"transform_quantity,omitempty" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
+	TransformQuantity *TransformQuantity `json:"transform_quantity,omitempty" database:"foreignKey:id"`
 	UnitAmount        int                `json:"unit_amount,omitempty"`
 	UnitAmountDecimal float64            `json:"unit_amount_decimal,omitempty"`
 	Type              Type               `json:"type,omitempty"`
 
 	ProductId *uuid.UUID       `json:"product_id,omitempty" swaggerignore:"true"`
-	Product   *product.Product `json:"product,omitempty" database:"foreignKey:product_id" swaggertype:"primitive,string" format:"uuid"`
+	Product   *product.Product `json:"product,omitempty" database:"foreignKey:product_id"`
 }
