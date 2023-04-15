@@ -90,6 +90,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags PaymentMethod
 // @Accept json
 // @Produce json
+// @Param model body method.Bind.request true "Request Data"
 // @Success 200 {object} PaymentMethod
 // @Router /v1/payment_methods [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -118,7 +119,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags PaymentMethod
 // @Accept json
 // @Produce json
-// @Param id body string true "PaymentMethod ID"
+// @Param model body method.Bind.request true "Request Data"
+// @Param id path string true "PaymentMethod ID"
 // @Success 200 {object} PaymentMethod
 // @Router /v1/payment_methods/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -157,7 +159,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags PaymentMethod
 // @Accept json
 // @Produce json
-// @Param id body string true "PaymentMethod ID"
+// @Param id path string true "PaymentMethod ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/payment_methods/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -186,7 +188,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags PaymentMethod
 // @Accept json
 // @Produce json
-// @Param id body string true "PaymentMethod ID"
+// @Param id path string true "PaymentMethod ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/payment_methods/{id}/attach [post]
 func (h *Handler) RouteAttach(context *fiber.Ctx) error {
@@ -215,7 +217,7 @@ func (h *Handler) RouteAttach(context *fiber.Ctx) error {
 // @Tags PaymentMethod
 // @Accept json
 // @Produce json
-// @Param id body string true "PaymentMethod ID"
+// @Param id path string true "PaymentMethod ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/payment_methods/{id}/dettach [post]
 func (h *Handler) RouteDettach(context *fiber.Ctx) error {

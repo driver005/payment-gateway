@@ -88,6 +88,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags SubscriptionItem
 // @Accept json
 // @Produce json
+// @Param model body subscriptionItem.Bind.request true "Request Data"
 // @Success 200 {object} SubscriptionItem
 // @Router /v1/subscription_items [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -117,7 +118,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags SubscriptionItem
 // @Accept json
 // @Produce json
-// @Param id body string true "SubscriptionItem ID"
+// @Param model body subscriptionItem.Bind.request true "Request Data"
+// @Param id path string true "SubscriptionItem ID"
 // @Success 200 {object} SubscriptionItem
 // @Router /v1/subscription_items/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -157,7 +159,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags SubscriptionItem
 // @Accept json
 // @Produce json
-// @Param id body string true "SubscriptionItem ID"
+// @Param id path string true "SubscriptionItem ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/subscription_items/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {

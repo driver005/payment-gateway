@@ -86,9 +86,8 @@ func (s *Handler) Delete(ctx context.Context, Id uuid.UUID) error {
 }
 
 func (h *Handler) Unmarshal(data []byte, m *PaymentIntent) error {
-	type Alias PaymentIntent
 
-	model := struct {
+	type request struct {
 		*Alias
 		AmountDetails           string `json:"amount_details,omitempty"`
 		AutomaticPaymentMethods string `json:"automatic_payment_methods,omitempty"`
@@ -102,7 +101,9 @@ func (h *Handler) Unmarshal(data []byte, m *PaymentIntent) error {
 		Processing              string `json:"processing,omitempty"`
 		Shipping                string `json:"shipping,omitempty"`
 		Review                  string `json:"review,omitempty"`
-	}{
+	}
+
+	var model = request{
 		Alias: (*Alias)(m),
 	}
 

@@ -88,6 +88,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Coupon
 // @Accept json
 // @Produce json
+// @Param model body coupon.Bind.request true "Request Data"
 // @Success 200 {object} Coupon
 // @Router /v1/coupons [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -116,7 +117,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Coupon
 // @Accept json
 // @Produce json
-// @Param id body string true "Coupon ID"
+// @Param model body coupon.Bind.request true "Request Data"
+// @Param id path string true "Coupon ID"
 // @Success 200 {object} Coupon
 // @Router /v1/coupons/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -155,7 +157,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Coupon
 // @Accept json
 // @Produce json
-// @Param id body string true "Coupon ID"
+// @Param id path string true "Coupon ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/coupons/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {

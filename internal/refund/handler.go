@@ -88,6 +88,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Refund
 // @Accept json
 // @Produce json
+// @Param model body refund.Bind.request true "Request Data"
 // @Success 200 {object} Refund
 // @Router /v1/refunds [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -116,7 +117,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Refund
 // @Accept json
 // @Produce json
-// @Param id body string true "Refund ID"
+// @Param model body refund.Bind.request true "Request Data"
+// @Param id path string true "Refund ID"
 // @Success 200 {object} Refund
 // @Router /v1/refunds/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -155,7 +157,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Refund
 // @Accept json
 // @Produce json
-// @Param id body string true "Refund ID"
+// @Param id path string true "Refund ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/refunds/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -184,7 +186,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags Refund
 // @Accept json
 // @Produce json
-// @Param id body string true "Refund ID"
+// @Param id path string true "Refund ID"
 // @Success 200 {object} Refund
 // @Router /v1/refunds/{id}/cancele [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {

@@ -94,6 +94,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
+// @Param model body invoice.Bind.request true "Request Data"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -122,7 +123,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param model body invoice.Bind.request true "Request Data"
+// @Param id path string true "Invoice ID"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -161,7 +163,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param id path string true "Invoice ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/invoices/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -190,7 +192,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param id path string true "Invoice ID"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices/{id}/capture [post]
 func (h *Handler) RouteCapture(context *fiber.Ctx) error {
@@ -226,7 +228,7 @@ func (h *Handler) RouteCapture(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param id path string true "Invoice ID"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices/{id}/cancel [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {
@@ -262,7 +264,7 @@ func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param id path string true "Invoice ID"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices/{id}/finalize [post]
 func (h *Handler) RouteFinalize(context *fiber.Ctx) error {
@@ -298,7 +300,7 @@ func (h *Handler) RouteFinalize(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param id path string true "Invoice ID"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices/{id}/pay [post]
 func (h *Handler) RoutePay(context *fiber.Ctx) error {
@@ -334,7 +336,7 @@ func (h *Handler) RoutePay(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param id path string true "Invoice ID"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices/{id}/send [post]
 func (h *Handler) RouteSend(context *fiber.Ctx) error {
@@ -363,7 +365,7 @@ func (h *Handler) RouteSend(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param id path string true "Invoice ID"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices/{id}/void [post]
 func (h *Handler) RouteVoid(context *fiber.Ctx) error {
@@ -399,7 +401,7 @@ func (h *Handler) RouteVoid(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param id path string true "Invoice ID"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices/{id}/mark_uncollectible [post]
 func (h *Handler) RouteMarkUncollectible(context *fiber.Ctx) error {
@@ -435,7 +437,7 @@ func (h *Handler) RouteMarkUncollectible(context *fiber.Ctx) error {
 // @Tags Invoice
 // @Accept json
 // @Produce json
-// @Param id body string true "Invoice ID"
+// @Param id path string true "Invoice ID"
 // @Success 200 {object} Invoice
 // @Router /v1/invoices/{id}/upcoming [post]
 func (h *Handler) RouteUpcoming(context *fiber.Ctx) error {

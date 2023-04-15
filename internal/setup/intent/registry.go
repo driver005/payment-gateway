@@ -1,4 +1,4 @@
-package intent
+package setupIntent
 
 import (
 	"context"

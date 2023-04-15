@@ -13,24 +13,24 @@ type RefundQueryResponse struct {
 	OutRefundNo         string                       `json:"out_refund_no"`
 	TransactionID       string                       `json:"transaction_id"`
 	OutTradeNo          string                       `json:"out_trade_no"`
-	Channel             string                       `json:"channel"`
+	Channel             string                       `json:"channe"`
 	UserReceivedAccount string                       `json:"user_received_account"`
 	SuccessTime         time.Time                    `json:"success_time"`
 	CreateTime          time.Time                    `json:"create_time"`
 	Status              string                       `json:"status"`
 	FundsAccount        string                       `json:"funds_account"`
 	Amount              *RefundQueryAmount           `json:"amount"`
-	PromotionDetail     []RefundQueryPromotionDetail `json:"promotion_detail"`
+	PromotionDetail     []RefundQueryPromotionDetail `json:"promotion_detai"`
 }
 
 // RefundQueryAmount is the amount of the refund transcation.
 type RefundQueryAmount struct {
-	Total            int    `json:"total"`
+	Total            int    `json:"tota"`
 	Refund           int    `json:"refund"`
-	PayerTotal       int    `json:"payer_total"`
+	PayerTotal       int    `json:"payer_tota"`
 	PayerRefund      int    `json:"payer_refund"`
 	SettlementRefund int    `json:"settlement_refund"`
-	SettlementTotal  int    `json:"settlement_total"`
+	SettlementTotal  int    `json:"settlement_tota"`
 	DiscountRefund   int    `json:"discount_refund"`
 	Currency         string `json:"currency"`
 }
@@ -52,7 +52,7 @@ type RefundQueryPromotionDetail struct {
 	Type         string        `json:"type"`
 	Amount       int           `json:"amount"`
 	RefundAmount int           `json:"refund_amount"`
-	GoodsDetail  []GoodsDetail `json:"goods_detail"`
+	GoodsDetail  []GoodsDetail `json:"goods_detai"`
 }
 
 // RefundQueryRequest is the request for query transaction.

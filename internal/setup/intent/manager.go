@@ -1,22 +1,25 @@
-package intent
+package setupIntent
 
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 )
 
+type Alias SetupIntent
+
 func (h *Handler) Bind(context *fiber.Ctx) (*SetupIntent, error) {
-	type Alias SetupIntent
 	var m SetupIntent
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		Customer         uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
-		PaymentMethod    uuid.NullUUID `json:"payment_method,omitempty gorm:"-:all"`
-		Mandate          uuid.NullUUID `json:"mandate,omitempty gorm:"-:all"`
-		SingleUseMandate uuid.NullUUID `json:"single_use_mandate,omitempty gorm:"-:all"`
-	}{
+		Customer         uuid.NullUUID `json:"customer,omitempty"`
+		PaymentMethod    uuid.NullUUID `json:"payment_method,omitempty"`
+		Mandate          uuid.NullUUID `json:"mandate,omitempty"`
+		SingleUseMandate uuid.NullUUID `json:"single_use_mandate,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

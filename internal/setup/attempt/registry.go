@@ -5,7 +5,7 @@ import (
 
 	"github.com/driver005/database"
 	"github.com/driver005/gateway/internal/customer"
-	"github.com/driver005/gateway/internal/setup/intent"
+	setupIntent "github.com/driver005/gateway/internal/setup/intent"
 	"github.com/driver005/gateway/payment/method"
 )
 
@@ -19,7 +19,7 @@ type Registry interface {
 	Migrate() bool
 	Customer() *customer.Handler
 	PaymentMethod() *method.Handler
-	SetupIntent() *intent.Handler
+	SetupIntent() *setupIntent.Handler
 }
 
 func NewHandler(r Registry) *Handler {

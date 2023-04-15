@@ -91,6 +91,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Customer
 // @Accept json
 // @Produce json
+// @Param model body Customer true "Request Data"
 // @Success 200 {object} Customer
 // @Router /v1/customers [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -120,7 +121,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Customer
 // @Accept json
 // @Produce json
-// @Param id body string true "Customer ID"
+// @Param model body Customer true "Request Data"
+// @Param id path string true "Customer ID"
 // @Success 200 {object} Customer
 // @Router /v1/customers/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -160,7 +162,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Customer
 // @Accept json
 // @Produce json
-// @Param id body string true "Customer ID"
+// @Param id path string true "Customer ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/customers/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -231,6 +233,7 @@ func (h *Handler) RouteGetTax(context *fiber.Ctx) error {
 // @Tags Customer
 // @Accept json
 // @Produce json
+// @Param id path string true "Customer ID"
 // @Success 200 {array} Customer
 // @Router /v1/customers/{id}/tax_ids [get]
 func (h *Handler) RouteListTax(context *fiber.Ctx) error {
@@ -268,6 +271,8 @@ func (h *Handler) RouteListTax(context *fiber.Ctx) error {
 // @Tags Customer
 // @Accept json
 // @Produce json
+// @Param model body Customer true "Request Data"
+// @Param id path string true "Customer ID"
 // @Success 200 {object} Customer
 // @Router /v1/customers/{id}/tax_ids [post]
 func (h *Handler) RouteCreateTax(context *fiber.Ctx) error {
@@ -297,7 +302,8 @@ func (h *Handler) RouteCreateTax(context *fiber.Ctx) error {
 // @Tags Customer
 // @Accept json
 // @Produce json
-// @Param id body string true "Customer ID"
+// @Param model body Customer true "Request Data"
+// @Param id path string true "Customer ID"
 // @Success 200 {object} Customer
 // @Router /v1/customers/{id} [post]
 func (h *Handler) RouteUpdateTax(context *fiber.Ctx) error {
@@ -337,7 +343,7 @@ func (h *Handler) RouteUpdateTax(context *fiber.Ctx) error {
 // @Tags Customer
 // @Accept json
 // @Produce json
-// @Param id body string true "Customer ID"
+// @Param id path string true "Customer ID"
 // @Param tax_id path string true "Tax ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/customers/{id}/tax_ids/{tax_id} [delete]

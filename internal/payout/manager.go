@@ -5,18 +5,21 @@ import (
 	"github.com/google/uuid"
 )
 
+type Alias Payout
+
 func (h *Handler) Bind(context *fiber.Ctx) (*Payout, error) {
-	type Alias Payout
 	var m Payout
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		BalanceTransaction        uuid.NullUUID `json:"balance_transaction,omitempty gorm:"-:all"`
-		FailureBalanceTransaction uuid.NullUUID `json:"failure_balance_transaction,omitempty gorm:"-:all"`
-		OriginalPayout            uuid.NullUUID `json:"original_payout,omitempty gorm:"-:all"`
-		ReversedBy                uuid.NullUUID `json:"reversed_by,omitempty gorm:"-:all"`
-	}{
+		BalanceTransaction        uuid.NullUUID `json:"balance_transaction,omitempty"`
+		FailureBalanceTransaction uuid.NullUUID `json:"failure_balance_transaction,omitempty"`
+		OriginalPayout            uuid.NullUUID `json:"original_payout,omitempty"`
+		ReversedBy                uuid.NullUUID `json:"reversed_by,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

@@ -5,15 +5,18 @@ import (
 	"github.com/google/uuid"
 )
 
+type Alias Source
+
 func (h *Handler) Bind(context *fiber.Ctx) (*Source, error) {
-	type Alias Source
 	var m Source
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		Customer uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
-	}{
+		Customer uuid.NullUUID `json:"customer,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

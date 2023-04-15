@@ -11,21 +11,24 @@ import (
 	"github.com/lib/pq"
 )
 
+type Alias Invoice
+
 func (h *Handler) Bind(context *fiber.Ctx) (*Invoice, error) {
-	type Alias Invoice
 	var m Invoice
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		Customer             uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
-		Charge               uuid.NullUUID `json:"charge,omitempty gorm:"-:all"`
-		DefaultPaymentMethod uuid.NullUUID `json:"default_payment_method,omitempty gorm:"-:all"`
-		PaymentIntent        uuid.NullUUID `json:"payment_intent,omitempty gorm:"-:all"`
-		Price                uuid.NullUUID `json:"price,omitempty gorm:"-:all"`
-		LatestRevision       uuid.NullUUID `json:"latest_revision,omitempty gorm:"-:all"`
-		Subscription         uuid.NullUUID `json:"subscription,omitempty gorm:"-:all"`
-	}{
+		Customer             uuid.NullUUID `json:"customer,omitempty"`
+		Charge               uuid.NullUUID `json:"charge,omitempty"`
+		DefaultPaymentMethod uuid.NullUUID `json:"default_payment_method,omitempty"`
+		PaymentIntent        uuid.NullUUID `json:"payment_intent,omitempty"`
+		Price                uuid.NullUUID `json:"price,omitempty"`
+		LatestRevision       uuid.NullUUID `json:"latest_revision,omitempty"`
+		Subscription         uuid.NullUUID `json:"subscription,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

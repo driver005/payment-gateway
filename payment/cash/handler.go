@@ -25,7 +25,7 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 // @Param id path string true "CashBalance ID"
 // @Param customer_id path string true "Customer ID"
 // @Success 200 {object} CashBalance
-// @Router /v1/customers/{id}/cash_balance/{id} [get]
+// @Router /v1/customers/{customer_id}/cash_balance/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -52,10 +52,9 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 // @Tags CashBalance
 // @Accept json
 // @Produce json
-// @Param id path string true "CashBalance ID"
 // @Param customer_id path string true "Customer ID"
 // @Success 200 {array} CashBalance
-// @Router /v1/customers/{id}/cash_balance [get]
+// @Router /v1/customers/{customer_id}/cash_balance [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -91,8 +90,10 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags CashBalance
 // @Accept json
 // @Produce json
+// @Param model body CashBalance true "Request Data"
+// @Param customer_id path string true "Customer ID"
 // @Success 200 {object} CashBalance
-// @Router /v1/customers/{id}/cash_balance [post]
+// @Router /v1/customers/{customer_id}/cash_balance [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	var m CashBalance
 
@@ -120,10 +121,11 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags CashBalance
 // @Accept json
 // @Produce json
+// @Param model body CashBalance true "Request Data"
 // @Param id path string true "CashBalance ID"
 // @Param customer_id path string true "Customer ID"
 // @Success 200 {object} CashBalance
-// @Router /v1/customers/{id}/cash_balance/{id} [post]
+// @Router /v1/customers/{customer_id}/cash_balance/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	var m CashBalance
 
@@ -164,7 +166,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Param id path string true "CashBalance ID"
 // @Param customer_id path string true "Customer ID"
 // @Success 204 {string} status "ok"
-// @Router /v1/customers/{id}/cash_balance/{id} [delete]
+// @Router /v1/customers/{customer_id}/cash_balance/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

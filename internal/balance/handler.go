@@ -22,7 +22,7 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 // @Produce json
 // @Param id path string true "Balance ID"
 // @Success 200 {object} Balance
-// @Router /v1/balance [get]
+// @Router /v1/balance/{id} [get]
 func (h *Handler) RouteGetBalance(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

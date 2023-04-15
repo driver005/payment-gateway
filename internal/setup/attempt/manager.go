@@ -5,17 +5,20 @@ import (
 	"github.com/google/uuid"
 )
 
+type Alias SetupAttempt
+
 func (h *Handler) Bind(context *fiber.Ctx) (*SetupAttempt, error) {
-	type Alias SetupAttempt
 	var m SetupAttempt
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		Customer      uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
-		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty gorm:"-:all"`
-		SetupIntent   uuid.NullUUID `json:"setup_intent,omitempty gorm:"-:all"`
-	}{
+		Customer      uuid.NullUUID `json:"customer,omitempty"`
+		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty"`
+		SetupIntent   uuid.NullUUID `json:"setup_intent,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

@@ -10,11 +10,11 @@ import (
 // BB - Banco do Brasil
 // Source: (http://www.bb.com.br/docs/pub/emp/mpe/espeboletobb.pdf)
 type BB struct {
-	Agency                int
-	Account               int
-	Convenio              int
-	Carteira              int
-	Company               Company
+	Agency   int
+	Account  int
+	Convenio int
+	Carteira int
+	Company  Company
 }
 
 // configBB is a global for this bank configs
@@ -102,8 +102,8 @@ func (b BB) Layout(w http.ResponseWriter, d Document) {
 	var barcode Barcode = b.Barcode(d)
 	layout, _ := template.ParseFiles("templates/bb.html")
 	layout.ExecuteTemplate(w, "bb", map[string]interface{}{
-		"Barcode": barcode,
+		"Barcode":  barcode,
 		"Document": d,
-		"Bank": b,
+		"Bank":     b,
 	})
 }

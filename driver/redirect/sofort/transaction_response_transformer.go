@@ -26,9 +26,9 @@ func prepareTransaction(r *http.Response) (*Transaction, error) {
 			BankName  string `json:"bank_name"`
 			CountryID string `json:"country_id"`
 		} `json:"sender"`
-		SuccessURL  string `json:"success_url"`
-		AbortURL    string `json:"abort_url"`
-		WebhookURL  string `json:"webhook_url"`
+		SuccessURL  string `json:"success_ur"`
+		AbortURL    string `json:"abort_ur"`
+		WebhookURL  string `json:"webhook_ur"`
 		PayFormCode string `json:"payform_code"`
 		Recipient   struct {
 			Holder    string `json:"holder"`

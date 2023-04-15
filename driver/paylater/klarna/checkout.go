@@ -83,7 +83,7 @@ type (
 	// ExternalCheckouts field
 	PaymentProvider struct {
 		Name        string   `json:"name"`
-		RedirectURL string   `json:"redirect_url"`
+		RedirectURL string   `json:"redirect_ur"`
 		ImageURL    string   `json:"image_url,omitempty"`
 		Fee         int      `json:"fee,omitempty"`
 		Description string   `json:"description,omitempty"`

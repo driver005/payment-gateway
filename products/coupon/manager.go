@@ -4,14 +4,17 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
+type Alias Coupon
+
 func (h *Handler) Bind(context *fiber.Ctx) (*Coupon, error) {
-	type Alias Coupon
 	var m Coupon
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-	}{
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

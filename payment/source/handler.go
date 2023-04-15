@@ -13,7 +13,7 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 	r.Post("/sources", h.RouteCreate)
 	r.Get("/sources/:id", h.RouteGet)
 	r.Post("/sources/:id", h.RouteUpdate)
-	r.Post("/customers/:id/sources", h.RouteAttach)
+	r.Post("/customers/:id/sources/:id", h.RouteAttach)
 	r.Delete("/customers/:id/sources/:id", h.RouteDettach)
 }
 
@@ -89,6 +89,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Source
 // @Accept json
 // @Produce json
+// @Param model body source.Bind.request true "Request Data"
 // @Success 200 {object} Source
 // @Router /v1/sources [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -117,7 +118,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Source
 // @Accept json
 // @Produce json
-// @Param id body string true "Source ID"
+// @Param model body source.Bind.request true "Request Data"
+// @Param id path string true "Source ID"
 // @Success 200 {object} Source
 // @Router /v1/sources/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -156,7 +158,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Source
 // @Accept json
 // @Produce json
-// @Param id body string true "Source ID"
+// @Param id path string true "Source ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/sources/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -185,9 +187,10 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags Source
 // @Accept json
 // @Produce json
-// @Param id body string true "Source ID"
+// @Param id path string true "Source ID"
+// @Param customer_id path string true "Customer ID"
 // @Success 204 {string} status "ok"
-// @Router /v1/customers/{id}/sources [post]
+// @Router /v1/customers/{customer_id}/sources/{id} [post]
 func (h *Handler) RouteAttach(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -214,9 +217,10 @@ func (h *Handler) RouteAttach(context *fiber.Ctx) error {
 // @Tags Source
 // @Accept json
 // @Produce json
-// @Param id body string true "Source ID"
+// @Param id path string true "Source ID"
+// @Param customer_id path string true "Customer ID"
 // @Success 204 {string} status "ok"
-// @Router /v1/customers/{id}/sources/{id} [delete]
+// @Router /v1/customers/{customer_id}/sources/{id} [delete]
 func (h *Handler) RouteDettach(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

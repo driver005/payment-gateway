@@ -1,29 +1,29 @@
 package boleto
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
-	"fmt"
 	"strconv"
 )
 
 // Itau
 // Source: (http://download.itau.com.br/bankline/cobranca_cnab240.pdf)
 type Itau struct {
-	Agency                int
-	Account               int
-	Carteira              int
-	ClientCode            int
-	Company               Company
+	Agency     int
+	Account    int
+	Carteira   int
+	ClientCode int
+	Company    Company
 }
 
 // configItau is a global for this bank configs
 var configItau = bankConfig{
-	Id:           341,
-	Aceite:       "N",
-	Currency:     9,
-	CurrencyName: "R$",
-	AgencyMaxSize: 4,
+	Id:             341,
+	Aceite:         "N",
+	Currency:       9,
+	CurrencyName:   "R$",
+	AgencyMaxSize:  4,
 	AccountMaxSize: 5,
 }
 
@@ -46,8 +46,8 @@ func (b Itau) Barcode(d Document) Barcode {
 	}
 
 	// Add rules to carteira equals to 107, 122, 142, 143, 196, 198
-	if b.Carteira == 107||b.Carteira == 122||b.Carteira == 142||
-	   b.Carteira == 143||b.Carteira == 196||b.Carteira == 198 {
+	if b.Carteira == 107 || b.Carteira == 122 || b.Carteira == 142 ||
+		b.Carteira == 143 || b.Carteira == 196 || b.Carteira == 198 {
 		// CCCNNNNNNNNLLLLLLLDDDDDX0
 		// C = Carteira number int(3)
 		// N = OurNumber int(8)
@@ -84,8 +84,8 @@ func (b Itau) Barcode(d Document) Barcode {
 
 		// Add rules to carteira number equals to 126, 131, 146, 150, 168
 		var codeModuleCarteira int
-		if b.Carteira == 126||b.Carteira == 131||b.Carteira == 146||
-		   b.Carteira == 150||b.Carteira == 168 {
+		if b.Carteira == 126 || b.Carteira == 131 || b.Carteira == 146 ||
+			b.Carteira == 150 || b.Carteira == 168 {
 			// module10 with bank agency, account, carteira, and OurNumber
 			m := fmt.Sprintf("%0"+strconv.Itoa(configItau.AgencyMaxSize)+"d", b.Agency)
 			m += fmt.Sprintf("%0"+strconv.Itoa(configItau.AccountMaxSize)+"d", b.Account)
@@ -134,8 +134,8 @@ func (b Itau) Layout(w http.ResponseWriter, d Document) {
 	var barcode Barcode = b.Barcode(d)
 	layout, _ := template.ParseFiles("templates/itau.html")
 	layout.ExecuteTemplate(w, "itau", map[string]interface{}{
-		"Barcode": barcode,
+		"Barcode":  barcode,
 		"Document": d,
-		"Bank": b,
+		"Bank":     b,
 	})
 }

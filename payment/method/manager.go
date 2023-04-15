@@ -6,35 +6,38 @@ import (
 	"github.com/google/uuid"
 )
 
+type Alias PaymentMethod
+
 func (h *Handler) Bind(context *fiber.Ctx) (*PaymentMethod, error) {
-	type Alias PaymentMethod
 	var m PaymentMethod
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		Customer                    uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
-		AccountNumber               string        `json:"account_number,omitempty gorm:"-:all"`
-		AccountHolderType           string        `json:"account_holder_type,omitempty gorm:"-:all"`
-		AccountType                 string        `json:"account_type,omitempty gorm:"-:all"`
-		FinancialConnectionsAccount string        `json:"financial_connections_account,omitempty gorm:"-:all"`
-		RoutingNumber               string        `json:"routing_number,omitempty gorm:"-:all"`
-		InstitutionNumber           string        `json:"institution_number,omitempty gorm:"-:all"`
-		TransitNumber               string        `json:"transit_number,omitempty gorm:"-:all"`
-		BsbNumber                   string        `json:"bsb_number,omitempty gorm:"-:all"`
-		SortCode                    string        `json:"sort_code,omitempty gorm:"-:all"`
-		TaxId                       string        `json:"tax_id,omitempty gorm:"-:all"`
-		ExpMonth                    int           `json:"exp_month,omitempty gorm:"-:all"`
-		ExpYear                     int           `json:"exp_year,omitempty gorm:"-:all"`
-		Number                      string        `json:"number,omitempty gorm:"-:all"`
-		Cvc                         string        `json:"cvc,omitempty gorm:"-:all"`
-		Bank                        string        `json:"bank,omitempty gorm:"-:all"`
-		Day                         int           `json:"day,omitempty gorm:"-:all"`
-		Month                       int           `json:"month,omitempty gorm:"-:all"`
-		Year                        int           `json:"year,omitempty gorm:"-:all"`
-		Iban                        string        `json:"iban,omitempty gorm:"-:all"`
-		Country                     string        `json:"country,omitempty gorm:"-:all"`
-	}{
+		Customer                    uuid.NullUUID `json:"customer,omitempty"`
+		AccountNumber               string        `json:"account_number,omitempty"`
+		AccountHolderType           string        `json:"account_holder_type,omitempty"`
+		AccountType                 string        `json:"account_type,omitempty"`
+		FinancialConnectionsAccount string        `json:"financial_connections_account,omitempty"`
+		RoutingNumber               string        `json:"routing_number,omitempty"`
+		InstitutionNumber           string        `json:"institution_number,omitempty"`
+		TransitNumber               string        `json:"transit_number,omitempty"`
+		BsbNumber                   string        `json:"bsb_number,omitempty"`
+		SortCode                    string        `json:"sort_code,omitempty"`
+		TaxId                       string        `json:"tax_id,omitempty"`
+		ExpMonth                    int           `json:"exp_month,omitempty"`
+		ExpYear                     int           `json:"exp_year,omitempty"`
+		Number                      string        `json:"number,omitempty"`
+		Cvc                         string        `json:"cvc,omitempty"`
+		Bank                        string        `json:"bank,omitempty"`
+		Day                         int           `json:"day,omitempty"`
+		Month                       int           `json:"month,omitempty"`
+		Year                        int           `json:"year,omitempty"`
+		Iban                        string        `json:"iban,omitempty"`
+		Country                     string        `json:"country,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

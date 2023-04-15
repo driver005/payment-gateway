@@ -25,14 +25,14 @@ type Region struct {
 	TaxRates *tax.TaxRate `json:"tax_rates" database:"foreignKey:id" swaggertype:"primitive,string" format:"uuid"`
 
 	// The tax code used on purchases in the Region. This may be used by other systems for accounting purposes.
-	TaxCode string `json:"tax_code" database:"default:null"`
+	TaxCode string `json:"tax_code" database:"default:nul"`
 
 	// Whether the gift cards are taxable or not in this region.
-	GiftCardsTaxable bool `json:"gift_cards_taxable" database:"default:null"`
+	GiftCardsTaxable bool `json:"gift_cards_taxable" database:"default:nul"`
 
 	// Whether taxes should be automated in this region.
-	AutomaticTaxes bool `json:"automatic_taxes" database:"default:null"`
+	AutomaticTaxes bool `json:"automatic_taxes" database:"default:nul"`
 
 	// [EXPERIMENTAL] Does the prices for the region include tax
-	IncludesTax bool `json:"includes_tax" database:"default:null"`
+	IncludesTax bool `json:"includes_tax" database:"default:nul"`
 }

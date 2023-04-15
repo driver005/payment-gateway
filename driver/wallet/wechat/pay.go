@@ -35,7 +35,7 @@ import (
 
 // PayAmount is total amount paid, have total and currency.
 type PayAmount struct {
-	Total    int    `json:"total"`
+	Total    int    `json:"tota"`
 	Currency string `json:"currency,omitempty"`
 }
 
@@ -78,7 +78,7 @@ type PayRequest struct {
 	OutTradeNo  string    `json:"out_trade_no"`
 	TimeExpire  time.Time `json:"time_expire,omitempty"`
 	Attach      string    `json:"attach,omitempty"`
-	NotifyUrl   string    `json:"notify_url"`
+	NotifyUrl   string    `json:"notify_ur"`
 	GoodsTag    string    `json:"goods_tag,omitempty"`
 	Amount      PayAmount `json:"amount"`
 	// Only set up Payer for JSAPI
@@ -101,11 +101,11 @@ const (
 // PayResponse is response when send a payment.
 type PayResponse struct {
 	// The CodeUrl is returned when the merchant used Native
-	CodeUrl string `json:"code_url"`
+	CodeUrl string `json:"code_ur"`
 	// The CodeUrl is returned when the merchant used JSAPI APP
 	PrepayId string `json:"prepay_id"`
 	// The CodeUrl is returned when the merchant used H5
-	H5Url string `json:"h5_url"`
+	H5Url string `json:"h5_ur"`
 }
 
 // Do send a transaction and invoke wechat payment.

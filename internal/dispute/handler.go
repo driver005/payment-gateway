@@ -88,6 +88,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Dispute
 // @Accept json
 // @Produce json
+// @Param model body dispute.Bind.request true "Request Data"
 // @Success 200 {object} Dispute
 // @Router /v1/disputes [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -118,7 +119,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Dispute
 // @Accept json
 // @Produce json
-// @Param id body string true "Dispute ID"
+// @Param model body dispute.Bind.request true "Request Data"
+// @Param id path string true "Dispute ID"
 // @Success 200 {object} Dispute
 // @Router /v1/disputes/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -157,7 +159,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Dispute
 // @Accept json
 // @Produce json
-// @Param id body string true "Dispute ID"
+// @Param id path string true "Dispute ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/disputes/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -186,7 +188,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags Dispute
 // @Accept json
 // @Produce json
-// @Param id body string true "Dispute ID"
+// @Param id path string true "Dispute ID"
 // @Success 200 {object} Dispute
 // @Router /v1/disputes/{id}/close [post]
 func (h *Handler) RouteClose(context *fiber.Ctx) error {

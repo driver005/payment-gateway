@@ -5,7 +5,7 @@ import (
 	"github.com/driver005/gateway/billing/subscriptionSchedule"
 	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/internal/customer"
-	"github.com/driver005/gateway/internal/setup/intent"
+	setupIntent "github.com/driver005/gateway/internal/setup/intent"
 	"github.com/driver005/gateway/payment/method"
 	"github.com/driver005/gateway/products/discount"
 	"github.com/driver005/gateway/products/price"
@@ -88,7 +88,7 @@ type Subscription struct {
 	// LatestInvoiceId        *uuid.UUID                                  `json:"latest_invoice_id,omitempty" swaggerignore:"true"`
 	// LatestInvoice          *invoice.Invoice                           `json:"latest_invoice,omitempty" database:"foreignKey:latest_invoice_id"`
 	PendingSetupIntentId *uuid.UUID                                 `json:"pending_setup_intent_id,omitempty" swaggerignore:"true"`
-	PendingSetupIntent   *intent.SetupIntent                        `json:"pending_setup_intent,omitempty" database:"foreignKey:pending_setup_intent_id"`
+	PendingSetupIntent   *setupIntent.SetupIntent                   `json:"pending_setup_intent,omitempty" database:"foreignKey:pending_setup_intent_id"`
 	PriceId              *uuid.UUID                                 `json:"price_id,omitempty" swaggerignore:"true"`
 	Price                *price.Price                               `json:"price,omitempty" database:"foreignKey:price_id"`
 	ScheduleId           *uuid.UUID                                 `json:"schedule_id,omitempty" swaggerignore:"true"`

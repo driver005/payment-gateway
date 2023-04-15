@@ -23,20 +23,23 @@ func contains(s pq.StringArray, str string) bool {
 	return false
 }
 
+type Alias PaymentIntent
+
 func (h *Handler) Bind(context *fiber.Ctx, isPayable bool) (*PaymentIntent, error) {
-	type Alias PaymentIntent
 	var m PaymentIntent
 	var err error
 	var paymentMethodOptions = &methods.PaymentIntentPaymentMethodOptions{}
 
-	model := struct {
+	type request struct {
 		*Alias
-		Customer      uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
-		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty gorm:"-:all"`
-		Confirm       bool          `json:"confirm,omitempty gorm:"-:all"`
-		ReturnUrl     string        `json:"return_url,omitempty gorm:"-:all"`
-		OffSession    bool          `json:"off_session,omitempty gorm:"-:all"`
-	}{
+		Customer      uuid.NullUUID `json:"customer,omitempty"`
+		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty"`
+		Confirm       bool          `json:"confirm,omitempty"`
+		ReturnUrl     string        `json:"return_url,omitempty"`
+		OffSession    bool          `json:"off_session,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

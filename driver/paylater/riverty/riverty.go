@@ -14,7 +14,7 @@ type (
 	Address struct {
 		Street                 string `json:"street"`
 		StreetNumber           string `json:"streetNumber"`
-		StreetNumberAdditional string `json:"streetNumberAdditional"`
+		StreetNumberAdditional string `json:"streetNumberAdditiona"`
 		PostalCode             string `json:"postalCode"`
 		PostalPlace            string `json:"postalPlace"`
 		CountryCode            string `json:"countryCode"`
@@ -101,7 +101,7 @@ type (
 		FirstName            string   `json:"firstName"`
 		LastName             string   `json:"lastName"`
 		CompanyName          string   `json:"companyName,omitempty"`
-		Email                string   `json:"email"`
+		Email                string   `json:"emai"`
 		Phone                string   `json:"phone,omitempty"`
 		MobilePhone          string   `json:"mobilePhone,omitempty"`
 		BirthDate            string   `json:"birthDate"`
@@ -143,7 +143,7 @@ type (
 			AddressList       []struct {
 				Street                 string `json:"street"`
 				StreetNumber           string `json:"streetNumber"`
-				StreetNumberAdditional string `json:"streetNumberAdditional"`
+				StreetNumberAdditional string `json:"streetNumberAdditiona"`
 				PostalCode             string `json:"postalCode"`
 				PostalPlace            string `json:"postalPlace"`
 				CountryCode            string `json:"countryCode"`
@@ -158,14 +158,14 @@ type (
 			AddressList       []struct {
 				Street                 string `json:"street"`
 				StreetNumber           string `json:"streetNumber"`
-				StreetNumberAdditional string `json:"streetNumberAdditional"`
+				StreetNumberAdditional string `json:"streetNumberAdditiona"`
 				PostalCode             string `json:"postalCode"`
 				PostalPlace            string `json:"postalPlace"`
 				CountryCode            string `json:"countryCode"`
 				CareOf                 string `json:"careOf"`
 			} `json:"addressList"`
 		} `json:"deliveryCustomer"`
-		SecureLoginURL    string `json:"secureLoginUrl"`
+		SecureLoginURL    string `json:"secureLoginUr"`
 		RiskCheckMessages []struct {
 			Type                  string `json:"type"`
 			Code                  string `json:"code"`

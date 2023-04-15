@@ -85,7 +85,7 @@ type BillDownloadURLQueryRsp struct {
 		Msg             string `json:"msg"`
 		SubCode         string `json:"sub_code"`
 		SubMsg          string `json:"sub_msg"`
-		BillDownloadUrl string `json:"bill_download_url"`
+		BillDownloadUrl string `json:"bill_download_ur"`
 	} `json:"alipay_data_dataservice_bill_downloadurl_query_response"`
 	Sign string `json:"sign"`
 }

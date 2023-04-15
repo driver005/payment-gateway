@@ -5,19 +5,22 @@ import (
 	"github.com/google/uuid"
 )
 
+type Alias Subscription
+
 func (h *Handler) Bind(context *fiber.Ctx) (*Subscription, error) {
-	type Alias Subscription
 	var m Subscription
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		Customer             uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
-		DefaultPaymentMethod uuid.NullUUID `json:"default_payment_method,omitempty gorm:"-:all"`
-		PendingSetupIntent   uuid.NullUUID `json:"pending_setup_intent,omitempty gorm:"-:all"`
-		Schedule             uuid.NullUUID `json:"schedule,omitempty gorm:"-:all"`
-		Price                uuid.NullUUID `json:"price,omitempty gorm:"-:all"`
-	}{
+		Customer             uuid.NullUUID `json:"customer,omitempty"`
+		DefaultPaymentMethod uuid.NullUUID `json:"default_payment_method,omitempty"`
+		PendingSetupIntent   uuid.NullUUID `json:"pending_setup_intent,omitempty"`
+		Schedule             uuid.NullUUID `json:"schedule,omitempty"`
+		Price                uuid.NullUUID `json:"price,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

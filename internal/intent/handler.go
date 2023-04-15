@@ -87,6 +87,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags PaymentIntent
 // @Accept json
 // @Produce json
+// @Param model body intent.Bind.request true "Request Data"
 // @Success 200 {object} PaymentIntent
 // @Router /v1/payment_intents [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -107,7 +108,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags PaymentIntent
 // @Accept json
 // @Produce json
-// @Param id body string true "PaymentIntent ID"
+// @Param model body intent.Bind.request true "Request Data"
+// @Param id path string true "PaymentIntent ID"
 // @Success 200 {object} PaymentIntent
 // @Router /v1/payment_intents/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -154,7 +156,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags PaymentIntent
 // @Accept json
 // @Produce json
-// @Param id body string true "PaymentIntent ID"
+// @Param id path string true "PaymentIntent ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/payment_intents/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -177,6 +179,17 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusNoContent).JSON(nil)
 }
 
+//TODO: ADD all
+
+// RouteConfirm func for confirming PaymentIntents by given ID.
+// @Description Confirm PaymentIntent.
+// @Summary confirm PaymentIntent
+// @Tags PaymentIntent
+// @Accept json
+// @Produce json
+// @Param id path string true "PaymentIntent ID"
+// @Success 200 {object} PaymentIntent
+// @Router /v1/payment_intents/{id}/confirm [post]
 func (h *Handler) RouteConfirm(context *fiber.Ctx) error {
 	m, err := h.Bind(context, false)
 	if err != nil {
@@ -218,6 +231,15 @@ func (h *Handler) RouteConfirm(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteCapture func for capturing PaymentIntents by given ID.
+// @Description Capture PaymentIntent.
+// @Summary capture PaymentIntent
+// @Tags PaymentIntent
+// @Accept json
+// @Produce json
+// @Param id path string true "PaymentIntent ID"
+// @Success 200 {object} PaymentIntent
+// @Router /v1/payment_intents/{id}/capture [post]
 func (h *Handler) RouteCapture(context *fiber.Ctx) error {
 	var m PaymentIntent
 
@@ -245,6 +267,15 @@ func (h *Handler) RouteCapture(context *fiber.Ctx) error {
 	return context.Status(fiber.StatusOK).JSON(&r)
 }
 
+// RouteCancel func for canceling PaymentIntents by given ID.
+// @Description Cancel PaymentIntent.
+// @Summary cancel PaymentIntent
+// @Tags PaymentIntent
+// @Accept json
+// @Produce json
+// @Param id path string true "PaymentIntent ID"
+// @Success 200 {object} PaymentIntent
+// @Router /v1/payment_intents/{id}/cancel [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 	var m PaymentIntent
 

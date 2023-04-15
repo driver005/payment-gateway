@@ -5,16 +5,19 @@ import (
 	"github.com/google/uuid"
 )
 
+type Alias Dispute
+
 func (h *Handler) Bind(context *fiber.Ctx) (*Dispute, error) {
-	type Alias Dispute
 	var m Dispute
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		Charge        uuid.NullUUID `json:"charge,omitempty gorm:"-:all"`
-		PaymentIntent uuid.NullUUID `json:"payment_intent,omitempty gorm:"-:all"`
-	}{
+		Charge        uuid.NullUUID `json:"charge,omitempty"`
+		PaymentIntent uuid.NullUUID `json:"payment_intent,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

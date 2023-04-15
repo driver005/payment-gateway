@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/driver005/database"
@@ -12,15 +11,13 @@ type Model struct {
 	Id        uuid.UUID          `json:"id" database:"primary_key"`
 	Object    string             `json:"object"`
 	Livemode  bool               `json:"livemode"`
-	Metadata  JSONB              `json:"metadata,omitempty" database:"default:null"`
+	Metadata  JSONB              `json:"metadata,omitempty" database:"default:nul"`
 	CreatedAt time.Time          `json:"created_at,omitempty" db:"created_at"`
 	UpdatedAt time.Time          `json:"updated_at,omitempty" db:"updated_at"`
-	DeletedAt database.DeletedAt `json:"deleted_at,omitempty" db:"deleted_at"`
+	DeletedAt database.DeletedAt `json:"deleted_at,omitempty" db:"deleted_at" swaggerignore:"true"`
 }
 
 func (m *Model) BeforeCreate(tx *database.DB) (err error) {
-	fmt.Print(tx.Statement.Schema.Table + " : ")
-	fmt.Println("core")
 	if m.Id == uuid.Nil {
 		m.Id, err = uuid.NewUUID()
 		if err != nil {

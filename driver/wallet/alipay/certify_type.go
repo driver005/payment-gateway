@@ -27,7 +27,7 @@ type IdentityParam struct {
 }
 
 type MerchantConfig struct {
-	ReturnURL string `json:"return_url"`
+	ReturnURL string `json:"return_ur"`
 }
 
 func (this UserCertifyOpenInitialize) APIName() string {

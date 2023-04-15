@@ -89,6 +89,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Payout
 // @Accept json
 // @Produce json
+// @Param model body payout.Bind.request true "Request Data"
 // @Success 200 {object} Payout
 // @Router /v1/payouts [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -117,7 +118,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Payout
 // @Accept json
 // @Produce json
-// @Param id body string true "Payout ID"
+// @Param model body payout.Bind.request true "Request Data"
+// @Param id path string true "Payout ID"
 // @Success 200 {object} Payout
 // @Router /v1/payouts/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -156,7 +158,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Payout
 // @Accept json
 // @Produce json
-// @Param id body string true "Payout ID"
+// @Param id path string true "Payout ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/payouts/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -185,7 +187,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags Payout
 // @Accept json
 // @Produce json
-// @Param id body string true "Payout ID"
+// @Param id path string true "Payout ID"
 // @Success 200 {object} Payout
 // @Router /v1/payouts/{id}/cancele [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {
@@ -219,7 +221,7 @@ func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 // @Tags Payout
 // @Accept json
 // @Produce json
-// @Param id body string true "Payout ID"
+// @Param id path string true "Payout ID"
 // @Success 200 {object} Payout
 // @Router /v1/payouts/{id}/reverse [post]
 func (h *Handler) RouteReverse(context *fiber.Ctx) error {

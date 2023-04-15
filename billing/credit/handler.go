@@ -90,7 +90,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags CreditNote
 // @Accept json
 // @Produce json
-// @Param credit_note body model true "CreditNote Data"
+// @Param model body credit.Bind.request true "Request Data"
 // @Success 200 {object} CreditNote
 // @Router /v1/credit_notes [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -119,7 +119,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags CreditNote
 // @Accept json
 // @Produce json
-// @Param id body string true "CreditNote ID"
+// @Param model body credit.Bind.request true "Request Data"
+// @Param id path string true "CreditNote ID"
 // @Success 200 {object} CreditNote
 // @Router /v1/credit_notes/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -158,7 +159,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags CreditNote
 // @Accept json
 // @Produce json
-// @Param id body string true "CreditNote ID"
+// @Param id path string true "CreditNote ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/credit_notes/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -216,7 +217,7 @@ func (h *Handler) RouteLines(context *fiber.Ctx) error {
 // @Tags CreditNote
 // @Accept json
 // @Produce json
-// @Param id body string true "CreditNote ID"
+// @Param id path string true "CreditNote ID"
 // @Success 200 {object} CreditNote
 // @Router /v1/credit_notes/{id}/void [get]
 func (h *Handler) RouteVoid(context *fiber.Ctx) error {

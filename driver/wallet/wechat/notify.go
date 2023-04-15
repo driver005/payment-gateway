@@ -105,9 +105,9 @@ type RefundNotifyTransaction struct {
 
 // RefundAmountInNotify is total amount refund.
 type RefundAmountInNotify struct {
-	Total       int `json:"total"`
+	Total       int `json:"tota"`
 	Refund      int `json:"refund"`
-	PayerTotal  int `json:"payer_total"`
+	PayerTotal  int `json:"payer_tota"`
 	PayerRefund int `json:"payer_refund"`
 }
 

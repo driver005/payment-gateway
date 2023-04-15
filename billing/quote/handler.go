@@ -90,6 +90,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Quote
 // @Accept json
 // @Produce json
+// @Param model body quote.Bind.request true "Request Data"
 // @Success 200 {object} Quote
 // @Router /v1/quotes [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -118,7 +119,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Quote
 // @Accept json
 // @Produce json
-// @Param id body string true "Quote ID"
+// @Param model body quote.Bind.request true "Request Data"
+// @Param id path string true "Quote ID"
 // @Success 200 {object} Quote
 // @Router /v1/quotes/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -157,7 +159,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Quote
 // @Accept json
 // @Produce json
-// @Param id body string true "Quote ID"
+// @Param id path string true "Quote ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/quotes/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -186,7 +188,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags Quote
 // @Accept json
 // @Produce json
-// @Param id body string true "Quote ID"
+// @Param id path string true "Quote ID"
 // @Success 200 {object} Quote
 // @Router /v1/quotes/{id}/finalize [post]
 func (h *Handler) RouteFinalize(context *fiber.Ctx) error {
@@ -222,7 +224,7 @@ func (h *Handler) RouteFinalize(context *fiber.Ctx) error {
 // @Tags Quote
 // @Accept json
 // @Produce json
-// @Param id body string true "Quote ID"
+// @Param id path string true "Quote ID"
 // @Success 200 {object} Quote
 // @Router /v1/quotes/{id}/accept [post]
 func (h *Handler) RouteAccept(context *fiber.Ctx) error {
@@ -258,7 +260,7 @@ func (h *Handler) RouteAccept(context *fiber.Ctx) error {
 // @Tags Quote
 // @Accept json
 // @Produce json
-// @Param id body string true "Quote ID"
+// @Param id path string true "Quote ID"
 // @Success 200 {object} Quote
 // @Router /v1/quotes/{id}/cancel [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {

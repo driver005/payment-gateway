@@ -24,7 +24,7 @@ type APIKeyRequest struct {
 }
 type APIKeyResponse struct {
 	APIKey      APIKey             `json:"apiKey"`
-	Label       string             `json:"label"`
+	Label       string             `json:"labe"`
 	Permissions []BTCPayPermission `json:"permissions"`
 }
 
@@ -271,13 +271,13 @@ type StoreResponse struct {
 	LightningDescriptionTemplate string               `json:"lightningDescriptionTemplate,omitempty"`
 	PaymentTolerance             float64              `json:"paymentTolerance"`
 	AnyoneCanCreateInvoice       bool                 `json:"anyoneCanCreateInvoice"`
-	RequiresRefundEmail          bool                 `json:"requiresRefundEmail"`
+	RequiresRefundEmail          bool                 `json:"requiresRefundEmai"`
 	LightningAmountInSatoshi     bool                 `json:"lightningAmountInSatoshi"`
 	LightningPrivateRouteHints   bool                 `json:"lightningPrivateRouteHints"`
 	OnChainWithLnInvoiceFallback bool                 `json:"onChainWithLnInvoiceFallback"`
 	RedirectAutomatically        bool                 `json:"redirectAutomatically"`
 	ShowRecommendedFee           bool                 `json:"showRecommendedFee"`
-	RecommendedFeeBlockTarget    int                `json:"recommendedFeeBlockTarget"`
+	RecommendedFeeBlockTarget    int                  `json:"recommendedFeeBlockTarget"`
 	DefaultLang                  string               `json:"defaultLang"`
 	CustomLogo                   string               `json:"customLogo,omitempty"`
 	CustomCSS                    string               `json:"customCSS,omitempty"`
@@ -303,7 +303,7 @@ type StoreRequest struct {
 	OnChainWithLnInvoiceFallback bool                 `json:"onChainWithLnInvoiceFallback,omitempty"`
 	RedirectAutomatically        bool                 `json:"redirectAutomatically,omitempty"`
 	ShowRecommendedFee           bool                 `json:"showRecommendedFee,omitempty"`
-	RecommendedFeeBlockTarget    int                `json:"recommendedFeeBlockTarget,omitempty"`
+	RecommendedFeeBlockTarget    int                  `json:"recommendedFeeBlockTarget,omitempty"`
 	DefaultLang                  string               `json:"defaultLang,omitempty"`
 	CustomLogo                   string               `json:"customLogo,omitempty"`
 	CustomCSS                    string               `json:"customCSS,omitempty"`
@@ -328,7 +328,7 @@ type StoreUpdate struct {
 	OnChainWithLnInvoiceFallback bool                 `json:"onChainWithLnInvoiceFallback,omitempty"`
 	RedirectAutomatically        bool                 `json:"redirectAutomatically,omitempty"`
 	ShowRecommendedFee           bool                 `json:"showRecommendedFee,omitempty"`
-	RecommendedFeeBlockTarget    int                `json:"recommendedFeeBlockTarget,omitempty"`
+	RecommendedFeeBlockTarget    int                  `json:"recommendedFeeBlockTarget,omitempty"`
 	DefaultLang                  string               `json:"defaultLang,omitempty"`
 	CustomLogo                   string               `json:"customLogo,omitempty"`
 	CustomCSS                    string               `json:"customCSS,omitempty"`
@@ -343,7 +343,7 @@ type UserID string
 
 type UserResponse struct {
 	ID                        UserID   `json:"id"`
-	Email                     string   `json:"email"`
+	Email                     string   `json:"emai"`
 	EmailConfirmed            bool     `json:"emailConfirmed"`
 	RequiresEmailConfirmation bool     `json:"requiresEmailConfirmation"`
 	Created                   int64    `json:"created,omitempty"`
@@ -351,7 +351,7 @@ type UserResponse struct {
 }
 
 type UserRequest struct {
-	Email           string `json:"email"`
+	Email           string `json:"emai"`
 	Password        string `json:"password"`
 	IsAdministrator bool   `json:"isAdministrator"`
 }

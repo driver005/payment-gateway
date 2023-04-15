@@ -44,8 +44,8 @@ type File struct {
 	Header     FileHeader     `json:"fileHeader"`
 	Batches    []Batcher      `json:"batches"`
 	IATBatches []IATBatch     `json:"IATBatches"`
-	Control    FileControl    `json:"fileControl"`
-	ADVControl ADVFileControl `json:"fileADVControl"`
+	Control    FileControl    `json:"fileContro"`
+	ADVControl ADVFileControl `json:"fileADVContro"`
 
 	// NotificationOfChange (Notification of change) is a slice of references to BatchCOR in file.Batches
 	NotificationOfChange []Batcher `json:"NotificationOfChange"`
@@ -73,11 +73,11 @@ type fileHeader struct {
 }
 
 type fileControl struct {
-	Control FileControl `json:"fileControl"`
+	Control FileControl `json:"fileContro"`
 }
 
 type advFileControl struct {
-	ADVControl ADVFileControl `json:"advFileControl"`
+	ADVControl ADVFileControl `json:"advFileContro"`
 }
 
 // FileFromJSON attempts to return a *File object assuming the input is valid JSON.
@@ -603,7 +603,7 @@ func (f *File) SetValidation(opts *ValidateOpts) {
 // performed on a NACHA file, records and various fields within.
 type ValidateOpts struct {
 	// SkipAll will disable all validation checks of a File. It has no effect when set on records.
-	SkipAll bool `json:"skipAll"`
+	SkipAll bool `json:"skipAl"`
 
 	// RequireABAOrigin can be set to enable routing number validation
 	// over the ImmediateOrigin file header field.
@@ -641,7 +641,7 @@ type ValidateOpts struct {
 	AllowMissingFileHeader bool `json:"allowMissingFileHeader"`
 
 	// AllowMissingFileControl allows a file to be read without a FileControl record.
-	AllowMissingFileControl bool `json:"allowMissingFileControl"`
+	AllowMissingFileControl bool `json:"allowMissingFileContro"`
 
 	// BypassCompanyIdentificationMatch allows batches in which the Company Identification field
 	// in the batch header and control do not match.

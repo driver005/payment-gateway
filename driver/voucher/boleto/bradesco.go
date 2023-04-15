@@ -1,28 +1,28 @@
 package boleto
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
-	"fmt"
 	"strconv"
 )
 
 // Bradesco
 // Source: (https://banco.bradesco/assets/pessoajuridica/pdf/4008-524-0121-08-layout-cobranca-versao-portuguesSS28785.pdf)
 type Bradesco struct {
-	Agency                int
-	Account               int
-	Carteira              int
-	Company               Company
+	Agency   int
+	Account  int
+	Carteira int
+	Company  Company
 }
 
 // configBradesco is a global for this bank configs
 var configBradesco = bankConfig{
-	Id:           237,
-	Aceite:       "N",
-	Currency:     9,
-	CurrencyName: "R$",
-	AgencyMaxSize: 4,
+	Id:             237,
+	Aceite:         "N",
+	Currency:       9,
+	CurrencyName:   "R$",
+	AgencyMaxSize:  4,
 	AccountMaxSize: 7,
 }
 
@@ -58,8 +58,8 @@ func (b Bradesco) Layout(w http.ResponseWriter, d Document) {
 	var barcode Barcode = b.Barcode(d)
 	layout, _ := template.ParseFiles("templates/bradesco.html")
 	layout.ExecuteTemplate(w, "bradesco", map[string]interface{}{
-		"Barcode": barcode,
+		"Barcode":  barcode,
 		"Document": d,
-		"Bank": b,
+		"Bank":     b,
 	})
 }

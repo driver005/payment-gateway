@@ -88,6 +88,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Charge
 // @Accept json
 // @Produce json
+// @Param model body charge.Bind.request true "Request Data"
 // @Success 200 {object} Charge
 // @Router /v1/charges [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -116,7 +117,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Charge
 // @Accept json
 // @Produce json
-// @Param id body string true "Charge ID"
+// @Param model body charge.Bind.request true "Request Data"
+// @Param id path string true "Charge ID"
 // @Success 200 {object} Charge
 // @Router /v1/charges/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -155,7 +157,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Charge
 // @Accept json
 // @Produce json
-// @Param id body string true "Charge ID"
+// @Param id path string true "Charge ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/charges/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -184,7 +186,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags Charge
 // @Accept json
 // @Produce json
-// @Param id body string true "Charge ID"
+// @Param id path string true "Charge ID"
 // @Success 200 {object} Charge
 // @Router /v1/charges/{id}/capture [post]
 func (h *Handler) RouteCapture(context *fiber.Ctx) error {

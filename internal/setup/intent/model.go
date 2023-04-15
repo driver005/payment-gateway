@@ -1,4 +1,4 @@
-package intent
+package setupIntent
 
 import (
 	"github.com/driver005/gateway/core"

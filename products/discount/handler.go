@@ -22,8 +22,9 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Discount ID"
+// @Param customer_id path string true "Customer ID"
 // @Success 200 {object} Discount
-// @Router /v1/customers/{id}/discount/{id} [get]
+// @Router /v1/customers/{customer_id}/discount/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -50,8 +51,9 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 // @Tags Discount
 // @Accept json
 // @Produce json
+// @Param customer_id path string true "Customer ID"
 // @Success 200 {array} Discount
-// @Router /v1/customers/{id}/discount [get]
+// @Router /v1/customers/{customer_id}/discount [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -87,8 +89,10 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Discount
 // @Accept json
 // @Produce json
+// @Param model body discount.Bind.request true "Request Data"
+// @Param customer_id path string true "Customer ID"
 // @Success 200 {object} Discount
-// @Router /v1/customers/{id}/discount [post]
+// @Router /v1/customers/{customer_id}/discount [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -115,9 +119,11 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Discount
 // @Accept json
 // @Produce json
-// @Param id body string true "Discount ID"
+// @Param model body discount.Bind.request true "Request Data"
+// @Param id path string true "Discount ID"
+// @Param customer_id path string true "Customer ID"
 // @Success 200 {object} Discount
-// @Router /v1/customers/{id}/discount/{id} [post]
+// @Router /v1/customers/{customer_id}/discount/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -154,9 +160,10 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Discount
 // @Accept json
 // @Produce json
-// @Param id body string true "Discount ID"
+// @Param id path string true "Discount ID"
+// @Param customer_id path string true "Customer ID"
 // @Success 204 {string} status "ok"
-// @Router /v1/customers/{id}/discount/{id} [delete]
+// @Router /v1/customers/{customer_id}/discount/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

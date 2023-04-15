@@ -10,19 +10,22 @@ import (
 	"github.com/google/uuid"
 )
 
+type Alias Invoiceitem
+
 func (h *Handler) Bind(context *fiber.Ctx) (*Invoiceitem, error) {
-	type Alias Invoiceitem
 	var m Invoiceitem
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		Customer         uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
-		Invoice          uuid.NullUUID `json:"invoice,omitempty gorm:"-:all"`
-		Subscription     uuid.NullUUID `json:"subscription,omitempty gorm:"-:all"`
-		Price            uuid.NullUUID `json:"price,omitempty gorm:"-:all"`
-		SubscriptionItem uuid.NullUUID `json:"subscription_item,omitempty gorm:"-:all"`
-	}{
+		Customer         uuid.NullUUID `json:"customer,omitempty"`
+		Invoice          uuid.NullUUID `json:"invoice,omitempty"`
+		Subscription     uuid.NullUUID `json:"subscription,omitempty"`
+		Price            uuid.NullUUID `json:"price,omitempty"`
+		SubscriptionItem uuid.NullUUID `json:"subscription_item,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

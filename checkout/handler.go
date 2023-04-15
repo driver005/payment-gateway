@@ -88,6 +88,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags CheckoutSession
 // @Accept json
 // @Produce json
+// @Param model body CheckoutSession true "Request Data"
 // @Success 200 {object} CheckoutSession
 // @Router /v1/checkout/sessions [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -117,7 +118,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags CheckoutSession
 // @Accept json
 // @Produce json
-// @Param id body string true "CheckoutSession ID"
+// @Param model body CheckoutSession true "Request Data"
+// @Param id path string true "CheckoutSession ID"
 // @Success 200 {object} CheckoutSession
 // @Router /v1/checkout/sessions/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -157,7 +159,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags CheckoutSession
 // @Accept json
 // @Produce json
-// @Param id body string true "CheckoutSession ID"
+// @Param id path string true "CheckoutSession ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/checkout/sessions/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -186,7 +188,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags CheckoutSession
 // @Accept json
 // @Produce json
-// @Param id body string true "CheckoutSession ID"
+// @Param id path string true "CheckoutSession ID"
 // @Success 200 {object} CheckoutSession
 // @Router /v1/checkout/sessions/{id}/expire [post]
 func (h *Handler) RouteExpire(context *fiber.Ctx) error {

@@ -23,8 +23,9 @@ func (h *Handler) SetRoutes(r fiber.Router) {
 // @Accept json
 // @Produce json
 // @Param id path string true "Card ID"
+// @Param customer_id path string true "Customer ID"
 // @Success 200 {object} Card
-// @Router /v1/customers/{id}/sources/{id} [get]
+// @Router /v1/customers/{customer_id}/sources/{id} [get]
 func (h *Handler) RouteGet(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {
@@ -51,8 +52,9 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 // @Tags Card
 // @Accept json
 // @Produce json
+// @Param customer_id path string true "Customer ID"
 // @Success 200 {array} Card
-// @Router /v1/customers/{id}/sources [get]
+// @Router /v1/customers/{customer_id}/sources [get]
 func (h *Handler) RouteList(context *fiber.Ctx) error {
 	page, _ := strconv.Atoi(context.Query("page"))
 	if page == 0 {
@@ -88,8 +90,10 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Card
 // @Accept json
 // @Produce json
+// @Param model body card.Bind.request true "Request Data"
+// @Param customer_id path string true "Customer ID"
 // @Success 200 {object} Card
-// @Router /v1/customers/{id}/sources [post]
+// @Router /v1/customers/{customer_id}/sources [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -116,9 +120,11 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Card
 // @Accept json
 // @Produce json
-// @Param id body string true "Card ID"
+// @Param model body card.Bind.request true "Request Data"
+// @Param id path string true "Card ID"
+// @Param customer_id path string true "Customer ID"
 // @Success 200 {object} Card
-// @Router /v1/customers/{id}/sources/{id} [post]
+// @Router /v1/customers/{customer_id}/sources/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 	m, err := h.Bind(context)
 	if err != nil {
@@ -155,9 +161,10 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Card
 // @Accept json
 // @Produce json
-// @Param id body string true "Card ID"
+// @Param id path string true "Card ID"
+// @Param customer_id path string true "Customer ID"
 // @Success 204 {string} status "ok"
-// @Router /v1/customers/{id}/sources/{id} [delete]
+// @Router /v1/customers/{customer_id}/sources/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 	Id, err := uuid.Parse(context.Params("id"))
 	if err != nil {

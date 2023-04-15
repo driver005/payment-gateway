@@ -126,7 +126,7 @@ type FundAuthOrderVoucherCreateRsp struct {
 		OutRequestNo string `json:"out_request_no"`
 		CodeType     string `json:"code_type"`
 		CodeValue    string `json:"code_value"`
-		CodeURL      string `json:"code_url"`
+		CodeURL      string `json:"code_ur"`
 	} `json:"alipay_fund_auth_order_voucher_create_response"`
 	Sign string `json:"sign"`
 }

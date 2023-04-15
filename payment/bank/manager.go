@@ -7,16 +7,19 @@ import (
 	"github.com/google/uuid"
 )
 
+type Alias BankAccount
+
 func (h *Handler) Bind(context *fiber.Ctx) (*BankAccount, error) {
-	type Alias BankAccount
 	var m BankAccount
 	var err error
 
-	model := struct {
+	type request struct {
 		*Alias
-		Account  uuid.NullUUID `json:"account,omitempty gorm:"-:all"`
-		Customer uuid.NullUUID `json:"customer,omitempty gorm:"-:all"`
-	}{
+		Account  uuid.NullUUID `json:"account,omitempty"`
+		Customer uuid.NullUUID `json:"customer,omitempty"`
+	}
+
+	var model = request{
 		Alias: (*Alias)(&m),
 	}
 

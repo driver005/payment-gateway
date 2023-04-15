@@ -90,6 +90,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags SubscriptionSchedule
 // @Accept json
 // @Produce json
+// @Param model body subscriptionSchedule.Bind.request true "Request Data"
 // @Success 200 {object} SubscriptionSchedule
 // @Router /v1/subscription_schedules [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -118,7 +119,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags SubscriptionSchedule
 // @Accept json
 // @Produce json
-// @Param id body string true "SubscriptionSchedule ID"
+// @Param model body subscriptionSchedule.Bind.request true "Request Data"
+// @Param id path string true "SubscriptionSchedule ID"
 // @Success 200 {object} SubscriptionSchedule
 // @Router /v1/subscription_schedules/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -157,7 +159,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags SubscriptionSchedule
 // @Accept json
 // @Produce json
-// @Param id body string true "SubscriptionSchedule ID"
+// @Param id path string true "SubscriptionSchedule ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/subscription_schedules/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -186,7 +188,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags SubscriptionSchedule
 // @Accept json
 // @Produce json
-// @Param id body string true "SubscriptionSchedule ID"
+// @Param id path string true "SubscriptionSchedule ID"
 // @Success 200 {object} SubscriptionSchedule
 // @Router /v1/subscription_schedules/{id}/cancele [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {
@@ -222,7 +224,7 @@ func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 // @Tags SubscriptionSchedule
 // @Accept json
 // @Produce json
-// @Param id body string true "SubscriptionSchedule ID"
+// @Param id path string true "SubscriptionSchedule ID"
 // @Success 200 {object} SubscriptionSchedule
 // @Router /v1/subscription_schedules/{id}/release [post]
 func (h *Handler) RouteRelease(context *fiber.Ctx) error {

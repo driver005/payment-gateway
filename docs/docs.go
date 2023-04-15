@@ -24,7 +24,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/v1/balance": {
+        "/v1/balance/{id}": {
             "get": {
                 "description": "Get Balance by given ID or 404 error.",
                 "consumes": [
@@ -151,6 +151,17 @@ const docTemplate = `{
                     "Charge"
                 ],
                 "summary": "create a new Charge",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/charge.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -206,13 +217,20 @@ const docTemplate = `{
                 "summary": "update Charge",
                 "parameters": [
                     {
-                        "description": "Charge ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/charge.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Charge ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -238,13 +256,11 @@ const docTemplate = `{
                 "summary": "delete Charge by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Charge ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -272,13 +288,11 @@ const docTemplate = `{
                 "summary": "capture Charge",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Charge ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -328,6 +342,17 @@ const docTemplate = `{
                     "CheckoutSession"
                 ],
                 "summary": "create a new CheckoutSession",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/checkout.CheckoutSession"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -383,13 +408,20 @@ const docTemplate = `{
                 "summary": "update CheckoutSession",
                 "parameters": [
                     {
-                        "description": "CheckoutSession ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/checkout.CheckoutSession"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "CheckoutSession ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -415,13 +447,11 @@ const docTemplate = `{
                 "summary": "delete CheckoutSession by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "CheckoutSession ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -449,13 +479,11 @@ const docTemplate = `{
                 "summary": "expire CheckoutSession",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "CheckoutSession ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -505,6 +533,17 @@ const docTemplate = `{
                     "Coupon"
                 ],
                 "summary": "create a new Coupon",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/coupon.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -560,13 +599,20 @@ const docTemplate = `{
                 "summary": "update Coupon",
                 "parameters": [
                     {
-                        "description": "Coupon ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/coupon.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Coupon ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -592,13 +638,11 @@ const docTemplate = `{
                 "summary": "delete Coupon by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Coupon ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -648,6 +692,17 @@ const docTemplate = `{
                     "CreditNote"
                 ],
                 "summary": "create a new CreditNote",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/credit.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -703,13 +758,20 @@ const docTemplate = `{
                 "summary": "update CreditNote",
                 "parameters": [
                     {
-                        "description": "CreditNote ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/credit.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "CreditNote ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -735,13 +797,11 @@ const docTemplate = `{
                 "summary": "delete CreditNote by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "CreditNote ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -801,13 +861,11 @@ const docTemplate = `{
                 "summary": "update CreditNote to status void",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "CreditNote ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -857,6 +915,17 @@ const docTemplate = `{
                     "Customer"
                 ],
                 "summary": "create a new Customer",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/customer.Customer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -867,103 +936,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/customers/{id}": {
-            "get": {
-                "description": "Get Customer by given ID or 404 error.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Customer"
-                ],
-                "summary": "get Customer by given ID or 404 error.",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Customer ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/customer.Customer"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Update Customer.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Customer"
-                ],
-                "summary": "update Customer",
-                "parameters": [
-                    {
-                        "description": "Customer ID",
-                        "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/customer.Customer"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete Customer by given ID.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Customer"
-                ],
-                "summary": "delete Customer by given ID",
-                "parameters": [
-                    {
-                        "description": "Customer ID",
-                        "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "ok",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/customers/{id}/cash_balance": {
+        "/v1/customers/{customer_id}/cash_balance": {
             "get": {
                 "description": "Get all existing CashBalances.",
                 "consumes": [
@@ -977,13 +950,6 @@ const docTemplate = `{
                 ],
                 "summary": "get all existing CashBalances",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "description": "CashBalance ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
                     {
                         "type": "string",
                         "description": "Customer ID",
@@ -1016,6 +982,24 @@ const docTemplate = `{
                     "CashBalance"
                 ],
                 "summary": "create a new CashBalance",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/cash.CashBalance"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1026,7 +1010,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/customers/{id}/cash_balance/{id}": {
+        "/v1/customers/{customer_id}/cash_balance/{id}": {
             "get": {
                 "description": "Get CashBalance by given ID or 404 error.",
                 "consumes": [
@@ -1077,6 +1061,15 @@ const docTemplate = `{
                 ],
                 "summary": "update CashBalance",
                 "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/cash.CashBalance"
+                        }
+                    },
                     {
                         "type": "string",
                         "description": "CashBalance ID",
@@ -1139,7 +1132,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/customers/{id}/discount": {
+        "/v1/customers/{customer_id}/discount": {
             "get": {
                 "description": "Get all existing Discounts.",
                 "consumes": [
@@ -1152,6 +1145,15 @@ const docTemplate = `{
                     "Discount"
                 ],
                 "summary": "get all existing Discounts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1176,6 +1178,24 @@ const docTemplate = `{
                     "Discount"
                 ],
                 "summary": "create a new Discount",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/discount.Bind.request"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1186,7 +1206,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/customers/{id}/discount/{id}": {
+        "/v1/customers/{customer_id}/discount/{id}": {
             "get": {
                 "description": "Get Discount by given ID or 404 error.",
                 "consumes": [
@@ -1204,6 +1224,13 @@ const docTemplate = `{
                         "type": "string",
                         "description": "Discount ID",
                         "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
                         "in": "path",
                         "required": true
                     }
@@ -1231,13 +1258,27 @@ const docTemplate = `{
                 "summary": "update Discount",
                 "parameters": [
                     {
-                        "description": "Discount ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/discount.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Discount ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1263,13 +1304,18 @@ const docTemplate = `{
                 "summary": "delete Discount by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Discount ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1282,7 +1328,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/customers/{id}/sources": {
+        "/v1/customers/{customer_id}/sources": {
             "get": {
                 "description": "Get all existing Cards.",
                 "consumes": [
@@ -1295,6 +1341,15 @@ const docTemplate = `{
                     "Card"
                 ],
                 "summary": "get all existing Cards",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1308,7 +1363,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Attaching Source to Customer by given ID.",
+                "description": "Create a new Card.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1316,31 +1371,38 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Source"
+                    "Card"
                 ],
-                "summary": "attaching Source to Customer by given ID",
+                "summary": "create a new Card",
                 "parameters": [
                     {
-                        "description": "Source ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/card.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "ok",
+                    "200": {
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/github_com_driver005_gateway_payment_card.Card"
                         }
                     }
                 }
             }
         },
-        "/v1/customers/{id}/sources/{id}": {
+        "/v1/customers/{customer_id}/sources/{id}": {
             "get": {
                 "description": "Get Card by given ID or 404 error.",
                 "consumes": [
@@ -1360,6 +1422,13 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1372,7 +1441,7 @@ const docTemplate = `{
                 }
             },
             "post": {
-                "description": "Update Card.",
+                "description": "Attaching Source to Customer by given ID.",
                 "consumes": [
                     "application/json"
                 ],
@@ -1380,25 +1449,30 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Card"
+                    "Source"
                 ],
-                "summary": "update Card",
+                "summary": "attaching Source to Customer by given ID",
                 "parameters": [
                     {
-                        "description": "Card ID",
+                        "type": "string",
+                        "description": "Source ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "204": {
+                        "description": "ok",
                         "schema": {
-                            "$ref": "#/definitions/github_com_driver005_gateway_payment_card.Card"
+                            "type": "string"
                         }
                     }
                 }
@@ -1417,13 +1491,18 @@ const docTemplate = `{
                 "summary": "dettaching Source from Customer by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Source ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1436,7 +1515,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/customers/{id}/sources/{id}/verify": {
+        "/v1/customers/{customer_id}/sources/{id}/verify": {
             "post": {
                 "description": "Verify BankAccount.",
                 "consumes": [
@@ -1451,13 +1530,18 @@ const docTemplate = `{
                 "summary": "verify BankAccount",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "BankAccount ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "customer_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1465,6 +1549,107 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/bank.BankAccount"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/customers/{id}": {
+            "get": {
+                "description": "Get Customer by given ID or 404 error.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "get Customer by given ID or 404 error.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/customer.Customer"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Update Customer.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "update Customer",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/customer.Customer"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/customer.Customer"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Customer by given ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Customer"
+                ],
+                "summary": "delete Customer by given ID",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "ok",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -1483,6 +1668,15 @@ const docTemplate = `{
                     "Customer"
                 ],
                 "summary": "get all existing Customers",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1507,6 +1701,24 @@ const docTemplate = `{
                     "Customer"
                 ],
                 "summary": "create a new Customer",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/customer.Customer"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Customer ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1569,13 +1781,11 @@ const docTemplate = `{
                 "summary": "delete Customer by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Customer ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "type": "string",
@@ -1632,6 +1842,17 @@ const docTemplate = `{
                     "Dispute"
                 ],
                 "summary": "create a new Dispute",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dispute.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1687,13 +1908,20 @@ const docTemplate = `{
                 "summary": "update Dispute",
                 "parameters": [
                     {
-                        "description": "Dispute ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/dispute.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Dispute ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1719,13 +1947,11 @@ const docTemplate = `{
                 "summary": "delete Dispute by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Dispute ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1753,13 +1979,11 @@ const docTemplate = `{
                 "summary": "close Dispute",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Dispute ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1809,6 +2033,17 @@ const docTemplate = `{
                     "File"
                 ],
                 "summary": "create a new File",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/file.File"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1864,13 +2099,20 @@ const docTemplate = `{
                 "summary": "update File",
                 "parameters": [
                     {
-                        "description": "File ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/file.File"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "File ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1896,13 +2138,11 @@ const docTemplate = `{
                 "summary": "delete File by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "File ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1952,6 +2192,17 @@ const docTemplate = `{
                     "Invoiceitem"
                 ],
                 "summary": "create a new Invoiceitem",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/invoiceItem.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2007,13 +2258,20 @@ const docTemplate = `{
                 "summary": "update Invoiceitem",
                 "parameters": [
                     {
-                        "description": "Invoiceitem ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/invoiceItem.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Invoiceitem ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2039,13 +2297,11 @@ const docTemplate = `{
                 "summary": "delete Invoiceitem by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoiceitem ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2095,6 +2351,17 @@ const docTemplate = `{
                     "Invoice"
                 ],
                 "summary": "create a new Invoice",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/invoice.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2150,13 +2417,20 @@ const docTemplate = `{
                 "summary": "update Invoice",
                 "parameters": [
                     {
-                        "description": "Invoice ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/invoice.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Invoice ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2182,13 +2456,11 @@ const docTemplate = `{
                 "summary": "delete Invoice by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoice ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2216,13 +2488,11 @@ const docTemplate = `{
                 "summary": "cancel Invoice",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoice ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2250,13 +2520,11 @@ const docTemplate = `{
                 "summary": "capture Invoice",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoice ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2284,13 +2552,11 @@ const docTemplate = `{
                 "summary": "finalize Invoice",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoice ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2318,13 +2584,11 @@ const docTemplate = `{
                 "summary": "mark Invoice as uncollectible",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoice ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2352,13 +2616,11 @@ const docTemplate = `{
                 "summary": "pay Invoice",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoice ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2386,13 +2648,11 @@ const docTemplate = `{
                 "summary": "send Invoice",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoice ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2420,13 +2680,11 @@ const docTemplate = `{
                 "summary": "upcoming Invoice",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoice ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2454,13 +2712,11 @@ const docTemplate = `{
                 "summary": "void Invoice",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Invoice ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2510,6 +2766,17 @@ const docTemplate = `{
                     "LineItem"
                 ],
                 "summary": "create a new LineItem",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/item.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2565,13 +2832,20 @@ const docTemplate = `{
                 "summary": "update LineItem",
                 "parameters": [
                     {
-                        "description": "LineItem ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/item.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "LineItem ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2597,13 +2871,11 @@ const docTemplate = `{
                 "summary": "delete LineItem by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "LineItem ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2653,6 +2925,17 @@ const docTemplate = `{
                     "Mandate"
                 ],
                 "summary": "create a new Mandate",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/mandate.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2708,13 +2991,20 @@ const docTemplate = `{
                 "summary": "update Mandate",
                 "parameters": [
                     {
-                        "description": "Mandate ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/mandate.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Mandate ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2740,13 +3030,11 @@ const docTemplate = `{
                 "summary": "delete Mandate by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Mandate ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2796,6 +3084,17 @@ const docTemplate = `{
                     "PaymentIntent"
                 ],
                 "summary": "create a new PaymentIntent",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/intent.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2851,13 +3150,20 @@ const docTemplate = `{
                 "summary": "update PaymentIntent",
                 "parameters": [
                     {
-                        "description": "PaymentIntent ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/intent.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "PaymentIntent ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2883,13 +3189,11 @@ const docTemplate = `{
                 "summary": "delete PaymentIntent by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "PaymentIntent ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -2897,6 +3201,102 @@ const docTemplate = `{
                         "description": "ok",
                         "schema": {
                             "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/payment_intents/{id}/cancel": {
+            "post": {
+                "description": "Cancel PaymentIntent.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PaymentIntent"
+                ],
+                "summary": "cancel PaymentIntent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PaymentIntent ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/intent.PaymentIntent"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/payment_intents/{id}/capture": {
+            "post": {
+                "description": "Capture PaymentIntent.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PaymentIntent"
+                ],
+                "summary": "capture PaymentIntent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PaymentIntent ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/intent.PaymentIntent"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/payment_intents/{id}/confirm": {
+            "post": {
+                "description": "Confirm PaymentIntent.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "PaymentIntent"
+                ],
+                "summary": "confirm PaymentIntent",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "PaymentIntent ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/intent.PaymentIntent"
                         }
                     }
                 }
@@ -2939,6 +3339,17 @@ const docTemplate = `{
                     "PaymentLink"
                 ],
                 "summary": "create a new PaymentLink",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/link.PaymentLink"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2994,13 +3405,20 @@ const docTemplate = `{
                 "summary": "update PaymentLink",
                 "parameters": [
                     {
-                        "description": "PaymentLink ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/link.PaymentLink"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "PaymentLink ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3026,13 +3444,11 @@ const docTemplate = `{
                 "summary": "delete PaymentLink by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "PaymentLink ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3082,6 +3498,17 @@ const docTemplate = `{
                     "PaymentMethod"
                 ],
                 "summary": "create a new PaymentMethod",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/method.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -3137,13 +3564,20 @@ const docTemplate = `{
                 "summary": "update PaymentMethod",
                 "parameters": [
                     {
-                        "description": "PaymentMethod ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/method.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "PaymentMethod ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3169,13 +3603,11 @@ const docTemplate = `{
                 "summary": "delete PaymentMethod by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "PaymentMethod ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3203,13 +3635,11 @@ const docTemplate = `{
                 "summary": "attaching PaymentMethod to Customer by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "PaymentMethod ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3237,13 +3667,11 @@ const docTemplate = `{
                 "summary": "dettaching PaymentMethod from Customer by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "PaymentMethod ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3293,6 +3721,17 @@ const docTemplate = `{
                     "Payout"
                 ],
                 "summary": "create a new Payout",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/payout.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -3348,13 +3787,20 @@ const docTemplate = `{
                 "summary": "update Payout",
                 "parameters": [
                     {
-                        "description": "Payout ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/payout.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Payout ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3380,13 +3826,11 @@ const docTemplate = `{
                 "summary": "delete Payout by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Payout ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3414,13 +3858,11 @@ const docTemplate = `{
                 "summary": "cancel Payout",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Payout ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3448,13 +3890,11 @@ const docTemplate = `{
                 "summary": "reverse Payout",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Payout ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3504,6 +3944,17 @@ const docTemplate = `{
                     "Plan"
                 ],
                 "summary": "create a new Plan",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/plan.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -3559,13 +4010,20 @@ const docTemplate = `{
                 "summary": "update Plan",
                 "parameters": [
                     {
-                        "description": "Plan ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/plan.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Plan ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3591,13 +4049,11 @@ const docTemplate = `{
                 "summary": "delete Plan by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Plan ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3647,6 +4103,17 @@ const docTemplate = `{
                     "Price"
                 ],
                 "summary": "create a new Price",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/price.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -3702,13 +4169,20 @@ const docTemplate = `{
                 "summary": "update Price",
                 "parameters": [
                     {
-                        "description": "Price ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/price.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Price ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3734,13 +4208,11 @@ const docTemplate = `{
                 "summary": "delete Price by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Price ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3790,6 +4262,17 @@ const docTemplate = `{
                     "Product"
                 ],
                 "summary": "create a new Product",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/product.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -3845,13 +4328,20 @@ const docTemplate = `{
                 "summary": "update Product",
                 "parameters": [
                     {
-                        "description": "Product ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/product.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Product ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3877,13 +4367,11 @@ const docTemplate = `{
                 "summary": "delete Product by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Product ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -3933,6 +4421,17 @@ const docTemplate = `{
                     "PromotionCode"
                 ],
                 "summary": "create a new PromotionCode",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/promotion.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -3988,13 +4487,20 @@ const docTemplate = `{
                 "summary": "update PromotionCode",
                 "parameters": [
                     {
-                        "description": "PromotionCode ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/promotion.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "PromotionCode ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4020,13 +4526,11 @@ const docTemplate = `{
                 "summary": "delete PromotionCode by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "PromotionCode ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4076,6 +4580,17 @@ const docTemplate = `{
                     "Quote"
                 ],
                 "summary": "create a new Quote",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/quote.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -4131,13 +4646,20 @@ const docTemplate = `{
                 "summary": "update Quote",
                 "parameters": [
                     {
-                        "description": "Quote ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/quote.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Quote ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4163,13 +4685,11 @@ const docTemplate = `{
                 "summary": "delete Quote by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Quote ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4197,13 +4717,11 @@ const docTemplate = `{
                 "summary": "accept Quote",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Quote ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4231,13 +4749,11 @@ const docTemplate = `{
                 "summary": "cancel Quote",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Quote ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4265,13 +4781,11 @@ const docTemplate = `{
                 "summary": "finalize Quote",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Quote ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4321,6 +4835,17 @@ const docTemplate = `{
                     "Refund"
                 ],
                 "summary": "create a new Refund",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/refund.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -4376,13 +4901,20 @@ const docTemplate = `{
                 "summary": "update Refund",
                 "parameters": [
                     {
-                        "description": "Refund ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/refund.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Refund ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4408,13 +4940,11 @@ const docTemplate = `{
                 "summary": "delete Refund by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Refund ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4442,13 +4972,11 @@ const docTemplate = `{
                 "summary": "cancel Refund",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Refund ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4498,6 +5026,17 @@ const docTemplate = `{
                     "SetupAttempt"
                 ],
                 "summary": "create a new SetupAttempt",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/attempt.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -4553,13 +5092,20 @@ const docTemplate = `{
                 "summary": "update SetupAttempt",
                 "parameters": [
                     {
-                        "description": "SetupAttempt ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/attempt.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "SetupAttempt ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4585,13 +5131,11 @@ const docTemplate = `{
                 "summary": "delete SetupAttempt by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "SetupAttempt ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4623,7 +5167,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/intent.SetupIntent"
+                                "$ref": "#/definitions/setupIntent.SetupIntent"
                             }
                         }
                     }
@@ -4641,11 +5185,22 @@ const docTemplate = `{
                     "SetupIntent"
                 ],
                 "summary": "create a new SetupIntent",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/setupIntent.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/intent.SetupIntent"
+                            "$ref": "#/definitions/setupIntent.SetupIntent"
                         }
                     }
                 }
@@ -4677,7 +5232,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/intent.SetupIntent"
+                            "$ref": "#/definitions/setupIntent.SetupIntent"
                         }
                     }
                 }
@@ -4696,20 +5251,27 @@ const docTemplate = `{
                 "summary": "update SetupIntent",
                 "parameters": [
                     {
-                        "description": "SetupIntent ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/setupIntent.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "SetupIntent ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/intent.SetupIntent"
+                            "$ref": "#/definitions/setupIntent.SetupIntent"
                         }
                     }
                 }
@@ -4728,13 +5290,11 @@ const docTemplate = `{
                 "summary": "delete SetupIntent by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "SetupIntent ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4762,20 +5322,18 @@ const docTemplate = `{
                 "summary": "cancel SetupIntent",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "SetupIntent ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/intent.SetupIntent"
+                            "$ref": "#/definitions/setupIntent.SetupIntent"
                         }
                     }
                 }
@@ -4796,20 +5354,18 @@ const docTemplate = `{
                 "summary": "confirm SetupIntent",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "SetupIntent ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/intent.SetupIntent"
+                            "$ref": "#/definitions/setupIntent.SetupIntent"
                         }
                     }
                 }
@@ -4852,6 +5408,17 @@ const docTemplate = `{
                     "Source"
                 ],
                 "summary": "create a new Source",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/source.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -4907,13 +5474,20 @@ const docTemplate = `{
                 "summary": "update Source",
                 "parameters": [
                     {
-                        "description": "Source ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/source.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Source ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4939,13 +5513,11 @@ const docTemplate = `{
                 "summary": "delete Source by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Source ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -4995,6 +5567,17 @@ const docTemplate = `{
                     "SubscriptionItem"
                 ],
                 "summary": "create a new SubscriptionItem",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/subscriptionItem.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -5050,13 +5633,20 @@ const docTemplate = `{
                 "summary": "update SubscriptionItem",
                 "parameters": [
                     {
-                        "description": "SubscriptionItem ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/subscriptionItem.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "SubscriptionItem ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -5082,13 +5672,11 @@ const docTemplate = `{
                 "summary": "delete SubscriptionItem by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "SubscriptionItem ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -5114,6 +5702,15 @@ const docTemplate = `{
                     "UsageRecord"
                 ],
                 "summary": "get all existing UsageRecords",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "SubscriptionItem ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -5196,6 +5793,17 @@ const docTemplate = `{
                     "SubscriptionSchedule"
                 ],
                 "summary": "create a new SubscriptionSchedule",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/subscriptionSchedule.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -5251,13 +5859,20 @@ const docTemplate = `{
                 "summary": "update SubscriptionSchedule",
                 "parameters": [
                     {
-                        "description": "SubscriptionSchedule ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/subscriptionSchedule.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "SubscriptionSchedule ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -5283,13 +5898,11 @@ const docTemplate = `{
                 "summary": "delete SubscriptionSchedule by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "SubscriptionSchedule ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -5317,13 +5930,11 @@ const docTemplate = `{
                 "summary": "cancel SubscriptionSchedule",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "SubscriptionSchedule ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -5351,13 +5962,11 @@ const docTemplate = `{
                 "summary": "release SubscriptionSchedule",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "SubscriptionSchedule ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -5407,6 +6016,17 @@ const docTemplate = `{
                     "Subscription"
                 ],
                 "summary": "create a new Subscription",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/subscription.Bind.request"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -5462,13 +6082,20 @@ const docTemplate = `{
                 "summary": "update Subscription",
                 "parameters": [
                     {
-                        "description": "Subscription ID",
-                        "name": "id",
+                        "description": "Request Data",
+                        "name": "model",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/subscription.Bind.request"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "Subscription ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -5494,13 +6121,11 @@ const docTemplate = `{
                 "summary": "delete Subscription by given ID",
                 "parameters": [
                     {
+                        "type": "string",
                         "description": "Subscription ID",
                         "name": "id",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -5526,6 +6151,17 @@ const docTemplate = `{
                     "UsageRecord"
                 ],
                 "summary": "create a new UsageRecord",
+                "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usageRecord.UsageRecord"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -5550,6 +6186,15 @@ const docTemplate = `{
                 ],
                 "summary": "update UsageRecord",
                 "parameters": [
+                    {
+                        "description": "Request Data",
+                        "name": "model",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/usageRecord.UsageRecord"
+                        }
+                    },
                     {
                         "type": "string",
                         "description": "SubscriptionItem ID",
@@ -5582,7 +6227,7 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "SubscriptionItem ID",
+                        "description": "UsageRecord ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -5609,9 +6254,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -5634,9 +6276,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -5714,9 +6353,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "first_name": {
                     "description": "First name",
                     "type": "string"
@@ -5764,9 +6400,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "email": {
                     "description": "Email address.",
                     "type": "string"
@@ -5810,9 +6443,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -5842,6 +6472,59 @@ const docTemplate = `{
                 }
             }
         },
+        "attempt.Bind.request": {
+            "type": "object",
+            "properties": {
+                "attach_to_self": {
+                    "type": "boolean"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "flow_directions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "payment_method": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "payment_method_details": {
+                    "$ref": "#/definitions/details.PaymentMethodDetails"
+                },
+                "setup_error": {
+                    "$ref": "#/definitions/errors.ApiErrors"
+                },
+                "setup_intent": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "status": {
+                    "$ref": "#/definitions/attempt.Status"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "usage": {
+                    "$ref": "#/definitions/attempt.Usage"
+                }
+            }
+        },
         "attempt.SetupAttempt": {
             "type": "object",
             "properties": {
@@ -5853,9 +6536,6 @@ const docTemplate = `{
                 },
                 "customer": {
                     "$ref": "#/definitions/customer.Customer"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "flow_directions": {
                     "type": "array",
@@ -5885,7 +6565,7 @@ const docTemplate = `{
                     "$ref": "#/definitions/errors.ApiErrors"
                 },
                 "setup_intent": {
-                    "$ref": "#/definitions/intent.SetupIntent"
+                    "$ref": "#/definitions/setupIntent.SetupIntent"
                 },
                 "status": {
                     "$ref": "#/definitions/attempt.Status"
@@ -5950,9 +6630,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -6007,9 +6684,6 @@ const docTemplate = `{
                 "currency": {
                     "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "description": "An arbitrary string attached to the object. Often useful for displaying to users.",
@@ -6230,8 +6904,79 @@ const docTemplate = `{
                 "default_for_currency": {
                     "type": "boolean"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
+                "fingerprint": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "last4": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "routing_number": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/bank.Status"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "bank.Bind.request": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "account_holder_name": {
+                    "type": "string"
+                },
+                "account_holder_type": {
+                    "$ref": "#/definitions/bank.AccountHolderType"
+                },
+                "account_id": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "account_type": {
+                    "$ref": "#/definitions/bank.AccountType"
+                },
+                "available_payout_methods": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "bank_name": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "customer_id": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "default_for_currency": {
+                    "type": "boolean"
                 },
                 "fingerprint": {
                     "type": "string"
@@ -6308,6 +7053,107 @@ const docTemplate = `{
                 "AddressZipCheckUnavailable",
                 "AddressZipCheckUnchecked"
             ]
+        },
+        "card.Bind.request": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "address_city": {
+                    "type": "string"
+                },
+                "address_country": {
+                    "type": "string"
+                },
+                "address_line1": {
+                    "type": "string"
+                },
+                "address_line1_check": {
+                    "$ref": "#/definitions/card.AddressLine1Check"
+                },
+                "address_line2": {
+                    "type": "string"
+                },
+                "address_state": {
+                    "type": "string"
+                },
+                "address_zip": {
+                    "type": "string"
+                },
+                "address_zip_check": {
+                    "$ref": "#/definitions/card.AddressZipCheck"
+                },
+                "available_payout_methods": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "brand": {
+                    "$ref": "#/definitions/card.Brand"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "cvc_check": {
+                    "$ref": "#/definitions/card.CvcCheck"
+                },
+                "default_for_currency": {
+                    "type": "boolean"
+                },
+                "dynamic_last4": {
+                    "type": "string"
+                },
+                "exp_month": {
+                    "type": "integer"
+                },
+                "exp_year": {
+                    "type": "integer"
+                },
+                "fingerprint": {
+                    "type": "string"
+                },
+                "funding": {
+                    "$ref": "#/definitions/card.Funding"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "last4": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "tokenization_method": {
+                    "$ref": "#/definitions/card.TokenizationMethod"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
         },
         "card.Brand": {
             "type": "string",
@@ -6397,9 +7243,6 @@ const docTemplate = `{
                     "description": "The ID of the customer whose cash balance this object represents.",
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -6419,6 +7262,116 @@ const docTemplate = `{
                 "setting_using_merchant_default": {
                     "description": "A flag to indicate if reconciliation mode returned is the user's default or is specific to this customer cash balance",
                     "type": "boolean"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "charge.Bind.request": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "amount_captured": {
+                    "type": "integer"
+                },
+                "amount_refunded": {
+                    "type": "integer"
+                },
+                "balance_transaction": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "billing_details": {
+                    "$ref": "#/definitions/address.BillingDetails"
+                },
+                "calculated_statement_descriptor": {
+                    "type": "string"
+                },
+                "captured": {
+                    "type": "boolean"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "disputed": {
+                    "type": "boolean"
+                },
+                "failure_balance_transaction": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "failure_code": {
+                    "type": "string"
+                },
+                "failure_message": {
+                    "type": "string"
+                },
+                "fraud_details": {
+                    "$ref": "#/definitions/charge.ChargeFraudDetails"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "outcome": {
+                    "$ref": "#/definitions/charge.ChargeOutcome"
+                },
+                "paid": {
+                    "type": "boolean"
+                },
+                "payment_method": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "payment_method_details": {
+                    "$ref": "#/definitions/details.PaymentMethodDetails"
+                },
+                "radar_options": {
+                    "$ref": "#/definitions/radar.RadarOptions"
+                },
+                "receipt_email": {
+                    "type": "string"
+                },
+                "receipt_number": {
+                    "type": "string"
+                },
+                "receipt_url": {
+                    "type": "string"
+                },
+                "refunded": {
+                    "type": "boolean"
+                },
+                "review": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "shipping": {
+                    "$ref": "#/definitions/address.Shipping"
+                },
+                "statement_descriptor": {
+                    "type": "string"
+                },
+                "statement_descriptor_suffix": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/charge.Status"
                 },
                 "updated_at": {
                     "type": "string"
@@ -6457,9 +7410,6 @@ const docTemplate = `{
                 },
                 "customer": {
                     "$ref": "#/definitions/customer.Customer"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "type": "string"
@@ -6544,9 +7494,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -6577,9 +7524,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -6779,9 +7723,6 @@ const docTemplate = `{
                 "customer_email": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "expires_at": {
                     "type": "integer"
                 },
@@ -6844,7 +7785,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "setup_intent": {
-                    "$ref": "#/definitions/intent.SetupIntent"
+                    "$ref": "#/definitions/setupIntent.SetupIntent"
                 },
                 "shipping_address_collection": {
                     "$ref": "#/definitions/page.PaymentPagesCheckoutSessionShippingAddressCollection"
@@ -7063,9 +8004,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "display_name": {
                     "description": "The country name appropriate for display.",
                     "type": "string"
@@ -7103,7 +8041,7 @@ const docTemplate = `{
                 }
             }
         },
-        "coupon.Coupon": {
+        "coupon.Bind.request": {
             "type": "object",
             "properties": {
                 "amount_off": {
@@ -7121,8 +8059,64 @@ const docTemplate = `{
                 "currency": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
+                "duration": {
+                    "$ref": "#/definitions/coupon.Duration"
+                },
+                "duration_in_months": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "max_redemptions": {
+                    "type": "integer"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "percent_off": {
+                    "type": "number"
+                },
+                "redeem_by": {
+                    "type": "integer"
+                },
+                "times_redeemed": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "valid": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "coupon.Coupon": {
+            "type": "object",
+            "properties": {
+                "amount_off": {
+                    "type": "integer"
+                },
+                "applies_to": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
                 },
                 "duration": {
                     "$ref": "#/definitions/coupon.Duration"
@@ -7178,6 +8172,129 @@ const docTemplate = `{
                 "DurationForever"
             ]
         },
+        "credit.Bind.request": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "description": "The integer amount in %s representing the total amount of the credit note, including tax.",
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "customer_balance_transaction": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "discount_amount": {
+                    "description": "The integer amount in %s representing the total amount of discount that was credited.",
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "invoice": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "lines": {
+                    "description": "The aggregate amounts calculated per discount for all line items.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "memo": {
+                    "description": "Customer-facing text that appears on the credit note PDF.",
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "number": {
+                    "description": "A unique number that identifies this particular credit note and appears on the PDF of the credit note and its associated invoice.",
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "out_of_band_amount": {
+                    "description": "Amount that was credited outside of Stripe.",
+                    "type": "integer"
+                },
+                "pdf": {
+                    "description": "The link to download the PDF of the credit note.",
+                    "type": "string"
+                },
+                "reason": {
+                    "description": "Reason for issuing this credit note, one of ` + "`" + `duplicate` + "`" + `, ` + "`" + `fraudulent` + "`" + `, ` + "`" + `order_change` + "`" + `, or ` + "`" + `product_unsatisfactory` + "`" + `",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/credit.Reason"
+                        }
+                    ]
+                },
+                "refund": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "status": {
+                    "description": "Status of this credit note, one of ` + "`" + `issued` + "`" + ` or ` + "`" + `void` + "`" + `. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/credit.Status"
+                        }
+                    ]
+                },
+                "subtotal": {
+                    "description": "The integer amount in %s representing the amount of the credit note, excluding exclusive tax and invoice level discounts.",
+                    "type": "integer"
+                },
+                "subtotal_excluding_tax": {
+                    "description": "The integer amount in %s representing the amount of the credit note, excluding all tax and invoice level discounts.",
+                    "type": "integer"
+                },
+                "tax_amounts": {
+                    "description": "The aggregate amounts calculated per tax rate for all line items.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "total": {
+                    "description": "The integer amount in %s representing the total amount of the credit note, including tax and all discount.",
+                    "type": "integer"
+                },
+                "total_excluding_tax": {
+                    "description": "The integer amount in %s representing the total amount of the credit note, excluding tax, but including discounts.",
+                    "type": "integer"
+                },
+                "type": {
+                    "description": "Type of this credit note, one of ` + "`" + `pre_payment` + "`" + ` or ` + "`" + `post_payment` + "`" + `. A ` + "`" + `pre_payment` + "`" + ` credit note means it was issued when the invoice was open. A ` + "`" + `post_payment` + "`" + ` credit note means it was issued when the invoice was paid.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/credit.Type"
+                        }
+                    ]
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "voided_at": {
+                    "description": "The time that the credit note was voided.",
+                    "type": "string"
+                }
+            }
+        },
         "credit.CreditNote": {
             "type": "object",
             "properties": {
@@ -7197,9 +8314,6 @@ const docTemplate = `{
                 },
                 "customer_balance_transaction": {
                     "$ref": "#/definitions/balance.BalanceTransaction"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "discount_amount": {
                     "description": "The integer amount in %s representing the total amount of discount that was credited.",
@@ -7355,9 +8469,6 @@ const docTemplate = `{
                     "description": "CashBalance          *CashBalance                     ` + "`" + `json:\"cash_balance,omitempty\"` + "`" + `",
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "delinquent": {
                     "type": "boolean"
                 },
@@ -7437,9 +8548,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -7481,18 +8589,6 @@ const docTemplate = `{
                 "TaxExemptExempt",
                 "TaxExemptReverse"
             ]
-        },
-        "database.DeletedAt": {
-            "type": "object",
-            "properties": {
-                "time": {
-                    "type": "string"
-                },
-                "valid": {
-                    "description": "Valid is true if Time is not NULL",
-                    "type": "boolean"
-                }
-            }
         },
         "details.PaymentMethodDetails": {
             "type": "object",
@@ -7541,9 +8637,6 @@ const docTemplate = `{
                 },
                 "customer_balance": {
                     "$ref": "#/definitions/details.PaymentMethodDetailsCustomerBalance"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "eps": {
                     "$ref": "#/definitions/details.PaymentMethodDetailsEps"
@@ -7639,9 +8732,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -7685,9 +8775,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "fingerprint": {
                     "description": "Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.",
                     "type": "string"
@@ -7726,9 +8813,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "description": "Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.",
@@ -7773,9 +8857,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -7798,9 +8879,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -7832,9 +8910,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "description": "Uniquely identifies this particular Alipay account. You can use this attribute to check whether two Alipay accounts are the same.",
@@ -7871,9 +8946,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "fingerprint": {
                     "description": "Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.",
                     "type": "string"
@@ -7908,9 +8980,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "description": "Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.",
@@ -7963,9 +9032,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "iban_last4": {
                     "description": "Last four characters of the IBAN.",
                     "type": "string"
@@ -8001,9 +9067,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -8026,9 +9089,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -8076,9 +9136,6 @@ const docTemplate = `{
                 "cvc_check": {
                     "description": "If a CVC was provided, results of the check, one of ` + "`" + `pass` + "`" + `, ` + "`" + `fail` + "`" + `, ` + "`" + `unavailable` + "`" + `, or ` + "`" + `unchecked` + "`" + `.",
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "exp_month": {
                     "description": "Two-digit number representing the card's expiration month.",
@@ -8163,9 +9220,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "emv_auth_data": {
                     "description": "Authorization response cryptogram.",
                     "type": "string"
@@ -8237,9 +9291,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -8266,9 +9317,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -8300,9 +9348,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -8343,9 +9388,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -8372,9 +9414,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -8410,9 +9449,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "iban_last4": {
                     "description": "Last four characters of the IBAN.",
@@ -8456,9 +9492,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "emv_auth_data": {
                     "description": "Authorization response cryptogram.",
@@ -8530,9 +9563,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -8564,9 +9594,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -8593,9 +9620,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -8618,9 +9642,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "entity": {
                     "description": "Entity number associated with this Multibanco payment.",
@@ -8653,9 +9674,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -8686,9 +9704,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -8721,9 +9736,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -8755,9 +9767,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -8780,9 +9789,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -8822,9 +9828,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "description": "Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.",
@@ -8877,9 +9880,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "iban_last4": {
                     "description": "Last four characters of the IBAN.",
                     "type": "string"
@@ -8914,9 +9914,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -8953,9 +9950,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "fingerprint": {
                     "description": "Uniquely identifies this particular bank account. You can use this attribute to check whether two bank accounts are the same.",
                     "type": "string"
@@ -8991,9 +9985,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -9016,9 +10007,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "description": "Uniquely identifies this particular WeChat Pay account. You can use this attribute to check whether two WeChat accounts are the same.",
@@ -9045,6 +10033,59 @@ const docTemplate = `{
                 }
             }
         },
+        "discount.Bind.request": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "checkout_session": {
+                    "type": "string"
+                },
+                "coupon": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "end": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "invoice": {
+                    "type": "string"
+                },
+                "invoice_item": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "promotion_code": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "start": {
+                    "type": "integer"
+                },
+                "subscription": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "discount.Discount": {
             "type": "object",
             "properties": {
@@ -9062,9 +10103,6 @@ const docTemplate = `{
                 },
                 "customer": {
                     "$ref": "#/definitions/customer.Customer"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "end": {
                     "type": "integer"
@@ -9101,6 +10139,77 @@ const docTemplate = `{
                 }
             }
         },
+        "dispute.Bind.request": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "description": "Disputed amount. Usually the amount of the charge, but can differ (usually because of currency fluctuation or because only part of the order is disputed).",
+                    "type": "integer"
+                },
+                "balance_transactions": {
+                    "description": "List of zero, one, or two balance transactions that show funds withdrawn and reinstated to your Stripe account as a result of this dispute.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "charge": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
+                    "type": "string"
+                },
+                "evidence": {
+                    "$ref": "#/definitions/dispute.DisputeEvidence"
+                },
+                "evidence_details": {
+                    "$ref": "#/definitions/dispute.DisputeEvidenceDetails"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "is_charge_refundable": {
+                    "description": "If true, it is still possible to refund the disputed payment. Once the payment has been fully refunded, no further funds will be withdrawn from your Stripe account as a result of this dispute.",
+                    "type": "boolean"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "payment_intent": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "reason": {
+                    "description": "Reason given by cardholder for dispute. Possible values are ` + "`" + `bank_cannot_process` + "`" + `, ` + "`" + `check_returned` + "`" + `, ` + "`" + `credit_not_processed` + "`" + `, ` + "`" + `customer_initiated` + "`" + `, ` + "`" + `debit_not_authorized` + "`" + `, ` + "`" + `duplicate` + "`" + `, ` + "`" + `fraudulent` + "`" + `, ` + "`" + `general` + "`" + `, ` + "`" + `incorrect_account_details` + "`" + `, ` + "`" + `insufficient_funds` + "`" + `, ` + "`" + `product_not_received` + "`" + `, ` + "`" + `product_unacceptable` + "`" + `, ` + "`" + `subscription_canceled` + "`" + `, or ` + "`" + `unrecognized` + "`" + `. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dispute.Reason"
+                        }
+                    ]
+                },
+                "status": {
+                    "description": "Current status of dispute. Possible values are ` + "`" + `warning_needs_response` + "`" + `, ` + "`" + `warning_under_review` + "`" + `, ` + "`" + `warning_closed` + "`" + `, ` + "`" + `needs_response` + "`" + `, ` + "`" + `under_review` + "`" + `, ` + "`" + `charge_refunded` + "`" + `, ` + "`" + `won` + "`" + `, or ` + "`" + `lost` + "`" + `.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/dispute.Status"
+                        }
+                    ]
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "dispute.Dispute": {
             "type": "object",
             "properties": {
@@ -9125,9 +10234,6 @@ const docTemplate = `{
                 "currency": {
                     "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "evidence": {
                     "$ref": "#/definitions/dispute.DisputeEvidence"
@@ -9218,9 +10324,6 @@ const docTemplate = `{
                 "customer_signature": {
                     "$ref": "#/definitions/file.File"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "duplicate_charge_documentation": {
                     "$ref": "#/definitions/file.File"
                 },
@@ -9305,9 +10408,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "due_by": {
                     "description": "Date by which evidence must be submitted in order to successfully challenge dispute. Will be null if the customer's bank or credit card company doesn't allow a response for this particular dispute.",
@@ -9418,9 +10518,6 @@ const docTemplate = `{
                     "description": "For card errors resulting from a card issuer decline, a short string indicating the [card issuer's reason for the decline](https://stripe.com/docs/declines#issuer-declines) if they provide one.",
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "doc_url": {
                     "description": "A URL to more information about the [error code](https://stripe.com/docs/error-codes) reported.",
                     "type": "string"
@@ -9491,9 +10588,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "expires_at": {
                     "description": "The time at which the file expires and is no longer available in epoch seconds.",
                     "type": "integer"
@@ -9551,9 +10645,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expired": {
                     "description": "Whether this link is already expired.",
@@ -9624,82 +10715,6 @@ const docTemplate = `{
                 "PurposeTerminalReaderSplashscreen"
             ]
         },
-        "github_com_driver005_gateway_internal_intent.CancellationReason": {
-            "type": "string",
-            "enum": [
-                "duplicate",
-                "fraudulent",
-                "requested_by_customer",
-                "abandoned",
-                "failed_invoice",
-                "void_invoice",
-                "automatic"
-            ],
-            "x-enum-varnames": [
-                "CancellationReasonDuplicate",
-                "CancellationReasonFraudulent",
-                "CancellationReasonRequestedByCustomer",
-                "CancellationReasonAbandoned",
-                "CancellationReasonFailedInvoice",
-                "CancellationReasonVoidInvoice",
-                "CancellationReasonAutomatic"
-            ]
-        },
-        "github_com_driver005_gateway_internal_intent.Status": {
-            "type": "string",
-            "enum": [
-                "requires_payment_method",
-                "requires_confirmation",
-                "requires_action",
-                "processing",
-                "requires_capture",
-                "canceled",
-                "succeeded"
-            ],
-            "x-enum-varnames": [
-                "StatusRequiresPaymentMethod",
-                "StatusRequiresConfirmation",
-                "StatusRequiresAction",
-                "StatusProcessing",
-                "StatusRequiresCapture",
-                "StatusCanceled",
-                "StatusSucceeded"
-            ]
-        },
-        "github_com_driver005_gateway_internal_setup_intent.CancellationReason": {
-            "type": "string",
-            "enum": [
-                "abandoned",
-                "requested_by_customer",
-                "duplicate"
-            ],
-            "x-enum-varnames": [
-                "CancellationReasonAbandoned",
-                "CancellationReasonRequestedByCustomer",
-                "CancellationReasonDuplicate"
-            ]
-        },
-        "github_com_driver005_gateway_internal_setup_intent.Status": {
-            "type": "string",
-            "enum": [
-                "requires_payment_method",
-                "requires_confirmation",
-                "requires_action",
-                "processing",
-                "succeeded",
-                "failed",
-                "abandoned"
-            ],
-            "x-enum-varnames": [
-                "StatusRequiresPaymentMethod",
-                "StatusRequiresConfirmation",
-                "StatusRequiresAction",
-                "StatusProcessing",
-                "StatusSucceeded",
-                "StatusFailed",
-                "StatusAbandoned"
-            ]
-        },
         "github_com_driver005_gateway_payment_card.Card": {
             "type": "object",
             "properties": {
@@ -9757,9 +10772,6 @@ const docTemplate = `{
                 "default_for_currency": {
                     "type": "boolean"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "dynamic_last4": {
                     "type": "string"
                 },
@@ -9804,6 +10816,143 @@ const docTemplate = `{
                 }
             }
         },
+        "intent.Bind.request": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "amount_capturable": {
+                    "type": "integer"
+                },
+                "amount_details": {
+                    "$ref": "#/definitions/paymentFlow.PaymentFlowsAmountDetails"
+                },
+                "amount_received": {
+                    "type": "integer"
+                },
+                "automatic_payment_methods": {
+                    "type": "boolean"
+                },
+                "canceled_at": {
+                    "type": "integer"
+                },
+                "cancellation_reason": {
+                    "$ref": "#/definitions/intent.CancellationReason"
+                },
+                "capture_method": {
+                    "$ref": "#/definitions/intent.CaptureMethod"
+                },
+                "client_secret": {
+                    "type": "string"
+                },
+                "confirm": {
+                    "type": "boolean"
+                },
+                "confirmation_method": {
+                    "$ref": "#/definitions/intent.ConfirmationMethod"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "last_payment_error": {
+                    "$ref": "#/definitions/errors.ApiErrors"
+                },
+                "latest_charge": {
+                    "$ref": "#/definitions/charge.Charge"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "next_action": {
+                    "$ref": "#/definitions/next.PaymentIntentNextAction"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "off_session": {
+                    "type": "boolean"
+                },
+                "payment_method": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "payment_method_options": {
+                    "$ref": "#/definitions/methods.PaymentIntentPaymentMethodOptions"
+                },
+                "payment_method_types": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "processing": {
+                    "$ref": "#/definitions/intent.PaymentIntentProcessing"
+                },
+                "receipt_email": {
+                    "type": "string"
+                },
+                "return_url": {
+                    "type": "string"
+                },
+                "review": {
+                    "$ref": "#/definitions/review.Review"
+                },
+                "setup_future_usage": {
+                    "$ref": "#/definitions/intent.SetupFutureUsage"
+                },
+                "shipping": {
+                    "$ref": "#/definitions/address.Shipping"
+                },
+                "statement_descriptor": {
+                    "type": "string"
+                },
+                "statement_descriptor_suffix": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/intent.Status"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "intent.CancellationReason": {
+            "type": "string",
+            "enum": [
+                "duplicate",
+                "fraudulent",
+                "requested_by_customer",
+                "abandoned",
+                "failed_invoice",
+                "void_invoice",
+                "automatic"
+            ],
+            "x-enum-varnames": [
+                "CancellationReasonDuplicate",
+                "CancellationReasonFraudulent",
+                "CancellationReasonRequestedByCustomer",
+                "CancellationReasonAbandoned",
+                "CancellationReasonFailedInvoice",
+                "CancellationReasonVoidInvoice",
+                "CancellationReasonAutomatic"
+            ]
+        },
         "intent.CaptureMethod": {
             "type": "string",
             "enum": [
@@ -9824,17 +10973,6 @@ const docTemplate = `{
             "x-enum-varnames": [
                 "ConfirmationMethodAutomatic",
                 "ConfirmationMethodManual"
-            ]
-        },
-        "intent.MicrodepositType": {
-            "type": "string",
-            "enum": [
-                "descriptor_code",
-                "amounts"
-            ],
-            "x-enum-varnames": [
-                "MicrodepositTypeDescriptorCode",
-                "MicrodepositTypeAmounts"
             ]
         },
         "intent.PaymentIntent": {
@@ -9859,7 +10997,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "cancellation_reason": {
-                    "$ref": "#/definitions/github_com_driver005_gateway_internal_intent.CancellationReason"
+                    "$ref": "#/definitions/intent.CancellationReason"
                 },
                 "capture_method": {
                     "$ref": "#/definitions/intent.CaptureMethod"
@@ -9878,9 +11016,6 @@ const docTemplate = `{
                 },
                 "customer": {
                     "$ref": "#/definitions/customer.Customer"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "type": "string"
@@ -9940,7 +11075,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "status": {
-                    "$ref": "#/definitions/github_com_driver005_gateway_internal_intent.Status"
+                    "$ref": "#/definitions/intent.Status"
                 },
                 "updated_at": {
                     "type": "string"
@@ -9955,9 +11090,6 @@ const docTemplate = `{
                 },
                 "customer_notification": {
                     "$ref": "#/definitions/intent.PaymentIntentProcessingCustomerNotification"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -9984,9 +11116,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -10023,9 +11152,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -10054,182 +11180,25 @@ const docTemplate = `{
                 "SetupFutureUsageOnSession"
             ]
         },
-        "intent.SetupIntent": {
-            "type": "object",
-            "properties": {
-                "attach_to_self": {
-                    "type": "boolean"
-                },
-                "cancellation_reason": {
-                    "$ref": "#/definitions/github_com_driver005_gateway_internal_setup_intent.CancellationReason"
-                },
-                "client_secret": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "customer": {
-                    "$ref": "#/definitions/customer.Customer"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "flow_directions": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "id": {
-                    "type": "string"
-                },
-                "last_setup_error": {
-                    "$ref": "#/definitions/errors.ApiErrors"
-                },
-                "livemode": {
-                    "type": "boolean"
-                },
-                "mandate": {
-                    "$ref": "#/definitions/mandate.Mandate"
-                },
-                "metadata": {
-                    "$ref": "#/definitions/core.JSONB"
-                },
-                "next_action": {
-                    "$ref": "#/definitions/intent.SetupIntentNextAction"
-                },
-                "object": {
-                    "type": "string"
-                },
-                "payment_method": {
-                    "$ref": "#/definitions/method.PaymentMethod"
-                },
-                "payment_method_types": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "single_use_mandate": {
-                    "$ref": "#/definitions/mandate.Mandate"
-                },
-                "status": {
-                    "$ref": "#/definitions/github_com_driver005_gateway_internal_setup_intent.Status"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "usage": {
-                    "$ref": "#/definitions/intent.Usage"
-                }
-            }
-        },
-        "intent.SetupIntentNextAction": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "livemode": {
-                    "type": "boolean"
-                },
-                "metadata": {
-                    "$ref": "#/definitions/core.JSONB"
-                },
-                "object": {
-                    "type": "string"
-                },
-                "redirect_to_url_return_url": {
-                    "type": "string"
-                },
-                "redirect_to_url_url": {
-                    "type": "string"
-                },
-                "type": {
-                    "$ref": "#/definitions/intent.Type"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "use_stripe_sdk": {
-                    "$ref": "#/definitions/core.JSONB"
-                },
-                "verify_with_microdeposits": {
-                    "$ref": "#/definitions/intent.SetupIntentNextActionVerifyWithMicrodeposits"
-                }
-            }
-        },
-        "intent.SetupIntentNextActionVerifyWithMicrodeposits": {
-            "type": "object",
-            "properties": {
-                "arrival_date": {
-                    "type": "integer"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
-                "hosted_verification_url": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "livemode": {
-                    "type": "boolean"
-                },
-                "metadata": {
-                    "$ref": "#/definitions/core.JSONB"
-                },
-                "microdeposit_type": {
-                    "$ref": "#/definitions/intent.MicrodepositType"
-                },
-                "object": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
-        "intent.Type": {
+        "intent.Status": {
             "type": "string",
             "enum": [
-                "redirect_to_url",
-                "use_stripe_sdk",
-                "alipay_handle_redirect",
-                "oxxo_display_details",
-                "verify_with_microdeposits"
+                "requires_payment_method",
+                "requires_confirmation",
+                "requires_action",
+                "processing",
+                "requires_capture",
+                "canceled",
+                "succeeded"
             ],
             "x-enum-varnames": [
-                "TypeRedirectToUrl",
-                "TypeUseStripeSdk",
-                "TypeAlipayHandleRedirect",
-                "TypeOxxoDisplayDetails",
-                "TypeVerifyWithMicrodeposits"
-            ]
-        },
-        "intent.Usage": {
-            "type": "string",
-            "enum": [
-                "off_session",
-                "on_session"
-            ],
-            "x-enum-varnames": [
-                "UsageOffSession",
-                "UsageOnSession"
+                "StatusRequiresPaymentMethod",
+                "StatusRequiresConfirmation",
+                "StatusRequiresAction",
+                "StatusProcessing",
+                "StatusRequiresCapture",
+                "StatusCanceled",
+                "StatusSucceeded"
             ]
         },
         "invoice.BillingReason": {
@@ -10252,6 +11221,244 @@ const docTemplate = `{
                 "BillingReasonManual",
                 "BillingReasonUpcoming"
             ]
+        },
+        "invoice.Bind.request": {
+            "type": "object",
+            "properties": {
+                "account_country": {
+                    "type": "string"
+                },
+                "account_name": {
+                    "type": "string"
+                },
+                "account_tax_ids": {
+                    "$ref": "#/definitions/tax.TaxId"
+                },
+                "amount_due": {
+                    "type": "integer"
+                },
+                "amount_paid": {
+                    "type": "integer"
+                },
+                "amount_remaining": {
+                    "type": "integer"
+                },
+                "attempt_count": {
+                    "type": "integer"
+                },
+                "attempted": {
+                    "type": "boolean"
+                },
+                "auto_advance": {
+                    "type": "boolean"
+                },
+                "automatic_tax": {
+                    "$ref": "#/definitions/tax.AutomaticTax"
+                },
+                "billing_reason": {
+                    "$ref": "#/definitions/invoice.BillingReason"
+                },
+                "charge": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "collection_method": {
+                    "$ref": "#/definitions/invoice.CollectionMethod"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "custom_fields": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "customer_address": {
+                    "$ref": "#/definitions/address.Address"
+                },
+                "customer_email": {
+                    "type": "string"
+                },
+                "customer_name": {
+                    "type": "string"
+                },
+                "customer_phone": {
+                    "type": "string"
+                },
+                "customer_shipping": {
+                    "$ref": "#/definitions/address.Shipping"
+                },
+                "customer_tax_exempt": {
+                    "$ref": "#/definitions/customer.TaxExempt"
+                },
+                "customer_tax_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "default_payment_method": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "default_tax_rates": {
+                    "$ref": "#/definitions/tax.TaxRate"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "discountable": {
+                    "type": "boolean"
+                },
+                "discounts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "due_date": {
+                    "type": "string"
+                },
+                "ending_balance": {
+                    "type": "integer"
+                },
+                "footer": {
+                    "type": "string"
+                },
+                "from_invoice": {
+                    "$ref": "#/definitions/invoice.Invoice"
+                },
+                "hosted_invoice_url": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "invoice_pdf": {
+                    "type": "string"
+                },
+                "last_finalization_error": {
+                    "$ref": "#/definitions/errors.ApiErrors"
+                },
+                "latest_revision": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "lines": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "next_payment_attempt": {
+                    "type": "integer"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "paid": {
+                    "type": "boolean"
+                },
+                "paid_out_of_band": {
+                    "type": "boolean"
+                },
+                "payment_intent": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "payment_settings": {
+                    "$ref": "#/definitions/invoices.InvoicesPaymentSettings"
+                },
+                "period_end": {
+                    "type": "string"
+                },
+                "period_start": {
+                    "type": "string"
+                },
+                "post_payment_credit_notes_amount": {
+                    "type": "integer"
+                },
+                "pre_payment_credit_notes_amount": {
+                    "type": "integer"
+                },
+                "price": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "receipt_number": {
+                    "type": "string"
+                },
+                "rendering_options": {
+                    "$ref": "#/definitions/settings.InvoiceSettingRenderingOptions"
+                },
+                "starting_balance": {
+                    "type": "integer"
+                },
+                "statement_descriptor": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/invoice.Status"
+                },
+                "status_transitions": {
+                    "$ref": "#/definitions/invoices.InvoicesStatusTransitions"
+                },
+                "subscription": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "subscription_proration_date": {
+                    "type": "integer"
+                },
+                "subtotal": {
+                    "type": "integer"
+                },
+                "subtotal_excluding_tax": {
+                    "type": "integer"
+                },
+                "tax": {
+                    "type": "integer"
+                },
+                "threshold_reason": {
+                    "$ref": "#/definitions/invoice.InvoiceThresholdReason"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "total_excluding_tax": {
+                    "type": "integer"
+                },
+                "total_tax_amounts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "webhooks_delivered_at": {
+                    "type": "integer"
+                }
+            }
         },
         "invoice.CollectionMethod": {
             "type": "string",
@@ -10352,9 +11559,6 @@ const docTemplate = `{
                 },
                 "default_tax_rates": {
                     "$ref": "#/definitions/tax.TaxRate"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "type": "string"
@@ -10515,9 +11719,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -10563,6 +11764,103 @@ const docTemplate = `{
                 "StatusVoid"
             ]
         },
+        "invoiceItem.Bind.request": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "description": "Amount (in the ` + "`" + `currency` + "`" + ` specified) of the invoice item. This should always be equal to ` + "`" + `unit_amount * quantity` + "`" + `.",
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "date": {
+                    "description": "Time at which the object was created. Measured in seconds since the Unix epoch.",
+                    "type": "integer"
+                },
+                "description": {
+                    "description": "An arbitrary string attached to the object. Often useful for displaying to users.",
+                    "type": "string"
+                },
+                "discountable": {
+                    "description": "If true, discounts will apply to this invoice item. Always false for prorations.",
+                    "type": "boolean"
+                },
+                "discounts": {
+                    "description": "The discounts which apply to the invoice item. Item discounts are applied before invoice discounts. Use ` + "`" + `expand[]=discounts` + "`" + ` to expand each discount.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "invoice": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "period_end": {
+                    "description": "Unique identifier for the object.",
+                    "type": "integer"
+                },
+                "period_start": {
+                    "type": "integer"
+                },
+                "price": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "proration": {
+                    "description": "Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.",
+                    "type": "boolean"
+                },
+                "quantity": {
+                    "description": "Quantity of units for the invoice item. If the invoice item is a proration, the quantity of the subscription that the proration was computed for.",
+                    "type": "integer"
+                },
+                "subscription": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "subscription_item": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "tax_rates": {
+                    "description": "The tax rates which apply to the invoice item. When set, the ` + "`" + `default_tax_rates` + "`" + ` on the invoice do not apply to this invoice item.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/tax.TaxRate"
+                        }
+                    ]
+                },
+                "unit_amount": {
+                    "description": "Unit amount (in the ` + "`" + `currency` + "`" + ` specified) of the invoice item.",
+                    "type": "integer"
+                },
+                "unit_amount_decimal": {
+                    "description": "Same as ` + "`" + `unit_amount` + "`" + `, but contains a decimal value with at most 12 decimal places.",
+                    "type": "number"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "invoiceItem.Invoiceitem": {
             "type": "object",
             "properties": {
@@ -10583,9 +11881,6 @@ const docTemplate = `{
                 "date": {
                     "description": "Time at which the object was created. Measured in seconds since the Unix epoch.",
                     "type": "integer"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "description": "An arbitrary string attached to the object. Often useful for displaying to users.",
@@ -10669,9 +11964,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -10710,9 +12002,6 @@ const docTemplate = `{
                     "description": "ID of the mandate to be used for this invoice. It must correspond to the payment method used to pay the invoice, including the invoice's default_payment_method or default_source, if set.",
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -10747,9 +12036,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "finalized_at": {
                     "description": "The time that the invoice draft was finalized.",
                     "type": "integer"
@@ -10783,7 +12069,7 @@ const docTemplate = `{
                 }
             }
         },
-        "item.LineItem": {
+        "item.Bind.request": {
             "type": "object",
             "properties": {
                 "amount": {
@@ -10798,8 +12084,90 @@ const docTemplate = `{
                 "currency": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
+                "description": {
+                    "type": "string"
+                },
+                "discountable": {
+                    "type": "boolean"
+                },
+                "discounts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "period_end": {
+                    "type": "string"
+                },
+                "period_start": {
+                    "type": "string"
+                },
+                "price": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "product": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "proration": {
+                    "type": "boolean"
+                },
+                "proration_details": {
+                    "$ref": "#/definitions/invoices.InvoicesLineItemsCreditedItems"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "subscription": {
+                    "type": "string"
+                },
+                "subscription_item": {
+                    "type": "string"
+                },
+                "tax_rates": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "type": {
+                    "type": "string"
+                },
+                "unit_amount_excluding_tax": {
+                    "type": "number"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "item.LineItem": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "amount_excluding_tax": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
                 },
                 "description": {
                     "type": "string"
@@ -10910,9 +12278,6 @@ const docTemplate = `{
                 "customer_creation": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -10974,14 +12339,49 @@ const docTemplate = `{
                 }
             }
         },
-        "mandate.Mandate": {
+        "mandate.Bind.request": {
             "type": "object",
             "properties": {
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "payment_method": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "payment_method_details": {
+                    "$ref": "#/definitions/methods.MandatePaymentMethodDetails"
+                },
+                "single_use": {
+                    "$ref": "#/definitions/methods.MandateSingleUse"
+                },
+                "status": {
+                    "$ref": "#/definitions/mandate.Status"
+                },
+                "type": {
+                    "$ref": "#/definitions/mandate.Type"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "mandate.Mandate": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
                 },
                 "id": {
                     "type": "string"
@@ -11039,6 +12439,194 @@ const docTemplate = `{
                 "TypeSingleUse"
             ]
         },
+        "method.Bind.request": {
+            "type": "object",
+            "properties": {
+                "account_holder_type": {
+                    "type": "string"
+                },
+                "account_number": {
+                    "type": "string"
+                },
+                "account_type": {
+                    "type": "string"
+                },
+                "acss_debit": {
+                    "$ref": "#/definitions/methods.PaymentMethodAcssDebit"
+                },
+                "affirm": {
+                    "$ref": "#/definitions/methods.PaymentMethodAffirm"
+                },
+                "afterpay_clearpay": {
+                    "$ref": "#/definitions/methods.PaymentMethodAfterpayClearpay"
+                },
+                "alipay": {
+                    "$ref": "#/definitions/methods.PaymentMethodAlipay"
+                },
+                "au_becs_debit": {
+                    "$ref": "#/definitions/methods.PaymentMethodAuBecsDebit"
+                },
+                "bacs_debit": {
+                    "$ref": "#/definitions/methods.PaymentMethodBacsDebit"
+                },
+                "bancontact": {
+                    "$ref": "#/definitions/methods.PaymentMethodBancontact"
+                },
+                "bank": {
+                    "type": "string"
+                },
+                "billing_details": {
+                    "$ref": "#/definitions/address.BillingDetails"
+                },
+                "blik": {
+                    "$ref": "#/definitions/methods.PaymentMethodBlik"
+                },
+                "boleto": {
+                    "$ref": "#/definitions/methods.PaymentMethodBoleto"
+                },
+                "bsb_number": {
+                    "type": "string"
+                },
+                "btc_pay": {
+                    "$ref": "#/definitions/methods.PaymentMethodBtcPay"
+                },
+                "card": {
+                    "$ref": "#/definitions/methods.PaymentMethodCard"
+                },
+                "card_present": {
+                    "$ref": "#/definitions/methods.PaymentMethodCardPresent"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "customer_balance": {
+                    "$ref": "#/definitions/methods.PaymentMethodCustomerBalance"
+                },
+                "cvc": {
+                    "type": "string"
+                },
+                "day": {
+                    "type": "integer"
+                },
+                "eps": {
+                    "$ref": "#/definitions/methods.PaymentMethodEps"
+                },
+                "exp_month": {
+                    "type": "integer"
+                },
+                "exp_year": {
+                    "type": "integer"
+                },
+                "financial_connections_account": {
+                    "type": "string"
+                },
+                "fpx": {
+                    "$ref": "#/definitions/methods.PaymentMethodFpx"
+                },
+                "giropay": {
+                    "$ref": "#/definitions/methods.PaymentMethodGiropay"
+                },
+                "grabpay": {
+                    "$ref": "#/definitions/methods.PaymentMethodGrabpay"
+                },
+                "iban": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ideal": {
+                    "$ref": "#/definitions/methods.PaymentMethodIdeal"
+                },
+                "institution_number": {
+                    "type": "string"
+                },
+                "interac_present": {
+                    "$ref": "#/definitions/methods.PaymentMethodInteracPresent"
+                },
+                "klarna": {
+                    "$ref": "#/definitions/methods.PaymentMethodKlarna"
+                },
+                "konbini": {
+                    "$ref": "#/definitions/methods.PaymentMethodKonbini"
+                },
+                "link": {
+                    "$ref": "#/definitions/methods.PaymentMethodLink"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "month": {
+                    "type": "integer"
+                },
+                "number": {
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "oxxo": {
+                    "$ref": "#/definitions/methods.PaymentMethodOxxo"
+                },
+                "p24": {
+                    "$ref": "#/definitions/methods.PaymentMethodP24"
+                },
+                "paynow": {
+                    "$ref": "#/definitions/methods.PaymentMethodPaynow"
+                },
+                "pix": {
+                    "$ref": "#/definitions/methods.PaymentMethodPix"
+                },
+                "promptpay": {
+                    "$ref": "#/definitions/methods.PaymentMethodPromptpay"
+                },
+                "radar_options": {
+                    "$ref": "#/definitions/radar.RadarOptions"
+                },
+                "routing_number": {
+                    "type": "string"
+                },
+                "sepa_debit": {
+                    "$ref": "#/definitions/methods.PaymentMethodSepaDebit"
+                },
+                "sofort": {
+                    "$ref": "#/definitions/methods.PaymentMethodSofort"
+                },
+                "sort_code": {
+                    "type": "string"
+                },
+                "tax_id": {
+                    "type": "string"
+                },
+                "transit_number": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/method.Type"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "us_bank_account": {
+                    "$ref": "#/definitions/methods.PaymentMethodUsBankAccount"
+                },
+                "wechat_pay": {
+                    "$ref": "#/definitions/methods.PaymentMethodWechatPay"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
         "method.PaymentMethod": {
             "type": "object",
             "properties": {
@@ -11089,9 +12677,6 @@ const docTemplate = `{
                 },
                 "customer_balance": {
                     "$ref": "#/definitions/methods.PaymentMethodCustomerBalance"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "eps": {
                     "$ref": "#/definitions/methods.PaymentMethodEps"
@@ -11252,9 +12837,6 @@ const docTemplate = `{
                         "type": "string"
                     }
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -11290,9 +12872,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -11319,9 +12898,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -11358,9 +12934,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "expires_after": {
                     "description": "Date at which the mandate expires.",
                     "type": "integer"
@@ -11396,9 +12969,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -11421,9 +12991,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -11463,9 +13030,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -11500,9 +13064,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -11543,9 +13104,6 @@ const docTemplate = `{
                     "description": "On a single use mandate, the currency of the payment.",
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -11568,9 +13126,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -11633,9 +13188,6 @@ const docTemplate = `{
                 },
                 "customer_balance": {
                     "$ref": "#/definitions/methods.PaymentIntentPaymentMethodOptionsCustomerBalance"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "eps": {
                     "$ref": "#/definitions/methods.PaymentIntentPaymentMethodOptionsEps1"
@@ -11718,9 +13270,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -11764,9 +13313,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -11805,9 +13351,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -11852,9 +13395,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -11893,9 +13433,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -11936,9 +13473,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -11977,9 +13511,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -12024,9 +13555,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12064,9 +13592,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expires_after_days": {
                     "description": "The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.",
@@ -12107,9 +13632,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12140,9 +13662,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -12203,9 +13722,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12256,9 +13772,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "funding_type": {
                     "description": "The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: ` + "`" + `bank_transfer` + "`" + `.",
                     "type": "string"
@@ -12302,9 +13815,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12343,9 +13853,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -12386,9 +13893,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12427,9 +13931,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -12470,9 +13971,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12512,9 +14010,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12552,9 +14047,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -12602,9 +14094,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expires_after_days": {
                     "description": "The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and ` + "`" + `expires_after_days` + "`" + ` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST.",
@@ -12657,9 +14146,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12702,9 +14188,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expires_after_days": {
                     "description": "The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.",
@@ -12749,9 +14232,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12791,9 +14271,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12832,9 +14309,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expires_after_seconds": {
                     "description": "The number of seconds (between 10 and 1209600) after which Pix payment will expire.",
@@ -12883,9 +14357,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -12924,9 +14395,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -12970,9 +14438,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13015,9 +14480,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "financial_connections": {
                     "type": "string",
@@ -13070,9 +14532,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13111,9 +14570,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "fingerprint": {
                     "type": "string"
                 },
@@ -13149,9 +14605,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13174,9 +14627,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -13204,9 +14654,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13232,9 +14679,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "type": "string"
@@ -13264,9 +14708,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "type": "string"
@@ -13300,9 +14741,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13326,9 +14764,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13351,9 +14786,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -13380,9 +14812,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -13427,9 +14856,6 @@ const docTemplate = `{
                 },
                 "cvc_check": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "exp_month": {
                     "type": "integer"
@@ -13494,9 +14920,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "exp_month": {
                     "type": "integer"
                 },
@@ -13541,9 +14964,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13569,9 +14989,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -13599,9 +15016,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13625,9 +15039,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13650,9 +15061,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -13682,9 +15090,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -13723,9 +15128,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "exp_month": {
                     "type": "integer"
@@ -13774,9 +15176,6 @@ const docTemplate = `{
                 "day": {
                     "type": "integer"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13806,9 +15205,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13831,9 +15227,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "email": {
                     "type": "string"
@@ -13864,9 +15257,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13893,9 +15283,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13918,9 +15305,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -13945,9 +15329,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -13970,9 +15351,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -14006,9 +15384,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "fingerprint": {
                     "type": "string"
                 },
@@ -14040,9 +15415,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -14082,9 +15454,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "financial_connections_account": {
                     "type": "string"
                 },
@@ -14123,9 +15492,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -14157,9 +15523,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "display_bank_transfer_instructions": {
                     "$ref": "#/definitions/next.PaymentIntentNextActionDisplayBankTransferInstructions"
@@ -14223,9 +15586,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -14264,9 +15624,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expires_at": {
                     "description": "The timestamp after which the boleto expires.",
@@ -14315,9 +15672,6 @@ const docTemplate = `{
                     "description": "For payments greater than INR 15000, the customer must provide explicit approval of the payment with their bank. For payments of lower amount, no customer action is required.",
                     "type": "boolean"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -14348,9 +15702,6 @@ const docTemplate = `{
                 "currency": {
                     "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "financial_addresses": {
                     "description": "A list of financial addresses that can be used to fund the customer balance",
@@ -14395,9 +15746,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "expires_after": {
                     "description": "The timestamp after which the OXXO voucher expires.",
                     "type": "integer"
@@ -14432,9 +15780,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expires_at": {
                     "description": "The timestamp at which the pending Konbini payment expires.",
@@ -14475,9 +15820,6 @@ const docTemplate = `{
                     "description": "The raw data string used to generate QR code, it should be used together with QR code library.",
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "hosted_instructions_url": {
                     "description": "The URL to the hosted PayNow instructions page, which allows customers to view the PayNow QR code.",
                     "type": "string"
@@ -14516,9 +15858,6 @@ const docTemplate = `{
                 "data": {
                     "description": "The raw data string used to generate QR code, it should be used together with QR code library.",
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expires_at": {
                     "description": "The date (unix timestamp) when the PIX expires.",
@@ -14563,9 +15902,6 @@ const docTemplate = `{
                     "description": "The raw data string used to generate QR code, it should be used together with QR code library.",
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "hosted_instructions_url": {
                     "description": "The URL to the hosted PromptPay instructions page, which allows customers to view the PromptPay QR code.",
                     "type": "string"
@@ -14600,9 +15936,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -14639,9 +15972,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "hosted_verification_url": {
                     "description": "The URL for the hosted verification page, which allows customers to verify their bank account.",
                     "type": "string"
@@ -14676,9 +16006,6 @@ const docTemplate = `{
                 "data": {
                     "description": "The data being used to generate QR code",
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "hosted_instructions_url": {
                     "description": "The URL to the hosted WeChat Pay instructions page, which allows customers to view the WeChat Pay QR code.",
@@ -14722,9 +16049,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -14773,9 +16097,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -14806,9 +16127,6 @@ const docTemplate = `{
                 "currency": {
                     "description": "Currency supported by the bank account. Returned when the Session is in ` + "`" + `setup` + "`" + ` mode.",
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -14845,9 +16163,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -14874,9 +16189,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -14905,9 +16217,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -14934,9 +16243,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -14965,9 +16271,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -14995,9 +16298,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15024,9 +16324,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expires_after_days": {
                     "description": "The number of calendar days before a Boleto voucher expires. For example, if you create a Boleto voucher on Monday and you set expires_after_days to 2, the Boleto voucher will expire on Wednesday at 23:59 America/Sao_Paulo time.",
@@ -15058,9 +16355,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15105,9 +16399,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "funding_type": {
                     "description": "The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: ` + "`" + `bank_transfer` + "`" + `.",
                     "type": "string"
@@ -15139,9 +16430,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15168,9 +16456,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15199,9 +16484,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15228,9 +16510,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15259,9 +16538,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15289,9 +16565,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15318,9 +16591,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "expires_after_days": {
                     "description": "The number of calendar days (between 1 and 60) after which Konbini payment instructions will expire. For example, if a PaymentIntent is confirmed with Konbini and ` + "`" + `expires_after_days` + "`" + ` set to 2 on Monday JST, the instructions will expire on Wednesday 23:59:59 JST.",
@@ -15353,9 +16623,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "expires_after_days": {
                     "description": "The number of calendar days before an OXXO invoice expires. For example, if you create an OXXO invoice on Monday and you set expires_after_days to 2, the OXXO invoice will expire on Wednesday at 23:59 America/Mexico_City time.",
                     "type": "integer"
@@ -15387,9 +16654,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15416,9 +16680,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15447,9 +16708,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "expires_after_seconds": {
                     "description": "The number of seconds after which Pix payment will expire.",
                     "type": "integer"
@@ -15476,9 +16734,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15536,9 +16791,6 @@ const docTemplate = `{
                 },
                 "customer_balance": {
                     "$ref": "#/definitions/options.CheckoutCustomerBalancePaymentMethodOptions"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "eps": {
                     "$ref": "#/definitions/options.CheckoutEpsPaymentMethodOptions"
@@ -15605,9 +16857,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15634,9 +16883,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15680,9 +16926,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "hosted_confirmation": {
                     "type": "string",
                     "format": "uuid"
@@ -15718,9 +16961,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15751,9 +16991,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15787,9 +17024,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15825,9 +17059,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15850,9 +17081,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "description": "The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.",
@@ -15897,9 +17125,6 @@ const docTemplate = `{
                 "customer_balance": {
                     "$ref": "#/definitions/options.SubscriptionsResourcePaymentMethodOptionsCustomerBalance"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -15928,9 +17153,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15961,9 +17183,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -15999,9 +17218,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "description": "A description of the mandate or subscription that is meant to be displayed to the customer.",
@@ -16042,9 +17258,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "funding_type": {
                     "description": "The funding method type to be used when there are not enough funds in the customer balance. Permitted values include: ` + "`" + `bank_transfer` + "`" + `.",
                     "type": "string"
@@ -16072,9 +17285,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -16097,9 +17307,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "financial_connections": {
                     "type": "string",
@@ -16136,9 +17343,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "enabled": {
                     "description": "If ` + "`" + `true` + "`" + `, a recovery url will be generated to recover this Checkout Session if it expires before a transaction is completed. It will be attached to the Checkout Session object upon expiration.",
                     "type": "boolean"
@@ -16173,9 +17377,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -16212,9 +17413,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -16245,9 +17443,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -16281,9 +17476,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "email": {
                     "description": "The email associated with the Customer, if one exists, on the Checkout Session after a completed Checkout Session or at time of session expiry. Otherwise, if the customer has consented to promotional content, this value is the most recent valid email provided by the customer on the Checkout form.",
@@ -16332,9 +17524,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "enabled": {
                     "description": "Indicates whether invoice creation is enabled for the Checkout Session.",
                     "type": "boolean"
@@ -16373,9 +17562,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -16396,7 +17582,7 @@ const docTemplate = `{
         "page.PaymentPagesCheckoutSessionShippingCost": {
             "type": "object",
             "properties": {
-                "amount_subtotal": {
+                "amount_subtota": {
                     "description": "Total shipping cost before any discounts or taxes are applied.",
                     "type": "integer"
                 },
@@ -16404,15 +17590,12 @@ const docTemplate = `{
                     "description": "Total tax amount applied due to shipping costs. If no tax was applied, defaults to 0.",
                     "type": "integer"
                 },
-                "amount_total": {
+                "amount_tota": {
                     "description": "Total shipping cost after discounts and taxes are applied.",
                     "type": "integer"
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -16460,9 +17643,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "discounts": {
                     "description": "The aggregated discounts.",
@@ -16512,9 +17692,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -16529,6 +17706,80 @@ const docTemplate = `{
                 },
                 "tip_amount": {
                     "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "payout.Bind.request": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "arrival_date": {
+                    "type": "integer"
+                },
+                "automatic": {
+                    "type": "boolean"
+                },
+                "balance_transaction": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "destination": {
+                    "type": "string"
+                },
+                "failure_balance_transaction": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "failure_code": {
+                    "type": "string"
+                },
+                "failure_message": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "method": {
+                    "$ref": "#/definitions/payout.Method"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "original_payout": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "reversed_by": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "source_type": {
+                    "$ref": "#/definitions/payout.SourceType"
+                },
+                "statement_descriptor": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/payout.Status"
+                },
+                "type": {
+                    "$ref": "#/definitions/payout.Type"
                 },
                 "updated_at": {
                     "type": "string"
@@ -16566,9 +17817,6 @@ const docTemplate = `{
                 },
                 "currency": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "type": "string"
@@ -16664,7 +17912,7 @@ const docTemplate = `{
                 "TypeCard"
             ]
         },
-        "plan.Plan": {
+        "plan.Bind.request": {
             "type": "object",
             "properties": {
                 "active": {
@@ -16694,8 +17942,90 @@ const docTemplate = `{
                     "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
+                "id": {
+                    "type": "string"
+                },
+                "interval": {
+                    "description": "The frequency at which a subscription is billed. One of ` + "`" + `day` + "`" + `, ` + "`" + `week` + "`" + `, ` + "`" + `month` + "`" + ` or ` + "`" + `year` + "`" + `.",
+                    "type": "string"
+                },
+                "interval_count": {
+                    "description": "The number of intervals (specified in the ` + "`" + `interval` + "`" + ` attribute) between subscription billings. For example, ` + "`" + `interval=month` + "`" + ` and ` + "`" + `interval_count=3` + "`" + ` bills every 3 months.",
+                    "type": "integer"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "nickname": {
+                    "description": "A brief description of the plan, hidden from customers.",
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "product": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "tiers": {
+                    "description": "Each element represents a pricing tier. This parameter requires ` + "`" + `billing_scheme` + "`" + ` to be set to ` + "`" + `tiered` + "`" + `. See also the documentation for ` + "`" + `billing_scheme` + "`" + `.",
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "tiers_mode": {
+                    "description": "Defines if the tiering price should be ` + "`" + `graduated` + "`" + ` or ` + "`" + `volume` + "`" + ` based. In ` + "`" + `volume` + "`" + `-based tiering, the maximum quantity within a period determines the per unit price. In ` + "`" + `graduated` + "`" + ` tiering, pricing can change as the quantity grows.",
+                    "type": "string"
+                },
+                "transform_usage": {
+                    "$ref": "#/definitions/plan.TransformUsage"
+                },
+                "trial_period_days": {
+                    "description": "Default number of trial days when subscribing a customer to this plan using [` + "`" + `trial_from_plan=true` + "`" + `](https://stripe.com/docs/api#create_subscription-trial_from_plan).",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "usage_type": {
+                    "description": "Configures how the quantity per period should be determined. Can be either ` + "`" + `metered` + "`" + ` or ` + "`" + `licensed` + "`" + `. ` + "`" + `licensed` + "`" + ` automatically bills the ` + "`" + `quantity` + "`" + ` set when adding it to a subscription. ` + "`" + `metered` + "`" + ` aggregates the total usage based on usage records. Defaults to ` + "`" + `licensed` + "`" + `.",
+                    "type": "string"
+                }
+            }
+        },
+        "plan.Plan": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "description": "Whether the plan can be used for new purchases.",
+                    "type": "boolean"
+                },
+                "aggregate_usage": {
+                    "description": "Specifies a usage aggregation strategy for plans of ` + "`" + `usage_type=metered` + "`" + `. Allowed values are ` + "`" + `sum` + "`" + ` for summing up all usage during a period, ` + "`" + `last_during_period` + "`" + ` for using the last usage record reported within a period, ` + "`" + `last_ever` + "`" + ` for using the last usage record ever (across period bounds) or ` + "`" + `max` + "`" + ` which uses the usage record with the maximum reported usage during a period. Defaults to ` + "`" + `sum` + "`" + `.",
+                    "type": "string"
+                },
+                "amount": {
+                    "description": "The unit amount in %s to be charged, represented as a whole integer if possible. Only set if ` + "`" + `billing_scheme=per_unit` + "`" + `.",
+                    "type": "integer"
+                },
+                "amount_decimal": {
+                    "description": "The unit amount in %s to be charged, represented as a decimal string with at most 12 decimal places. Only set if ` + "`" + `billing_scheme=per_unit` + "`" + `.",
+                    "type": "number"
+                },
+                "billing_scheme": {
+                    "description": "Describes how to compute the price per period. Either ` + "`" + `per_unit` + "`" + ` or ` + "`" + `tiered` + "`" + `. ` + "`" + `per_unit` + "`" + ` indicates that the fixed amount (specified in ` + "`" + `amount` + "`" + `) will be charged per unit in ` + "`" + `quantity` + "`" + ` (for plans with ` + "`" + `usage_type=licensed` + "`" + `), or per unit of total usage (for plans with ` + "`" + `usage_type=metered` + "`" + `). ` + "`" + `tiered` + "`" + ` indicates that the unit pricing will be computed using a tiering strategy as defined using the ` + "`" + `tiers` + "`" + ` and ` + "`" + `tiers_mode` + "`" + ` attributes.",
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
+                    "type": "string"
                 },
                 "id": {
                     "type": "string"
@@ -16758,9 +18088,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "divide_by": {
                     "description": "Divide usage by this number.",
                     "type": "integer"
@@ -16812,6 +18139,75 @@ const docTemplate = `{
                 "BillingSchemeTiered"
             ]
         },
+        "price.Bind.request": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "billing_scheme": {
+                    "$ref": "#/definitions/price.BillingScheme"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "lookup_key": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "product": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "recurring": {
+                    "$ref": "#/definitions/price.Recurring"
+                },
+                "tax_behavior": {
+                    "$ref": "#/definitions/price.TaxBehavior"
+                },
+                "tiers": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "tiers_mode": {
+                    "$ref": "#/definitions/price.TiersMode"
+                },
+                "transform_quantity": {
+                    "$ref": "#/definitions/price.TransformQuantity"
+                },
+                "type": {
+                    "$ref": "#/definitions/price.Type"
+                },
+                "unit_amount": {
+                    "type": "integer"
+                },
+                "unit_amount_decimal": {
+                    "type": "number"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "price.Interval": {
             "type": "string",
             "enum": [
@@ -16841,9 +18237,6 @@ const docTemplate = `{
                 },
                 "currency": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -16907,9 +18300,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -16978,9 +18368,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "divide_by": {
                     "type": "integer"
                 },
@@ -17026,45 +18413,7 @@ const docTemplate = `{
                 "UsageTypeLicensed"
             ]
         },
-        "product.PackageDimensions": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
-                "height": {
-                    "type": "number"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "length": {
-                    "type": "number"
-                },
-                "livemode": {
-                    "type": "boolean"
-                },
-                "metadata": {
-                    "$ref": "#/definitions/core.JSONB"
-                },
-                "object": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "weight": {
-                    "type": "number"
-                },
-                "width": {
-                    "type": "number"
-                }
-            }
-        },
-        "product.Product": {
+        "product.Bind.request": {
             "type": "object",
             "properties": {
                 "active": {
@@ -17072,9 +18421,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "type": "string"
@@ -17126,7 +18472,101 @@ const docTemplate = `{
                 }
             }
         },
-        "promotion.PromotionCode": {
+        "product.PackageDimensions": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "height": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "length": {
+                    "type": "number"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "weight": {
+                    "type": "number"
+                },
+                "width": {
+                    "type": "number"
+                }
+            }
+        },
+        "product.Product": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "images": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "package_dimensions": {
+                    "$ref": "#/definitions/product.PackageDimensions"
+                },
+                "shippable": {
+                    "type": "boolean"
+                },
+                "statement_descriptor": {
+                    "type": "string"
+                },
+                "tax_code": {
+                    "$ref": "#/definitions/tax.TaxCode"
+                },
+                "unit_label": {
+                    "type": "string"
+                },
+                "updated": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "promotion.Bind.request": {
             "type": "object",
             "properties": {
                 "active": {
@@ -17136,16 +18576,13 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "coupon": {
-                    "$ref": "#/definitions/coupon.Coupon"
+                    "$ref": "#/definitions/uuid.NullUUID"
                 },
                 "created_at": {
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/customer.Customer"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
+                    "$ref": "#/definitions/uuid.NullUUID"
                 },
                 "expires_at": {
                     "type": "integer"
@@ -17176,6 +18613,178 @@ const docTemplate = `{
                 },
                 "times_redeemed": {
                     "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "promotion.PromotionCode": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "coupon": {
+                    "$ref": "#/definitions/coupon.Coupon"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/customer.Customer"
+                },
+                "expires_at": {
+                    "type": "integer"
+                },
+                "first_time_transaction": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "max_redemptions": {
+                    "type": "integer"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "minimum_amount": {
+                    "type": "integer"
+                },
+                "minimum_amount_currency": {
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "times_redeemed": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "quote.Bind.request": {
+            "type": "object",
+            "properties": {
+                "amount_subtotal": {
+                    "description": "Total before any discounts or taxes are applied.",
+                    "type": "integer"
+                },
+                "amount_total": {
+                    "description": "Total after discounts and taxes are applied.",
+                    "type": "integer"
+                },
+                "automatic_tax": {
+                    "type": "boolean"
+                },
+                "collection_method": {
+                    "description": "Either ` + "`" + `charge_automatically` + "`" + `, or ` + "`" + `send_invoice` + "`" + `. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as ` + "`" + `active` + "`" + `. Defaults to ` + "`" + `charge_automatically` + "`" + `.",
+                    "type": "string"
+                },
+                "computed": {
+                    "$ref": "#/definitions/quote.QuotesResourceComputed"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "default_tax_rates": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "description": {
+                    "description": "A description that will be displayed on the quote PDF.",
+                    "type": "string"
+                },
+                "discounts": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "expires_at": {
+                    "description": "The date on which the quote will be canceled if in ` + "`" + `open` + "`" + ` or ` + "`" + `draft` + "`" + ` status. Measured in seconds since the Unix epoch.",
+                    "type": "integer"
+                },
+                "footer": {
+                    "description": "A footer that will be displayed on the quote PDF.",
+                    "type": "string"
+                },
+                "header": {
+                    "description": "A header that will be displayed on the quote PDF.",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "invoice": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "invoice_settings": {
+                    "description": "Unique identifier for the object.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/settings.InvoiceSettingQuoteSetting"
+                        }
+                    ]
+                },
+                "line_items": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "number": {
+                    "description": "A unique number that identifies this particular quote. This number is assigned once the quote is [finalized](https://stripe.com/docs/quotes/overview#finalize).",
+                    "type": "string"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "status": {
+                    "description": "The status of the quote.",
+                    "type": "string"
+                },
+                "status_transitions": {
+                    "$ref": "#/definitions/quote.QuotesResourceStatusTransitions"
+                },
+                "subscription": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "subscription_data": {
+                    "$ref": "#/definitions/quote.QuotesResourceSubscriptionDataSubscriptionData"
+                },
+                "subscription_schedule": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "total_details": {
+                    "$ref": "#/definitions/quote.QuotesResourceTotalDetails"
                 },
                 "updated_at": {
                     "type": "string"
@@ -17219,9 +18828,6 @@ const docTemplate = `{
                         "type": "string",
                         "format": "uuid"
                     }
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "description": "A description that will be displayed on the quote PDF.",
@@ -17310,9 +18916,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -17349,9 +18952,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -17395,9 +18995,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "finalized_at": {
                     "description": "The time that the quote was finalized. Measured in seconds since Unix epoch.",
                     "type": "integer"
@@ -17424,9 +19021,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "description": "The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.",
@@ -17478,9 +19072,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -17503,9 +19094,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "discounts": {
                     "description": "The aggregated discounts.",
@@ -17554,9 +19142,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -17588,9 +19173,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -17606,6 +19188,69 @@ const docTemplate = `{
                 "session": {
                     "description": "A [Radar Session](https://stripe.com/docs/radar/radar-session) is a snapshot of the browser metadata and device details that help Radar make more accurate predictions on your payments.",
                     "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "refund.Bind.request": {
+            "type": "object",
+            "properties": {
+                "amount": {
+                    "type": "integer"
+                },
+                "balance_transaction": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "charge": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "failure_balance_transaction": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "failure_reason": {
+                    "$ref": "#/definitions/refund.FailureReason"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "instructions_email": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "next_action": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "payment_intent": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "reason": {
+                    "$ref": "#/definitions/refund.Reason"
+                },
+                "receipt_number": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/refund.Status"
                 },
                 "updated_at": {
                     "type": "string"
@@ -17659,9 +19304,6 @@ const docTemplate = `{
                 },
                 "currency": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "type": "string"
@@ -17741,9 +19383,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -17795,9 +19434,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -17833,9 +19469,6 @@ const docTemplate = `{
                         "format": "uuid"
                     }
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "footer": {
                     "description": "DefaultPaymentMethod method.PaymentMethod ` + "`" + `json:\"default_payment_method,omitempty\"` + "`" + `\nDefault footer to be displayed on invoices for this customer.",
                     "type": "string"
@@ -17870,9 +19503,6 @@ const docTemplate = `{
                     "description": "Number of days within which a customer must pay invoices generated by this quote. This value will be ` + "`" + `null` + "`" + ` for quotes where ` + "`" + `collection_method=charge_automatically` + "`" + `.",
                     "type": "integer"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -17899,9 +19529,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -17930,9 +19557,6 @@ const docTemplate = `{
                     "description": "Number of days within which a customer must pay invoices generated by this subscription schedule. This value will be ` + "`" + `null` + "`" + ` for subscription schedules where ` + "`" + `billing=charge_automatically` + "`" + `.",
                     "type": "integer"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -17947,6 +19571,410 @@ const docTemplate = `{
                 },
                 "updated_at": {
                     "type": "string"
+                }
+            }
+        },
+        "setupIntent.Bind.request": {
+            "type": "object",
+            "properties": {
+                "attach_to_self": {
+                    "type": "boolean"
+                },
+                "cancellation_reason": {
+                    "$ref": "#/definitions/setupIntent.CancellationReason"
+                },
+                "client_secret": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "flow_directions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "last_setup_error": {
+                    "$ref": "#/definitions/errors.ApiErrors"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "mandate": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "next_action": {
+                    "$ref": "#/definitions/setupIntent.SetupIntentNextAction"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "payment_method": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "payment_method_types": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "single_use_mandate": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "status": {
+                    "$ref": "#/definitions/setupIntent.Status"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "usage": {
+                    "$ref": "#/definitions/setupIntent.Usage"
+                }
+            }
+        },
+        "setupIntent.CancellationReason": {
+            "type": "string",
+            "enum": [
+                "abandoned",
+                "requested_by_customer",
+                "duplicate"
+            ],
+            "x-enum-varnames": [
+                "CancellationReasonAbandoned",
+                "CancellationReasonRequestedByCustomer",
+                "CancellationReasonDuplicate"
+            ]
+        },
+        "setupIntent.MicrodepositType": {
+            "type": "string",
+            "enum": [
+                "descriptor_code",
+                "amounts"
+            ],
+            "x-enum-varnames": [
+                "MicrodepositTypeDescriptorCode",
+                "MicrodepositTypeAmounts"
+            ]
+        },
+        "setupIntent.SetupIntent": {
+            "type": "object",
+            "properties": {
+                "attach_to_self": {
+                    "type": "boolean"
+                },
+                "cancellation_reason": {
+                    "$ref": "#/definitions/setupIntent.CancellationReason"
+                },
+                "client_secret": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/customer.Customer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "flow_directions": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "string"
+                },
+                "last_setup_error": {
+                    "$ref": "#/definitions/errors.ApiErrors"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "mandate": {
+                    "$ref": "#/definitions/mandate.Mandate"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "next_action": {
+                    "$ref": "#/definitions/setupIntent.SetupIntentNextAction"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "payment_method": {
+                    "$ref": "#/definitions/method.PaymentMethod"
+                },
+                "payment_method_types": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "single_use_mandate": {
+                    "$ref": "#/definitions/mandate.Mandate"
+                },
+                "status": {
+                    "$ref": "#/definitions/setupIntent.Status"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "usage": {
+                    "$ref": "#/definitions/setupIntent.Usage"
+                }
+            }
+        },
+        "setupIntent.SetupIntentNextAction": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "redirect_to_url_return_url": {
+                    "type": "string"
+                },
+                "redirect_to_url_url": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/setupIntent.Type"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "use_stripe_sdk": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "verify_with_microdeposits": {
+                    "$ref": "#/definitions/setupIntent.SetupIntentNextActionVerifyWithMicrodeposits"
+                }
+            }
+        },
+        "setupIntent.SetupIntentNextActionVerifyWithMicrodeposits": {
+            "type": "object",
+            "properties": {
+                "arrival_date": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "hosted_verification_url": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "microdeposit_type": {
+                    "$ref": "#/definitions/setupIntent.MicrodepositType"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "setupIntent.Status": {
+            "type": "string",
+            "enum": [
+                "requires_payment_method",
+                "requires_confirmation",
+                "requires_action",
+                "processing",
+                "succeeded",
+                "failed",
+                "abandoned"
+            ],
+            "x-enum-varnames": [
+                "StatusRequiresPaymentMethod",
+                "StatusRequiresConfirmation",
+                "StatusRequiresAction",
+                "StatusProcessing",
+                "StatusSucceeded",
+                "StatusFailed",
+                "StatusAbandoned"
+            ]
+        },
+        "setupIntent.Type": {
+            "type": "string",
+            "enum": [
+                "redirect_to_url",
+                "use_stripe_sdk",
+                "alipay_handle_redirect",
+                "oxxo_display_details",
+                "verify_with_microdeposits"
+            ],
+            "x-enum-varnames": [
+                "TypeRedirectToUrl",
+                "TypeUseStripeSdk",
+                "TypeAlipayHandleRedirect",
+                "TypeOxxoDisplayDetails",
+                "TypeVerifyWithMicrodeposits"
+            ]
+        },
+        "setupIntent.Usage": {
+            "type": "string",
+            "enum": [
+                "off_session",
+                "on_session"
+            ],
+            "x-enum-varnames": [
+                "UsageOffSession",
+                "UsageOnSession"
+            ]
+        },
+        "source.Bind.request": {
+            "type": "object",
+            "properties": {
+                "ach_credit_transfer": {
+                    "$ref": "#/definitions/types.SourceTypeAchCreditTransfer"
+                },
+                "ach_debit": {
+                    "$ref": "#/definitions/types.SourceTypeAchDebit"
+                },
+                "acss_debit": {
+                    "$ref": "#/definitions/types.SourceTypeAcssDebit"
+                },
+                "alipay": {
+                    "$ref": "#/definitions/types.SourceTypeAlipay"
+                },
+                "amount": {
+                    "type": "integer"
+                },
+                "au_becs_debit": {
+                    "$ref": "#/definitions/types.SourceTypeAuBecsDebit"
+                },
+                "bancontact": {
+                    "$ref": "#/definitions/types.SourceTypeBancontact"
+                },
+                "card": {
+                    "$ref": "#/definitions/types.SourceTypeCard"
+                },
+                "card_present": {
+                    "$ref": "#/definitions/types.SourceTypeCardPresent"
+                },
+                "client_secret": {
+                    "type": "string"
+                },
+                "code_verification": {
+                    "$ref": "#/definitions/source.SourceCodeVerificationFlow"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "eps": {
+                    "$ref": "#/definitions/types.SourceTypeEps"
+                },
+                "flow": {
+                    "$ref": "#/definitions/source.Flow"
+                },
+                "giropay": {
+                    "$ref": "#/definitions/types.SourceTypeGiropay"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "ideal": {
+                    "$ref": "#/definitions/types.SourceTypeIdeal"
+                },
+                "klarna": {
+                    "$ref": "#/definitions/types.SourceTypeKlarna"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "multibanco": {
+                    "$ref": "#/definitions/types.SourceTypeMultibanco"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "owner": {
+                    "$ref": "#/definitions/source.SourceOwner"
+                },
+                "p24": {
+                    "$ref": "#/definitions/types.SourceTypeP24"
+                },
+                "receiver": {
+                    "$ref": "#/definitions/source.SourceReceiverFlow"
+                },
+                "redirect": {
+                    "$ref": "#/definitions/source.SourceRedirectFlow"
+                },
+                "sepa_debit": {
+                    "$ref": "#/definitions/types.SourceTypeSepaDebit"
+                },
+                "sofort": {
+                    "$ref": "#/definitions/types.SourceTypeSofort"
+                },
+                "source_order": {
+                    "$ref": "#/definitions/source.SourceOrder"
+                },
+                "statement_descriptor": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/source.Status"
+                },
+                "three_d_secure": {
+                    "$ref": "#/definitions/types.SourceTypeThreeDSecure"
+                },
+                "type": {
+                    "$ref": "#/definitions/source.Type"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "usage": {
+                    "$ref": "#/definitions/source.Usage"
+                },
+                "wechat": {
+                    "$ref": "#/definitions/types.SourceTypeWechat"
                 }
             }
         },
@@ -18051,9 +20079,6 @@ const docTemplate = `{
                 "customer": {
                     "$ref": "#/definitions/customer.Customer"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "eps": {
                     "$ref": "#/definitions/types.SourceTypeEps"
                 },
@@ -18137,9 +20162,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -18171,9 +20193,6 @@ const docTemplate = `{
                 },
                 "currency": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "email": {
                     "type": "string"
@@ -18213,9 +20232,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "email": {
                     "type": "string"
@@ -18273,9 +20289,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -18304,9 +20317,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "failure_reason": {
                     "type": "string"
@@ -18404,6 +20414,137 @@ const docTemplate = `{
                 "UsageSingleUse"
             ]
         },
+        "subscription.Bind.request": {
+            "type": "object",
+            "properties": {
+                "automatic_tax": {
+                    "type": "boolean"
+                },
+                "billing_cycle_anchor": {
+                    "description": "Determines the date of the first full invoice, and, for plans with ` + "`" + `month` + "`" + ` or ` + "`" + `year` + "`" + ` intervals, the day of the month for subsequent invoices. The timestamp is in UTC format.",
+                    "type": "integer"
+                },
+                "billing_thresholds": {
+                    "$ref": "#/definitions/subscription.SubscriptionBillingThresholds"
+                },
+                "cancel_at": {
+                    "description": "A date in the future at which the subscription will automatically get canceled",
+                    "type": "integer"
+                },
+                "cancel_at_period_end": {
+                    "description": "If the subscription has been canceled with the ` + "`" + `at_period_end` + "`" + ` flag set to ` + "`" + `true` + "`" + `, ` + "`" + `cancel_at_period_end` + "`" + ` on the subscription will be true. You can use this attribute to determine whether a subscription that has a status of active is scheduled to be canceled at the end of the current period.",
+                    "type": "boolean"
+                },
+                "canceled_at": {
+                    "description": "If the subscription has been canceled, the date of that cancellation. If the subscription was canceled with ` + "`" + `cancel_at_period_end` + "`" + `, ` + "`" + `canceled_at` + "`" + ` will reflect the time of the most recent update request, not the end of the subscription period when the subscription is automatically moved to a canceled state.",
+                    "type": "integer"
+                },
+                "collection_method": {
+                    "description": "Either ` + "`" + `charge_automatically` + "`" + `, or ` + "`" + `send_invoice` + "`" + `. When charging automatically, Stripe will attempt to pay this subscription at the end of the cycle using the default source attached to the customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as ` + "`" + `active` + "`" + `.",
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "currency": {
+                    "description": "Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).",
+                    "type": "string"
+                },
+                "current_period_end": {
+                    "description": "End of the current period that the subscription has been invoiced for. At the end of this period, a new invoice will be created.",
+                    "type": "integer"
+                },
+                "current_period_start": {
+                    "description": "Start of the current period that the subscription has been invoiced for.",
+                    "type": "integer"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "days_until_due": {
+                    "description": "Number of days a customer has to pay invoices generated by this subscription. This value will be ` + "`" + `null` + "`" + ` for subscriptions where ` + "`" + `collection_method=charge_automatically` + "`" + `.",
+                    "type": "integer"
+                },
+                "default_payment_method": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "default_tax_rates": {
+                    "description": "The tax rates that will apply to any subscription item that does not have ` + "`" + `tax_rates` + "`" + ` set. Invoices created will have their ` + "`" + `default_tax_rates` + "`" + ` populated from the subscription.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/tax.TaxRate"
+                        }
+                    ]
+                },
+                "description": {
+                    "description": "The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.",
+                    "type": "string"
+                },
+                "discount": {
+                    "$ref": "#/definitions/discount.Discount"
+                },
+                "ended_at": {
+                    "description": "If the subscription has ended, the date the subscription ended.",
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "next_pending_invoice_item_invoice": {
+                    "description": "Specifies the approximate timestamp on which any pending invoice items will be billed according to the schedule provided at ` + "`" + `pending_invoice_item_interval` + "`" + `.",
+                    "type": "integer"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "pause_collection": {
+                    "$ref": "#/definitions/subscriptions.SubscriptionsResourcePauseCollection"
+                },
+                "payment_settings": {
+                    "$ref": "#/definitions/subscriptions.SubscriptionsResourcePaymentSettings"
+                },
+                "pending_invoice_item_interval": {
+                    "$ref": "#/definitions/subscription.SubscriptionPendingInvoiceItemInterval"
+                },
+                "pending_setup_intent": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "pending_update": {
+                    "$ref": "#/definitions/subscriptions.SubscriptionsResourcePendingUpdate"
+                },
+                "price": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "schedule": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "start_date": {
+                    "description": "Date when the subscription was first created. The date might differ from the ` + "`" + `created` + "`" + ` date due to backdating.",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "Possible values are ` + "`" + `incomplete` + "`" + `, ` + "`" + `incomplete_expired` + "`" + `, ` + "`" + `trialing` + "`" + `, ` + "`" + `active` + "`" + `, ` + "`" + `past_due` + "`" + `, ` + "`" + `canceled` + "`" + `, or ` + "`" + `unpaid` + "`" + `.   For ` + "`" + `collection_method=charge_automatically` + "`" + ` a subscription moves into ` + "`" + `incomplete` + "`" + ` if the initial payment attempt fails. A subscription in this state can only have metadata and default_source updated. Once the first invoice is paid, the subscription moves into an ` + "`" + `active` + "`" + ` state. If the first invoice is not paid within 23 hours, the subscription transitions to ` + "`" + `incomplete_expired` + "`" + `. This is a terminal state, the open invoice will be voided and no further invoices will be generated.   A subscription that is currently in a trial period is ` + "`" + `trialing` + "`" + ` and moves to ` + "`" + `active` + "`" + ` when the trial period is over.   If subscription ` + "`" + `collection_method=charge_automatically` + "`" + ` it becomes ` + "`" + `past_due` + "`" + ` when payment to renew it fails and ` + "`" + `canceled` + "`" + ` or ` + "`" + `unpaid` + "`" + ` (depending on your subscriptions settings) when Stripe has exhausted all payment retry attempts.   If subscription ` + "`" + `collection_method=send_invoice` + "`" + ` it becomes ` + "`" + `past_due` + "`" + ` when its invoice is not paid by the due date, and ` + "`" + `canceled` + "`" + ` or ` + "`" + `unpaid` + "`" + ` if it is still not paid by an additional deadline after that. Note that when a subscription has a status of ` + "`" + `unpaid` + "`" + `, no subsequent invoices will be attempted (invoices will be created, but then immediately automatically closed). After receiving updated payment information from a customer, you may choose to reopen and pay their closed invoices.",
+                    "type": "string"
+                },
+                "trial_end": {
+                    "description": "If the subscription has a trial, the end of that trial.",
+                    "type": "integer"
+                },
+                "trial_start": {
+                    "description": "If the subscription has a trial, the beginning of that trial.",
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "subscription.Subscription": {
             "type": "object",
             "properties": {
@@ -18466,9 +20607,6 @@ const docTemplate = `{
                         }
                     ]
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "description": {
                     "description": "The subscription's description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription for rendering in Stripe surfaces.",
                     "type": "string"
@@ -18506,7 +20644,7 @@ const docTemplate = `{
                     "$ref": "#/definitions/subscription.SubscriptionPendingInvoiceItemInterval"
                 },
                 "pending_setup_intent": {
-                    "$ref": "#/definitions/intent.SetupIntent"
+                    "$ref": "#/definitions/setupIntent.SetupIntent"
                 },
                 "pending_update": {
                     "$ref": "#/definitions/subscriptions.SubscriptionsResourcePendingUpdate"
@@ -18548,9 +20686,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -18582,9 +20717,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -18610,14 +20742,52 @@ const docTemplate = `{
                 }
             }
         },
-        "subscriptionItem.SubscriptionItem": {
+        "subscriptionItem.Bind.request": {
             "type": "object",
             "properties": {
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "price": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "quantity": {
+                    "description": "The [quantity](https://stripe.com/docs/subscriptions/quantities) of the plan to which the customer should be subscribed.",
+                    "type": "integer"
+                },
+                "subscription": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "tax_rates": {
+                    "description": "The tax rates which apply to this ` + "`" + `subscription_item` + "`" + `. When set, the ` + "`" + `default_tax_rates` + "`" + ` on the subscription do not apply to this ` + "`" + `subscription_item` + "`" + `.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/tax.TaxRate"
+                        }
+                    ]
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "subscriptionItem.SubscriptionItem": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
                 },
                 "id": {
                     "type": "string"
@@ -18654,6 +20824,75 @@ const docTemplate = `{
                 }
             }
         },
+        "subscriptionSchedule.Bind.request": {
+            "type": "object",
+            "properties": {
+                "canceled_at": {
+                    "description": "Time at which the subscription schedule was canceled. Measured in seconds since the Unix epoch.",
+                    "type": "integer"
+                },
+                "completed_at": {
+                    "description": "Time at which the subscription schedule was completed. Measured in seconds since the Unix epoch.",
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "customer": {
+                    "$ref": "#/definitions/uuid.NullUUID"
+                },
+                "default_settings": {
+                    "$ref": "#/definitions/subscriptionSchedule.SubscriptionSchedulesResourceDefaultSettings"
+                },
+                "end_behavior": {
+                    "description": "Behavior of the subscription schedule and underlying subscription when it ends. Possible values are ` + "`" + `release` + "`" + ` or ` + "`" + `cancel` + "`" + ` with the default being ` + "`" + `release` + "`" + `. ` + "`" + `release` + "`" + ` will end the subscription schedule and keep the underlying subscription running.` + "`" + `cancel` + "`" + ` will end the subscription schedule and cancel the underlying subscription.",
+                    "type": "string"
+                },
+                "end_date": {
+                    "description": "The end of this phase of the subscription schedule.",
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "livemode": {
+                    "type": "boolean"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/core.JSONB"
+                },
+                "object": {
+                    "type": "string"
+                },
+                "phases": {
+                    "description": "Configuration for the subscription schedule's phases.",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/subscriptionSchedule.SubscriptionSchedulePhaseConfiguration"
+                        }
+                    ]
+                },
+                "released_at": {
+                    "description": "Time at which the subscription schedule was released. Measured in seconds since the Unix epoch.",
+                    "type": "string"
+                },
+                "released_subscription": {
+                    "description": "ID of the subscription once managed by the subscription schedule (if it is released).",
+                    "type": "string"
+                },
+                "start_date": {
+                    "description": "The start of this phase of the subscription schedule.",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "The present status of the subscription schedule. Possible values are ` + "`" + `not_started` + "`" + `, ` + "`" + `active` + "`" + `, ` + "`" + `completed` + "`" + `, ` + "`" + `released` + "`" + `, and ` + "`" + `canceled` + "`" + `. You can read more about the different states in our [behavior guide](https://stripe.com/docs/billing/subscriptions/subscription-schedules).",
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "subscriptionSchedule.SubscriptionSchedule": {
             "type": "object",
             "properties": {
@@ -18673,9 +20912,6 @@ const docTemplate = `{
                 },
                 "default_settings": {
                     "$ref": "#/definitions/subscriptionSchedule.SubscriptionSchedulesResourceDefaultSettings"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "end_behavior": {
                     "description": "Behavior of the subscription schedule and underlying subscription when it ends. Possible values are ` + "`" + `release` + "`" + ` or ` + "`" + `cancel` + "`" + ` with the default being ` + "`" + `release` + "`" + `. ` + "`" + `release` + "`" + ` will end the subscription schedule and keep the underlying subscription running.` + "`" + `cancel` + "`" + ` will end the subscription schedule and cancel the underlying subscription.",
@@ -18769,9 +21005,6 @@ const docTemplate = `{
                         }
                     ]
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "description": {
                     "description": "Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.",
                     "type": "string"
@@ -18844,9 +21077,6 @@ const docTemplate = `{
                 "default_payment_method": {
                     "$ref": "#/definitions/method.PaymentMethod"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "description": {
                     "description": "Subscription description, meant to be displayable to the customer. Use this field to optionally store an explanation of the subscription.",
                     "type": "string"
@@ -18878,9 +21108,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -18907,9 +21134,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -18952,9 +21176,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "expires_at": {
                     "description": "The point after which the changes reflected by this update will be discarded and no longer applied.",
                     "type": "integer"
@@ -18989,9 +21210,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "enabled": {
                     "description": "Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or ` + "`" + `tax_behavior=unspecified` + "`" + `) cannot be added to automatic tax invoices.",
@@ -19039,9 +21257,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "description": {
                     "description": "A detailed description of which types of products the tax code represents.",
                     "type": "string"
@@ -19081,9 +21296,6 @@ const docTemplate = `{
                 "customer": {
                     "type": "string",
                     "format": "uuid"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"
@@ -19146,9 +21358,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "description": {
                     "description": "An arbitrary string attached to the tax rate for your internal use only. It will not be visible to your customers.",
@@ -19333,9 +21542,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "fingerprint": {
                     "type": "string"
                 },
@@ -19382,9 +21588,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "type": "string"
@@ -19442,9 +21645,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "fingerprint": {
                     "type": "string"
                 },
@@ -19480,9 +21680,6 @@ const docTemplate = `{
                 "data_string": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -19514,9 +21711,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "type": "string"
@@ -19555,9 +21749,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "iban_last4": {
                     "type": "string"
@@ -19605,9 +21796,6 @@ const docTemplate = `{
                 },
                 "cvc_check": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "dynamic_last4": {
                     "type": "string"
@@ -19686,9 +21874,6 @@ const docTemplate = `{
                 "dedicated_file_name": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "emv_auth_data": {
                     "type": "string"
                 },
@@ -19754,9 +21939,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -19795,9 +21977,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -19829,9 +22008,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "iban_last4": {
                     "type": "string"
@@ -19867,9 +22043,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "first_name": {
                     "type": "string"
@@ -19966,9 +22139,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "entity": {
                     "type": "string"
                 },
@@ -20022,9 +22192,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -20059,9 +22226,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "fingerprint": {
                     "type": "string"
@@ -20109,9 +22273,6 @@ const docTemplate = `{
                 },
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "iban_last4": {
                     "type": "string"
@@ -20169,9 +22330,6 @@ const docTemplate = `{
                 "cvc_check": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "dynamic_last4": {
                     "type": "string"
                 },
@@ -20222,9 +22380,6 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
-                },
                 "id": {
                     "type": "string"
                 },
@@ -20256,9 +22411,6 @@ const docTemplate = `{
             "properties": {
                 "created_at": {
                     "type": "string"
-                },
-                "deleted_at": {
-                    "$ref": "#/definitions/database.DeletedAt"
                 },
                 "id": {
                     "type": "string"

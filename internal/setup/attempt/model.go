@@ -3,7 +3,7 @@ package attempt
 import (
 	"github.com/driver005/gateway/core"
 	"github.com/driver005/gateway/internal/customer"
-	"github.com/driver005/gateway/internal/setup/intent"
+	setupIntent "github.com/driver005/gateway/internal/setup/intent"
 	"github.com/driver005/gateway/payment/method"
 	"github.com/driver005/gateway/payment/method/details"
 	"github.com/driver005/gateway/utils/errors"
@@ -21,10 +21,10 @@ type SetupAttempt struct {
 	Status               Status                        `json:"status,omitempty"`
 	Usage                Usage                         `json:"usage,omitempty"`
 
-	CustomerId      *uuid.UUID            `json:"customer_id" swaggerignore:"true"`
-	Customer        *customer.Customer    `json:"customer,omitempty" database:"foreignKey:customer_id"`
-	PaymentMethodId *uuid.UUID            `json:"payment_method_id" swaggerignore:"true"`
-	PaymentMethod   *method.PaymentMethod `json:"payment_method,omitempty" database:"foreignKey:payment_method_id"`
-	SetupIntentId   *uuid.UUID            `json:"setup_intent_id,omitempty" swaggerignore:"true"`
-	SetupIntent     *intent.SetupIntent   `json:"setup_intent,omitempty" database:"foreignKey:setup_intent_id"`
+	CustomerId      *uuid.UUID               `json:"customer_id" swaggerignore:"true"`
+	Customer        *customer.Customer       `json:"customer,omitempty" database:"foreignKey:customer_id"`
+	PaymentMethodId *uuid.UUID               `json:"payment_method_id" swaggerignore:"true"`
+	PaymentMethod   *method.PaymentMethod    `json:"payment_method,omitempty" database:"foreignKey:payment_method_id"`
+	SetupIntentId   *uuid.UUID               `json:"setup_intent_id,omitempty" swaggerignore:"true"`
+	SetupIntent     *setupIntent.SetupIntent `json:"setup_intent,omitempty" database:"foreignKey:setup_intent_id"`
 }

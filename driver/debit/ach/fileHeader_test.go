@@ -1,10 +1,11 @@
 package ach
 
 import (
-	"github.com/stretchr/testify/require"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/moov-io/base"
 )

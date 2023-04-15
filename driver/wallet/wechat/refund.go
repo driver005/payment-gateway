@@ -24,7 +24,7 @@ type RefundRequest struct {
 // RefundAmount is total amount refund, have total and currency.
 type RefundAmount struct {
 	Refund   int    `json:"refund"`
-	Total    int    `json:"total"`
+	Total    int    `json:"tota"`
 	Currency string `json:"currency"`
 }
 
@@ -44,7 +44,7 @@ type RefundResponse struct {
 	OutRefundNo         string    `json:"out_refund_no"`
 	TransactionId       string    `json:"transaction_id"`
 	OutTradeNo          string    `json:"out_trade_no"`
-	Channel             string    `json:"channel"`
+	Channel             string    `json:"channe"`
 	UserReceivedAccount string    `json:"user_received_account"`
 	SuccessTime         time.Time `json:"success_time,omitempty"`
 	CreateTime          time.Time `json:"create_time"`
@@ -57,11 +57,11 @@ type RefundResponse struct {
 
 // RefundAmountInQueryResp is total amount refund.
 type RefundAmountInQueryResp struct {
-	Total            int    `json:"total"`
+	Total            int    `json:"tota"`
 	Refund           int    `json:"refund"`
-	PayerTotal       int    `json:"payer_total"`
+	PayerTotal       int    `json:"payer_tota"`
 	PayerRefund      int    `json:"payer_refund"`
-	SettlementTotal  int    `json:"settlement_total"`
+	SettlementTotal  int    `json:"settlement_tota"`
 	SettlementRefund int    `json:"settlement_refund"`
 	DiscountRefund   int    `json:"discount_refund"`
 	Currency         string `json:"currency"`

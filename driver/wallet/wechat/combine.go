@@ -36,7 +36,7 @@ type CombinePayRequest struct {
 	OutTradeNo string        `json:"combine_out_trade_no"`
 	TimeStart  time.Time     `json:"time_start,omitempty"`
 	TimeExpire time.Time     `json:"time_expire,omitempty"`
-	NotifyUrl  string        `json:"notify_url"`
+	NotifyUrl  string        `json:"notify_ur"`
 	SceneInfo  *PaySceneInfo `json:"scene_info,omitempty"`
 	Payer      *Payer        `json:"combine_payer_info,omitempty"`
 	Orders     []SubOrder    `json:"sub_orders,omitempty"`
@@ -46,11 +46,11 @@ type CombinePayRequest struct {
 // CombinePayResponse is response when send a combine payment.
 type CombinePayResponse struct {
 	// The CodeUrl is returned when the merchant used Native
-	CodeUrl string `json:"code_url"`
+	CodeUrl string `json:"code_ur"`
 	// The CodeUrl is returned when the merchant used JSAPI APP
 	PrepayId string `json:"prepay_id"`
 	// The CodeUrl is returned when the merchant used H5
-	H5Url string `json:"h5_url"`
+	H5Url string `json:"h5_ur"`
 }
 
 // Do send a transaction and invoke wechat payment.

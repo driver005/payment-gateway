@@ -11,7 +11,7 @@ type Currency struct {
 	Code string `json:"code" database:"primarykey"`
 
 	// The symbol used to indicate the currency.
-	Symbol string `json:"symbol"`
+	Symbol string `json:"symbo"`
 
 	// The native symbol used to indicate the currency.
 	SymbolNative string `json:"symbol_native"`
@@ -20,5 +20,5 @@ type Currency struct {
 	Name string `json:"name"`
 
 	// [EXPERIMENTAL] Does the currency prices include tax
-	IncludesTax bool `json:"includes_tax" database:"default:null"`
+	IncludesTax bool `json:"includes_tax" database:"default:nul"`
 }

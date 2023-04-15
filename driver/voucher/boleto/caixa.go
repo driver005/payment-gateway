@@ -1,27 +1,27 @@
 package boleto
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
-	"fmt"
 	"strconv"
 )
 
 // CEF - Caixa econômica federal - Modelo SIGCB
 // Source: (http://www.caixa.gov.br/Downloads/cobranca-caixa/ESP_COD_BARRAS_SIGCB_COBRANCA_CAIXA.pdf)
 type Caixa struct {
-	Agency                int
-	Account               int
-	Carteira              string
-	Company               Company
+	Agency   int
+	Account  int
+	Carteira string
+	Company  Company
 }
 
 // configCaixa is a global for this bank configs
 var configCaixa = bankConfig{
-	Id:           104,
-	Aceite:       "N",
-	Currency:     9,
-	CurrencyName: "R$",
+	Id:             104,
+	Aceite:         "N",
+	Currency:       9,
+	CurrencyName:   "R$",
 	AccountMaxSize: 6,
 }
 
@@ -45,7 +45,7 @@ func (b Caixa) Barcode(d Document) Barcode {
 	// codeModule var defines the Document.OurNumber DV, using '14' as prefix,
 	// means that, 1 is the identificator of registered billets and 4 is because the billet
 	// was issued from the client/company
-	codeModule := module11("14"+strconv.Itoa(d.OurNumber))
+	codeModule := module11("14" + strconv.Itoa(d.OurNumber))
 
 	// this code var is part of the BankNumbers,
 	// we use it to generate another var with module10
@@ -82,7 +82,7 @@ func (b Caixa) Barcode(d Document) Barcode {
 		CurrencyId:    configCaixa.Currency,
 		DateDueFactor: dateDueFactor(d.DateDue),
 		Value:         d.Value,
-		BankNumbers: fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
+		BankNumbers:   fmt.Sprintf("%0"+strconv.Itoa(bankNumbersSize)+"s", bn),
 	}
 	n.verification()
 	return n
@@ -98,8 +98,8 @@ func (b Caixa) Layout(w http.ResponseWriter, d Document) {
 	var barcode Barcode = b.Barcode(d)
 	layout, _ := template.ParseFiles("templates/caixa.html")
 	layout.ExecuteTemplate(w, "caixa", map[string]interface{}{
-		"Barcode": barcode,
+		"Barcode":  barcode,
 		"Document": d,
-		"Bank": b,
+		"Bank":     b,
 	})
 }

@@ -134,7 +134,7 @@ type TradeQueryRsp struct {
 		AlipaySubMerchantId   string           `json:"alipay_sub_merchant_id"`        // 间连商户在支付宝端的商户编号；
 		ExtInfos              string           `json:"ext_infos"`                     // 交易额外信息，特殊场景下与支付宝约定返回。
 		PassbackParams        string           `json:"passback_params"`               // 公用回传参数。返回支付时传入的passback_params参数信息
-		DiscountGoodsDetail   string           `json:"discount_goods_detail"`         // 本次交易支付所使用的单品券优惠的商品优惠信息
+		DiscountGoodsDetail   string           `json:"discount_goods_detai"`          // 本次交易支付所使用的单品券优惠的商品优惠信息
 		IndustrySepcDetailGov string           `json:"industry_sepc_detail_gov"`      // 行业特殊信息-统筹相关
 		IndustrySepcDetailAcc string           `json:"industry_sepc_detail_acc"`      // 行业特殊信息-个账相关
 		VoucherDetailList     []*VoucherDetail `json:"voucher_detail_list,omitempty"` // 本交易支付时使用的所有优惠券信息
@@ -144,7 +144,7 @@ type TradeQueryRsp struct {
 }
 
 type FundBill struct {
-	FundChannel string  `json:"fund_channel"`       // 交易使用的资金渠道，详见 支付渠道列表
+	FundChannel string  `json:"fund_channe"`        // 交易使用的资金渠道，详见 支付渠道列表
 	BankCode    string  `json:"bank_code"`          // 银行卡支付时的银行代码
 	Amount      string  `json:"amount"`             // 该支付工具类型所使用的金额
 	RealAmount  float64 `json:"real_amount,string"` // 渠道实际付款金额
@@ -271,10 +271,10 @@ func (this *TradeRefundRsp) IsSuccess() bool {
 }
 
 type RefundDetailItem struct {
-	FundChannel string `json:"fund_channel"` // 交易使用的资金渠道，详见 支付渠道列表
-	Amount      string `json:"amount"`       // 该支付工具类型所使用的金额
-	RealAmount  string `json:"real_amount"`  // 渠道实际付款金额
-	FundType    string `json:"fund_type"`    // 渠道所使用的资金类型
+	FundChannel string `json:"fund_channe"` // 交易使用的资金渠道，详见 支付渠道列表
+	Amount      string `json:"amount"`      // 该支付工具类型所使用的金额
+	RealAmount  string `json:"real_amount"` // 渠道实际付款金额
+	FundType    string `json:"fund_type"`   // 渠道所使用的资金类型
 }
 
 // TradeFastPayRefundQuery 统一收单交易退款查询接口请求参数 https://docs.open.alipay.com/api_1/alipay.trade.fastpay.refund.query
@@ -331,9 +331,9 @@ type RefundRoyalty struct {
 	RoyaltyType   string `json:"royalty_type"`
 	ResultCode    string `json:"result_code"`
 	TransOut      string `json:"trans_out"`
-	TransOutEmail string `json:"trans_out_email"`
+	TransOutEmail string `json:"trans_out_emai"`
 	TransIn       string `json:"trans_in"`
-	TransInEmail  string `json:"trans_in_email"`
+	TransInEmail  string `json:"trans_in_emai"`
 }
 
 type DepositBackInfo struct {
@@ -448,7 +448,7 @@ type GoodsDetailItem struct {
 	Price         string `json:"price"`
 	GoodsCategory string `json:"goods_category"`
 	Body          string `json:"body"`
-	ShowUrl       string `json:"show_url"`
+	ShowUrl       string `json:"show_ur"`
 }
 
 type AgreementParams struct {
@@ -498,7 +498,7 @@ type TradePayRsp struct {
 		BuyerPayAmount      string           `json:"buyer_pay_amount"`         // 买家实付金额，单位为元，两位小数。
 		BuyerUserId         string           `json:"buyer_user_id"`            // 买家在支付宝的用户id
 		CardBalance         string           `json:"card_balance"`             // 支付宝卡余额
-		DiscountGoodsDetail string           `json:"discount_goods_detail"`    // 本次交易支付所使用的单品券优惠的商品优惠信息
+		DiscountGoodsDetail string           `json:"discount_goods_detai"`     // 本次交易支付所使用的单品券优惠的商品优惠信息
 		FundBillList        []*FundBill      `json:"fund_bill_list,omitempty"` // 交易支付使用的资金渠道
 		GmtPayment          string           `json:"gmt_payment"`
 		InvoiceAmount       string           `json:"invoice_amount"`                // 交易中用户支付的可开具发票的金额，单位为元，两位小数。

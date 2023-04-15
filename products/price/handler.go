@@ -87,6 +87,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags Price
 // @Accept json
 // @Produce json
+// @Param model body price.Bind.request true "Request Data"
 // @Success 200 {object} Price
 // @Router /v1/prices [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -115,7 +116,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags Price
 // @Accept json
 // @Produce json
-// @Param id body string true "Price ID"
+// @Param model body price.Bind.request true "Request Data"
+// @Param id path string true "Price ID"
 // @Success 200 {object} Price
 // @Router /v1/prices/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -154,7 +156,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags Price
 // @Accept json
 // @Produce json
-// @Param id body string true "Price ID"
+// @Param id path string true "Price ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/prices/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {

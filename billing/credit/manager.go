@@ -7,20 +7,21 @@ import (
 
 type Alias CreditNote
 
-var m CreditNote
-
-var model = struct {
-	*Alias
-	Customer                   uuid.NullUUID `json:"customer,omitempty"`
-	CustomerBalanceTransaction uuid.NullUUID `json:"customer_balance_transaction,omitempty"`
-	Invoice                    uuid.NullUUID `json:"invoice,omitempty"`
-	Refund                     uuid.NullUUID `json:"refund,omitempty"`
-}{
-	Alias: (*Alias)(&m),
-}
-
 func (h *Handler) Bind(context *fiber.Ctx) (*CreditNote, error) {
+	var m CreditNote
 	var err error
+
+	type request struct {
+		*Alias
+		Customer                   uuid.NullUUID `json:"customer,omitempty"`
+		CustomerBalanceTransaction uuid.NullUUID `json:"customer_balance_transaction,omitempty"`
+		Invoice                    uuid.NullUUID `json:"invoice,omitempty"`
+		Refund                     uuid.NullUUID `json:"refund,omitempty"`
+	}
+
+	var model = request{
+		Alias: (*Alias)(&m),
+	}
 
 	if err = context.BodyParser(&model); err != nil {
 		return nil, err

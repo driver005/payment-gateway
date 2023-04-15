@@ -2,7 +2,7 @@ package v3
 
 // POSRefundTransactionRespDetails ...
 type POSRefundTransactionRespDetails struct {
-	PaymentChannel   string `json:"paymentChannel"`
+	PaymentChannel   string `json:"paymentChanne"`
 	StoreGrabID      string `json:"storeGrabID"`
 	GrabTxID         string `json:"grabTxID"`
 	PartnerTxID      string `json:"partnerTxID"`
@@ -54,7 +54,7 @@ type POSDetailsResponse struct {
 
 // POSInquireTransactionRespDetails ...
 type POSInquireTransactionRespDetails struct {
-	PaymentChannel    string `json:"paymentChannel"`
+	PaymentChannel    string `json:"paymentChanne"`
 	StoreGrabID       string `json:"storeGrabID"`
 	TxType            string `json:"txType"`
 	GrabTxID          string `json:"grabTxID"`

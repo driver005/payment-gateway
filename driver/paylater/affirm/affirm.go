@@ -13,8 +13,8 @@ type (
 
 	Merchant struct {
 		PublicApiKey              string `json:"public_api_key"`
-		UserCancelUrl             string `json:"user_cancel_url"`
-		UserConfirmationUrl       string `json:"user_confirmation_url"`
+		UserCancelUrl             string `json:"user_cancel_ur"`
+		UserConfirmationUrl       string `json:"user_confirmation_ur"`
 		UserConfirmationUrlAction string `json:"user_confirmation_url_action"`
 		Name                      string `json:"name"`
 		UseVcn                    bool   `json:"use_vcn"`
@@ -33,7 +33,7 @@ type (
 		Name        Name    `json:"name,omitempty"`
 		Address     Address `json:"address"`
 		PhoneNumber string  `json:"phone_number"`
-		Email       string  `json:"email"`
+		Email       string  `json:"emai"`
 	}
 
 	Name struct {
@@ -49,14 +49,14 @@ type (
 	DirectCheckout struct {
 		Merchant  Merchant `json:"merchant,omitempty"`
 		Billing   Billing  `json:"billing"`
-		Total     int      `json:"total"`
+		Total     int      `json:"tota"`
 		OrderId   string   `json:"order_id"`
 		TaxAmount int      `json:"tax_amount"`
 		Shipping  Shipping `json:"shipping"`
 	}
 
 	Response struct {
-		RedirectUrl string `json:"redirect_url"`
+		RedirectUrl string `json:"redirect_ur"`
 		CheckoutId  string `json:"checkout_id"`
 	}
 )

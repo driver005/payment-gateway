@@ -2,7 +2,7 @@ package v3
 
 // POSInitTransactionDetails ...
 type POSInitTransactionDetails struct {
-	PaymentChannel    string `json:"paymentChannel"`
+	PaymentChannel    string `json:"paymentChanne"`
 	StoreGrabID       string `json:"storeGrabID"`
 	GrabTxID          string `json:"grabTxID"`
 	PartnerTxID       string `json:"partnerTxID"`
@@ -38,7 +38,7 @@ type POSInquireTransactionDetails struct {
 
 // POSCancelTransactionDetails ...
 type POSCancelTransactionDetails struct {
-	PaymentChannel    string `json:"paymentChannel"`
+	PaymentChannel    string `json:"paymentChanne"`
 	StoreGrabID       string `json:"storeGrabID"`
 	OriginPartnerTxID string `json:"originPartnerTxID"`
 	Currency          string `json:"currency"`

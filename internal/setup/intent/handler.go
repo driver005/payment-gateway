@@ -1,4 +1,4 @@
-package intent
+package setupIntent
 
 import (
 	"strconv"
@@ -89,6 +89,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags SetupIntent
 // @Accept json
 // @Produce json
+// @Param model body setupIntent.Bind.request true "Request Data"
 // @Success 200 {object} SetupIntent
 // @Router /v1/setup_intents [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -117,7 +118,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags SetupIntent
 // @Accept json
 // @Produce json
-// @Param id body string true "SetupIntent ID"
+// @Param model body setupIntent.Bind.request true "Request Data"
+// @Param id path string true "SetupIntent ID"
 // @Success 200 {object} SetupIntent
 // @Router /v1/setup_intents/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -156,7 +158,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags SetupIntent
 // @Accept json
 // @Produce json
-// @Param id body string true "SetupIntent ID"
+// @Param id path string true "SetupIntent ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/setup_intents/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
@@ -185,7 +187,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 // @Tags SetupIntent
 // @Accept json
 // @Produce json
-// @Param id body string true "SetupIntent ID"
+// @Param id path string true "SetupIntent ID"
 // @Success 200 {object} SetupIntent
 // @Router /v1/setup_intents/{id}/cancele [post]
 func (h *Handler) RouteCancel(context *fiber.Ctx) error {
@@ -221,7 +223,7 @@ func (h *Handler) RouteCancel(context *fiber.Ctx) error {
 // @Tags SetupIntent
 // @Accept json
 // @Produce json
-// @Param id body string true "SetupIntent ID"
+// @Param id path string true "SetupIntent ID"
 // @Success 200 {object} SetupIntent
 // @Router /v1/setup_intents/{id}/confirm [post]
 func (h *Handler) RouteConfirm(context *fiber.Ctx) error {

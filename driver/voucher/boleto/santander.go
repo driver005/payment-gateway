@@ -1,28 +1,28 @@
 package boleto
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
-	"fmt"
 	"strconv"
 )
 
 // Santander
 // Source: (https://www.santander.com.br/document/wps/sl-tabela-de-tarifas-cobranca.pdf)
 type Santander struct {
-	Agency                int
-	Account               int
-	Carteira              int
-	IOS                   int
-	Company               Company
+	Agency   int
+	Account  int
+	Carteira int
+	IOS      int
+	Company  Company
 }
 
 // configSantander is a global for this bank configs
 var configSantander = bankConfig{
-	Id:           033,
-	Aceite:       "N",
-	Currency:     9,
-	CurrencyName: "R$",
+	Id:             033,
+	Aceite:         "N",
+	Currency:       9,
+	CurrencyName:   "R$",
 	AccountMaxSize: 7,
 }
 
@@ -59,8 +59,8 @@ func (b Santander) Layout(w http.ResponseWriter, d Document) {
 	var barcode Barcode = b.Barcode(d)
 	layout, _ := template.ParseFiles("templates/santander.html")
 	layout.ExecuteTemplate(w, "santander", map[string]interface{}{
-		"Barcode": barcode,
+		"Barcode":  barcode,
 		"Document": d,
-		"Bank": b,
+		"Bank":     b,
 	})
 }

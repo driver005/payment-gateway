@@ -87,6 +87,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Tags PaymentLink
 // @Accept json
 // @Produce json
+// @Param model body PaymentLink true "Request Data"
 // @Success 200 {object} PaymentLink
 // @Router /v1/payment_links [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
@@ -116,7 +117,8 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Tags PaymentLink
 // @Accept json
 // @Produce json
-// @Param id body string true "PaymentLink ID"
+// @Param model body PaymentLink true "Request Data"
+// @Param id path string true "PaymentLink ID"
 // @Success 200 {object} PaymentLink
 // @Router /v1/payment_links/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
@@ -156,7 +158,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 // @Tags PaymentLink
 // @Accept json
 // @Produce json
-// @Param id body string true "PaymentLink ID"
+// @Param id path string true "PaymentLink ID"
 // @Success 204 {string} status "ok"
 // @Router /v1/payment_links/{id} [delete]
 func (h *Handler) RouteDelete(context *fiber.Ctx) error {
