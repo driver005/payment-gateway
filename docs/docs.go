@@ -6482,7 +6482,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "flow_directions": {
                     "type": "array",
@@ -6503,7 +6504,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "payment_method": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "payment_method_details": {
                     "$ref": "#/definitions/details.PaymentMethodDetails"
@@ -6512,7 +6514,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/errors.ApiErrors"
                 },
                 "setup_intent": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "status": {
                     "$ref": "#/definitions/attempt.Status"
@@ -6937,7 +6940,8 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "account": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "account_holder_name": {
                     "type": "string"
@@ -6970,7 +6974,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "customer_id": {
                     "$ref": "#/definitions/uuid.NullUUID"
@@ -7058,7 +7063,8 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "account": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "address_city": {
                     "type": "string"
@@ -7103,7 +7109,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "cvc_check": {
                     "$ref": "#/definitions/card.CvcCheck"
@@ -7281,7 +7288,8 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "balance_transaction": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "billing_details": {
                     "$ref": "#/definitions/address.BillingDetails"
@@ -7299,7 +7307,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "description": {
                     "type": "string"
@@ -7308,7 +7317,8 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "failure_balance_transaction": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "failure_code": {
                     "type": "string"
@@ -7338,7 +7348,8 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "payment_method": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "payment_method_details": {
                     "$ref": "#/definitions/details.PaymentMethodDetails"
@@ -7359,7 +7370,8 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "review": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "shipping": {
                     "$ref": "#/definitions/address.Shipping"
@@ -8187,10 +8199,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "customer_balance_transaction": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "discount_amount": {
                     "description": "The integer amount in %s representing the total amount of discount that was credited.",
@@ -8200,7 +8214,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "invoice": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "lines": {
                     "description": "The aggregate amounts calculated per discount for all line items.",
@@ -8244,7 +8259,8 @@ const docTemplate = `{
                     ]
                 },
                 "refund": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "status": {
                     "description": "Status of this credit note, one of ` + "`" + `issued` + "`" + ` or ` + "`" + `void` + "`" + `. Learn more about [voiding credit notes](https://stripe.com/docs/billing/invoices/credit-notes#voiding).",
@@ -10043,13 +10059,15 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "coupon": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "created_at": {
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "end": {
                     "type": "integer"
@@ -10073,7 +10091,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "promotion_code": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "start": {
                     "type": "integer"
@@ -10155,7 +10174,8 @@ const docTemplate = `{
                     }
                 },
                 "charge": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "created_at": {
                     "type": "string"
@@ -10187,7 +10207,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "payment_intent": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "reason": {
                     "description": "Reason given by cardholder for dispute. Possible values are ` + "`" + `bank_cannot_process` + "`" + `, ` + "`" + `check_returned` + "`" + `, ` + "`" + `credit_not_processed` + "`" + `, ` + "`" + `customer_initiated` + "`" + `, ` + "`" + `debit_not_authorized` + "`" + `, ` + "`" + `duplicate` + "`" + `, ` + "`" + `fraudulent` + "`" + `, ` + "`" + `general` + "`" + `, ` + "`" + `incorrect_account_details` + "`" + `, ` + "`" + `insufficient_funds` + "`" + `, ` + "`" + `product_not_received` + "`" + `, ` + "`" + `product_unacceptable` + "`" + `, ` + "`" + `subscription_canceled` + "`" + `, or ` + "`" + `unrecognized` + "`" + `. Read more about [dispute reasons](https://stripe.com/docs/disputes/categories).",
@@ -10847,7 +10868,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "confirm": {
-                    "type": "boolean"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "confirmation_method": {
                     "$ref": "#/definitions/intent.ConfirmationMethod"
@@ -10859,7 +10881,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "description": {
                     "type": "string"
@@ -10886,10 +10909,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "off_session": {
-                    "type": "boolean"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "payment_method": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "payment_method_options": {
                     "$ref": "#/definitions/methods.PaymentIntentPaymentMethodOptions"
@@ -10907,7 +10932,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "return_url": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "review": {
                     "$ref": "#/definitions/review.Review"
@@ -11259,7 +11285,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/invoice.BillingReason"
                 },
                 "charge": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "collection_method": {
                     "$ref": "#/definitions/invoice.CollectionMethod"
@@ -11278,7 +11305,8 @@ const docTemplate = `{
                     }
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "customer_address": {
                     "$ref": "#/definitions/address.Address"
@@ -11306,7 +11334,8 @@ const docTemplate = `{
                     }
                 },
                 "default_payment_method": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "default_tax_rates": {
                     "$ref": "#/definitions/tax.TaxRate"
@@ -11349,7 +11378,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/errors.ApiErrors"
                 },
                 "latest_revision": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "lines": {
                     "type": "array",
@@ -11380,7 +11410,8 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "payment_intent": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "payment_settings": {
                     "$ref": "#/definitions/invoices.InvoicesPaymentSettings"
@@ -11398,7 +11429,8 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "price": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "quantity": {
                     "type": "integer"
@@ -11422,7 +11454,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/invoices.InvoicesStatusTransitions"
                 },
                 "subscription": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "subscription_proration_date": {
                     "type": "integer"
@@ -11779,7 +11812,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "date": {
                     "description": "Time at which the object was created. Measured in seconds since the Unix epoch.",
@@ -11805,7 +11839,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "invoice": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "livemode": {
                     "type": "boolean"
@@ -11824,7 +11859,8 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "price": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "proration": {
                     "description": "Whether the invoice item was created automatically as a proration adjustment when the customer switched plans.",
@@ -11835,10 +11871,12 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "subscription": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "subscription_item": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "tax_rates": {
                     "description": "The tax rates which apply to the invoice item. When set, the ` + "`" + `default_tax_rates` + "`" + ` on the invoice do not apply to this invoice item.",
@@ -12116,10 +12154,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "price": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "product": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "proration": {
                     "type": "boolean"
@@ -12358,7 +12398,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "payment_method": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "payment_method_details": {
                     "$ref": "#/definitions/methods.MandatePaymentMethodDetails"
@@ -12443,13 +12484,16 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "account_holder_type": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "account_number": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "account_type": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "acss_debit": {
                     "$ref": "#/definitions/methods.PaymentMethodAcssDebit"
@@ -12473,7 +12517,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/methods.PaymentMethodBancontact"
                 },
                 "bank": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "billing_details": {
                     "$ref": "#/definitions/address.BillingDetails"
@@ -12485,7 +12530,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/methods.PaymentMethodBoleto"
                 },
                 "bsb_number": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "btc_pay": {
                     "$ref": "#/definitions/methods.PaymentMethodBtcPay"
@@ -12497,34 +12543,41 @@ const docTemplate = `{
                     "$ref": "#/definitions/methods.PaymentMethodCardPresent"
                 },
                 "country": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "created_at": {
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "customer_balance": {
                     "$ref": "#/definitions/methods.PaymentMethodCustomerBalance"
                 },
                 "cvc": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "day": {
-                    "type": "integer"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "eps": {
                     "$ref": "#/definitions/methods.PaymentMethodEps"
                 },
                 "exp_month": {
-                    "type": "integer"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "exp_year": {
-                    "type": "integer"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "financial_connections_account": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "fpx": {
                     "$ref": "#/definitions/methods.PaymentMethodFpx"
@@ -12536,7 +12589,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/methods.PaymentMethodGrabpay"
                 },
                 "iban": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "id": {
                     "type": "string"
@@ -12545,7 +12599,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/methods.PaymentMethodIdeal"
                 },
                 "institution_number": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "interac_present": {
                     "$ref": "#/definitions/methods.PaymentMethodInteracPresent"
@@ -12566,10 +12621,12 @@ const docTemplate = `{
                     "$ref": "#/definitions/core.JSONB"
                 },
                 "month": {
-                    "type": "integer"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "number": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "object": {
                     "type": "string"
@@ -12593,7 +12650,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/radar.RadarOptions"
                 },
                 "routing_number": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "sepa_debit": {
                     "$ref": "#/definitions/methods.PaymentMethodSepaDebit"
@@ -12602,13 +12660,16 @@ const docTemplate = `{
                     "$ref": "#/definitions/methods.PaymentMethodSofort"
                 },
                 "sort_code": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "tax_id": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "transit_number": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "type": {
                     "$ref": "#/definitions/method.Type"
@@ -12623,7 +12684,8 @@ const docTemplate = `{
                     "$ref": "#/definitions/methods.PaymentMethodWechatPay"
                 },
                 "year": {
-                    "type": "integer"
+                    "type": "string",
+                    "format": "uuid"
                 }
             }
         },
@@ -17725,7 +17787,8 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "balance_transaction": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "created_at": {
                     "type": "string"
@@ -17740,7 +17803,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "failure_balance_transaction": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "failure_code": {
                     "type": "string"
@@ -17764,10 +17828,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "original_payout": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "reversed_by": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "source_type": {
                     "$ref": "#/definitions/payout.SourceType"
@@ -17967,7 +18033,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "product": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "tiers": {
                     "description": "Each element represents a pricing tier. This parameter requires ` + "`" + `billing_scheme` + "`" + ` to be set to ` + "`" + `tiered` + "`" + `. See also the documentation for ` + "`" + `billing_scheme` + "`" + `.",
@@ -18173,7 +18240,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "product": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "recurring": {
                     "$ref": "#/definitions/price.Recurring"
@@ -18576,13 +18644,15 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "coupon": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "created_at": {
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "expires_at": {
                     "type": "integer"
@@ -18701,7 +18771,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "default_tax_rates": {
                     "type": "array",
@@ -18737,7 +18808,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "invoice": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "invoice_settings": {
                     "description": "Unique identifier for the object.",
@@ -18775,13 +18847,15 @@ const docTemplate = `{
                     "$ref": "#/definitions/quote.QuotesResourceStatusTransitions"
                 },
                 "subscription": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "subscription_data": {
                     "$ref": "#/definitions/quote.QuotesResourceSubscriptionDataSubscriptionData"
                 },
                 "subscription_schedule": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "total_details": {
                     "$ref": "#/definitions/quote.QuotesResourceTotalDetails"
@@ -19201,10 +19275,12 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "balance_transaction": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "charge": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "created_at": {
                     "type": "string"
@@ -19216,7 +19292,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "failure_balance_transaction": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "failure_reason": {
                     "$ref": "#/definitions/refund.FailureReason"
@@ -19241,7 +19318,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "payment_intent": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "reason": {
                     "$ref": "#/definitions/refund.Reason"
@@ -19590,7 +19668,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "description": {
                     "type": "string"
@@ -19611,7 +19690,8 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "mandate": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "metadata": {
                     "$ref": "#/definitions/core.JSONB"
@@ -19623,7 +19703,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "payment_method": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "payment_method_types": {
                     "type": "array",
@@ -19632,7 +19713,8 @@ const docTemplate = `{
                     }
                 },
                 "single_use_mandate": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "status": {
                     "$ref": "#/definitions/setupIntent.Status"
@@ -19902,7 +19984,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "eps": {
                     "$ref": "#/definitions/types.SourceTypeEps"
@@ -20459,14 +20542,16 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "days_until_due": {
                     "description": "Number of days a customer has to pay invoices generated by this subscription. This value will be ` + "`" + `null` + "`" + ` for subscriptions where ` + "`" + `collection_method=charge_automatically` + "`" + `.",
                     "type": "integer"
                 },
                 "default_payment_method": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "default_tax_rates": {
                     "description": "The tax rates that will apply to any subscription item that does not have ` + "`" + `tax_rates` + "`" + ` set. Invoices created will have their ` + "`" + `default_tax_rates` + "`" + ` populated from the subscription.",
@@ -20513,16 +20598,19 @@ const docTemplate = `{
                     "$ref": "#/definitions/subscription.SubscriptionPendingInvoiceItemInterval"
                 },
                 "pending_setup_intent": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "pending_update": {
                     "$ref": "#/definitions/subscriptions.SubscriptionsResourcePendingUpdate"
                 },
                 "price": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "schedule": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "start_date": {
                     "description": "Date when the subscription was first created. The date might differ from the ` + "`" + `created` + "`" + ` date due to backdating.",
@@ -20761,14 +20849,16 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "price": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "quantity": {
                     "description": "The [quantity](https://stripe.com/docs/subscriptions/quantities) of the plan to which the customer should be subscribed.",
                     "type": "integer"
                 },
                 "subscription": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "tax_rates": {
                     "description": "The tax rates which apply to this ` + "`" + `subscription_item` + "`" + `. When set, the ` + "`" + `default_tax_rates` + "`" + ` on the subscription do not apply to this ` + "`" + `subscription_item` + "`" + `.",
@@ -20839,7 +20929,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "customer": {
-                    "$ref": "#/definitions/uuid.NullUUID"
+                    "type": "string",
+                    "format": "uuid"
                 },
                 "default_settings": {
                     "$ref": "#/definitions/subscriptionSchedule.SubscriptionSchedulesResourceDefaultSettings"

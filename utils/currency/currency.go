@@ -20,5 +20,5 @@ type Currency struct {
 	Name string `json:"name"`
 
 	// [EXPERIMENTAL] Does the currency prices include tax
-	IncludesTax bool `json:"includes_tax" database:"default:nul"`
+	IncludesTax bool `json:"includes_tax" database:"default:null"`
 }

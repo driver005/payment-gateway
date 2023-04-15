@@ -32,11 +32,11 @@ func (h *Handler) Bind(context *fiber.Ctx, isPayable bool) (*PaymentIntent, erro
 
 	type request struct {
 		*Alias
-		Customer      uuid.NullUUID `json:"customer,omitempty"`
-		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty"`
-		Confirm       bool          `json:"confirm,omitempty"`
-		ReturnUrl     string        `json:"return_url,omitempty"`
-		OffSession    bool          `json:"off_session,omitempty"`
+		Customer      uuid.NullUUID `json:"customer,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Confirm       bool          `json:"confirm,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		ReturnUrl     string        `json:"return_url,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		OffSession    bool          `json:"off_session,omitempty" swaggertype:"primitive,string" format:"uuid"`
 	}
 
 	var model = request{

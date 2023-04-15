@@ -11,7 +11,7 @@ type Model struct {
 	Id        uuid.UUID          `json:"id" database:"primary_key"`
 	Object    string             `json:"object"`
 	Livemode  bool               `json:"livemode"`
-	Metadata  JSONB              `json:"metadata,omitempty" database:"default:nul"`
+	Metadata  JSONB              `json:"metadata,omitempty" database:"default:null"`
 	CreatedAt time.Time          `json:"created_at,omitempty" db:"created_at"`
 	UpdatedAt time.Time          `json:"updated_at,omitempty" db:"updated_at"`
 	DeletedAt database.DeletedAt `json:"deleted_at,omitempty" db:"deleted_at" swaggerignore:"true"`

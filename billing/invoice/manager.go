@@ -19,13 +19,13 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Invoice, error) {
 
 	type request struct {
 		*Alias
-		Customer             uuid.NullUUID `json:"customer,omitempty"`
-		Charge               uuid.NullUUID `json:"charge,omitempty"`
-		DefaultPaymentMethod uuid.NullUUID `json:"default_payment_method,omitempty"`
-		PaymentIntent        uuid.NullUUID `json:"payment_intent,omitempty"`
-		Price                uuid.NullUUID `json:"price,omitempty"`
-		LatestRevision       uuid.NullUUID `json:"latest_revision,omitempty"`
-		Subscription         uuid.NullUUID `json:"subscription,omitempty"`
+		Customer             uuid.NullUUID `json:"customer,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Charge               uuid.NullUUID `json:"charge,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		DefaultPaymentMethod uuid.NullUUID `json:"default_payment_method,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		PaymentIntent        uuid.NullUUID `json:"payment_intent,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Price                uuid.NullUUID `json:"price,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		LatestRevision       uuid.NullUUID `json:"latest_revision,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Subscription         uuid.NullUUID `json:"subscription,omitempty" swaggertype:"primitive,string" format:"uuid"`
 	}
 
 	var model = request{

@@ -13,9 +13,9 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Discount, error) {
 
 	type request struct {
 		*Alias
-		Customer      uuid.NullUUID `json:"customer,omitempty"`
-		Coupon        uuid.NullUUID `json:"coupon,omitempty"`
-		PromotionCode uuid.NullUUID `json:"promotion_code,omitempty"`
+		Customer      uuid.NullUUID `json:"customer,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Coupon        uuid.NullUUID `json:"coupon,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		PromotionCode uuid.NullUUID `json:"promotion_code,omitempty" swaggertype:"primitive,string" format:"uuid"`
 	}
 
 	var model = request{

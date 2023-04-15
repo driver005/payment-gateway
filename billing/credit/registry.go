@@ -11,8 +11,7 @@ import (
 )
 
 type Handler struct {
-	r     Registry
-	model interface{}
+	r Registry
 }
 
 type Registry interface {

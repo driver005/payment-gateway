@@ -13,7 +13,7 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Mandate, error) {
 
 	type request struct {
 		*Alias
-		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty"`
+		PaymentMethod uuid.NullUUID `json:"payment_method,omitempty" swaggertype:"primitive,string" format:"uuid"`
 	}
 
 	var model = request{

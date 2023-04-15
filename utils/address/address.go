@@ -10,35 +10,35 @@ type Address struct {
 	core.Model
 
 	// Address line 1
-	Address1 string `json:"address_1" database:"default:nul"`
+	Address1 string `json:"address_1" database:"default:null"`
 
 	// Address line 2
-	Address2 string `json:"address_2" database:"default:nul"`
+	Address2 string `json:"address_2" database:"default:null"`
 
 	// City
-	City string `json:"city" database:"default:nul"`
+	City string `json:"city" database:"default:null"`
 
 	// Company name
-	Company string `json:"company" database:"default:nul"`
+	Company string `json:"company" database:"default:null"`
 
 	// A country object. Available if the relation `country` is expanded.
 	Country country.Country `json:"country" database:"foreignKey:id;references:country_code"`
 
 	// The 2 character ISO code of the country in lower case
-	CountryCode string `json:"country_code" database:"default:nul"`
+	CountryCode string `json:"country_code" database:"default:null"`
 
 	// First name
-	FirstName string `json:"first_name" database:"default:nul"`
+	FirstName string `json:"first_name" database:"default:null"`
 
 	// Last name
-	LastName string `json:"last_name" database:"default:nul"`
+	LastName string `json:"last_name" database:"default:null"`
 
 	// Phone Number
-	Phone string `json:"phone" database:"default:nul"`
+	Phone string `json:"phone" database:"default:null"`
 
 	// Postal Code
-	PostalCode string `json:"postal_code" database:"default:nul"`
+	PostalCode string `json:"postal_code" database:"default:null"`
 
 	// Province
-	Province string `json:"province" database:"default:nul"`
+	Province string `json:"province" database:"default:null"`
 }

@@ -13,8 +13,8 @@ func (h *Handler) Bind(context *fiber.Ctx) (*LineItem, error) {
 
 	type request struct {
 		*Alias
-		Product uuid.NullUUID `json:"product,omitempty"`
-		Price   uuid.NullUUID `json:"price,omitempty"`
+		Product uuid.NullUUID `json:"product,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Price   uuid.NullUUID `json:"price,omitempty" swaggertype:"primitive,string" format:"uuid"`
 	}
 
 	var model = request{

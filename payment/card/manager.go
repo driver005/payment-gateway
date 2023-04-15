@@ -15,8 +15,8 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Card, error) {
 
 	type request struct {
 		*Alias
-		Account  uuid.NullUUID `json:"account,omitempty"`
-		Customer uuid.NullUUID `json:"customer,omitempty"`
+		Account  uuid.NullUUID `json:"account,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Customer uuid.NullUUID `json:"customer,omitempty" swaggertype:"primitive,string" format:"uuid"`
 	}
 
 	var model = request{

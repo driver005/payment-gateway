@@ -18,11 +18,11 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Invoiceitem, error) {
 
 	type request struct {
 		*Alias
-		Customer         uuid.NullUUID `json:"customer,omitempty"`
-		Invoice          uuid.NullUUID `json:"invoice,omitempty"`
-		Subscription     uuid.NullUUID `json:"subscription,omitempty"`
-		Price            uuid.NullUUID `json:"price,omitempty"`
-		SubscriptionItem uuid.NullUUID `json:"subscription_item,omitempty"`
+		Customer         uuid.NullUUID `json:"customer,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Invoice          uuid.NullUUID `json:"invoice,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Subscription     uuid.NullUUID `json:"subscription,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		Price            uuid.NullUUID `json:"price,omitempty" swaggertype:"primitive,string" format:"uuid"`
+		SubscriptionItem uuid.NullUUID `json:"subscription_item,omitempty" swaggertype:"primitive,string" format:"uuid"`
 	}
 
 	var model = request{
