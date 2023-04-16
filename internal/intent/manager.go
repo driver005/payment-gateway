@@ -72,6 +72,12 @@ func (h *Handler) Bind(context *fiber.Ctx, isPayable bool) (*PaymentIntent, erro
 		m.SetupFutureUsage = "off_session"
 	}
 
+	// if model.AutomaticPaymentMethods {
+	// 	m.PaymentMethod = &method.PaymentMethod{
+
+	// 	}
+	// }
+
 	if contains(m.PaymentMethodTypes, "acss_debit") {
 		paymentMethodOptions.AcssDebit = &methods.PaymentIntentPaymentMethodOptionsAcssDebit1{}
 	}

@@ -45,7 +45,6 @@ import (
 	"github.com/driver005/gateway/products/product"
 	"github.com/driver005/gateway/products/promotion"
 	"github.com/driver005/gateway/repository"
-	"github.com/driver005/gateway/service"
 	"github.com/driver005/gateway/sql"
 	"github.com/driver005/gateway/utils"
 	"github.com/gernest/wow"
@@ -87,7 +86,6 @@ type Registry interface {
 	RegisterRoutes(router *fiber.App)
 	ClientManager() *db.Handler
 	Repository() repository.TransactionRepository
-	Service() *service.Handler
 	Driver() *driver.Handler
 	Pay(ctx context.Context, i *intent.PaymentIntent) (*intent.PaymentIntent, error)
 

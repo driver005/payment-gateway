@@ -43,10 +43,8 @@ import (
 	"github.com/driver005/gateway/products/product"
 	"github.com/driver005/gateway/products/promotion"
 	"github.com/driver005/gateway/repository"
-	"github.com/driver005/gateway/service"
 	"github.com/driver005/gateway/utils"
 
-	// "github.com/driver005/gateway/service"
 	_ "github.com/driver005/gateway/docs"
 	"github.com/driver005/gateway/sql"
 	"github.com/gofiber/fiber/v2"
@@ -66,7 +64,6 @@ type Base struct {
 	al           *logger.Logger
 	h            *handler.Handler
 	d            *driver.Handler
-	s            *service.Handler
 	buildVersion string
 	buildHash    string
 	buildDate    string
@@ -251,13 +248,6 @@ func (m *Base) Pay(ctx context.Context, i *intent.PaymentIntent) (*intent.Paymen
 	}
 
 	return r, nil
-}
-
-func (m *Base) Service() *service.Handler {
-	if m.s == nil {
-		m.s = service.NewHandler()
-	}
-	return m.s
 }
 
 func (m *Base) Database() sql.Database {

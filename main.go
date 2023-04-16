@@ -31,7 +31,7 @@ var ctx = context.Background()
 // @schemes http
 func main() {
 	o := make([]registry.OptionsModifier, 0)
-	// o = append(o, registry.DisableMigration())
+	o = append(o, registry.DisableMigration())
 
 	r := registry.New(ctx, o)
 

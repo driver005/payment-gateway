@@ -95,16 +95,15 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 // @Success 200 {object} Customer
 // @Router /v1/customers [post]
 func (h *Handler) RouteCreate(context *fiber.Ctx) error {
-	var m Customer
-
-	if err := context.BodyParser(&m); err != nil {
+	m, err := h.Bind(context)
+	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
-			"type":    "database_error",
+			"type":    "internal_error",
 		})
 	}
 
-	r, err := h.Create(context.Context(), &m)
+	r, err := h.Create(context.Context(), m)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -126,12 +125,11 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 // @Success 200 {object} Customer
 // @Router /v1/customers/{id} [post]
 func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
-	var m Customer
-
-	if err := context.BodyParser(&m); err != nil {
+	m, err := h.Bind(context)
+	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
-			"type":    "database_error",
+			"type":    "internal_error",
 		})
 	}
 
@@ -145,7 +143,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 
 	m.Id = Id
 
-	r, err := h.Update(context.Context(), &m)
+	r, err := h.Update(context.Context(), m)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
