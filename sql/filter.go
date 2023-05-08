@@ -179,7 +179,6 @@ func FilterByQuery(context *fiber.Ctx, config int) func(db *database.DB) *databa
 		if config&PAGINATE > 0 {
 			db = paginate(db, params)
 		}
-		fmt.Println("test")
 		return db
 	}
 }
