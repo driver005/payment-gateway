@@ -1,7 +1,6 @@
 package invoice
 
 import (
-	"context"
 	"time"
 
 	"github.com/driver005/gateway/internal/intent"
@@ -37,52 +36,52 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Invoice, error) {
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Charge.Valid {
-		m.Charge, err = h.r.Charge().Retrive(context.Context(), model.Charge.UUID)
+		m.Charge, err = h.r.Charge().Retrive(context, model.Charge.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.DefaultPaymentMethod.Valid {
-		m.DefaultPaymentMethod, err = h.r.PaymentMethod().Retrive(context.Context(), model.DefaultPaymentMethod.UUID)
+		m.DefaultPaymentMethod, err = h.r.PaymentMethod().Retrive(context, model.DefaultPaymentMethod.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.PaymentIntent.Valid {
-		m.PaymentIntent, err = h.r.PaymentIntent().Retrive(context.Context(), model.PaymentIntent.UUID)
+		m.PaymentIntent, err = h.r.PaymentIntent().Retrive(context, model.PaymentIntent.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Price.Valid {
-		m.Price, err = h.r.Price().Retrive(context.Context(), model.Price.UUID)
+		m.Price, err = h.r.Price().Retrive(context, model.Price.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.LatestRevision.Valid {
-		m.LatestRevision, err = h.Retrive(context.Context(), model.LatestRevision.UUID)
+		m.LatestRevision, err = h.Retrive(context, model.LatestRevision.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Subscription.Valid {
-		m.Subscription, err = h.r.Subscription().Retrive(context.Context(), model.Subscription.UUID)
+		m.Subscription, err = h.r.Subscription().Retrive(context, model.Subscription.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	return h.Manage(context.Context(), m)
+	return h.Manage(context, m)
 }
 
-func (h *Handler) Manage(ctx context.Context, m Invoice) (*Invoice, error) {
+func (h *Handler) Manage(ctx *fiber.Ctx, m Invoice) (*Invoice, error) {
 	var paymentIntent *intent.PaymentIntent
 	var err error
 

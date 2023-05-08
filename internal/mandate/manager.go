@@ -25,7 +25,7 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Mandate, error) {
 	}
 
 	if model.PaymentMethod.Valid {
-		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context.Context(), model.PaymentMethod.UUID)
+		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context, model.PaymentMethod.UUID)
 		if err != nil {
 			return nil, err
 		}

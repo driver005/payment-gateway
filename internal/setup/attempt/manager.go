@@ -27,19 +27,19 @@ func (h *Handler) Bind(context *fiber.Ctx) (*SetupAttempt, error) {
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.PaymentMethod.Valid {
-		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context.Context(), model.PaymentMethod.UUID)
+		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context, model.PaymentMethod.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.SetupIntent.Valid {
-		m.SetupIntent, err = h.r.SetupIntent().Retrive(context.Context(), model.SetupIntent.UUID)
+		m.SetupIntent, err = h.r.SetupIntent().Retrive(context, model.SetupIntent.UUID)
 		if err != nil {
 			return nil, err
 		}

@@ -28,25 +28,25 @@ func (h *Handler) Bind(context *fiber.Ctx) (*SetupIntent, error) {
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.PaymentMethod.Valid {
-		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context.Context(), model.PaymentMethod.UUID)
+		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context, model.PaymentMethod.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Mandate.Valid {
-		m.Mandate, err = h.r.Mandate().Retrive(context.Context(), model.Mandate.UUID)
+		m.Mandate, err = h.r.Mandate().Retrive(context, model.Mandate.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.SingleUseMandate.Valid {
-		m.SingleUseMandate, err = h.r.Mandate().Retrive(context.Context(), model.SingleUseMandate.UUID)
+		m.SingleUseMandate, err = h.r.Mandate().Retrive(context, model.SingleUseMandate.UUID)
 		if err != nil {
 			return nil, err
 		}

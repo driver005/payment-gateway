@@ -35,7 +35,7 @@ func (h *Handler) RouteGet(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := h.Retrive(context.Context(), Id)
+	m, err := h.Retrive(context, Id)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -71,7 +71,7 @@ func (h *Handler) RouteList(context *fiber.Ctx) error {
 
 	offset := (page - 1) * pageSize
 
-	m, n, err := h.List(context.Context(), offset, pageSize)
+	m, n, err := h.List(context, offset, pageSize)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -104,7 +104,7 @@ func (h *Handler) RouteCreate(context *fiber.Ctx) error {
 		})
 	}
 
-	r, err := h.Create(context.Context(), &m)
+	r, err := h.Create(context, &m)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -146,7 +146,7 @@ func (h *Handler) RouteUpdate(context *fiber.Ctx) error {
 
 	m.Id = Id
 
-	r, err := h.Update(context.Context(), &m)
+	r, err := h.Update(context, &m)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -176,7 +176,7 @@ func (h *Handler) RouteDelete(context *fiber.Ctx) error {
 		})
 	}
 
-	err = h.Delete(context.Context(), Id)
+	err = h.Delete(context, Id)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err,

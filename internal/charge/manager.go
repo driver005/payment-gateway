@@ -31,31 +31,31 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Charge, error) {
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.BalanceTransaction.Valid {
-		m.BalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context.Context(), model.BalanceTransaction.UUID)
+		m.BalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context, model.BalanceTransaction.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.FailureBalanceTransaction.Valid {
-		m.FailureBalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context.Context(), model.FailureBalanceTransaction.UUID)
+		m.FailureBalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context, model.FailureBalanceTransaction.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.PaymentMethod.Valid {
-		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context.Context(), model.PaymentMethod.UUID)
+		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context, model.PaymentMethod.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Review.Valid {
-		m.Review, err = utils.Retrive[review.Review](h.r.Utils(), context.Context(), model.Review.UUID)
+		m.Review, err = utils.Retrive[review.Review](h.r.Utils(), context, model.Review.UUID)
 		if err != nil {
 			return nil, err
 		}

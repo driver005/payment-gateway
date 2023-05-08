@@ -8,7 +8,7 @@ import (
 )
 
 type Model struct {
-	Id        uuid.UUID          `json:"id" database:"primary_key"`
+	Id        uuid.UUID          `json:"id" database:"primary_key" filter:"searchable"`
 	Object    string             `json:"object"`
 	Livemode  bool               `json:"livemode"`
 	Metadata  JSONB              `json:"metadata,omitempty" database:"default:null"`

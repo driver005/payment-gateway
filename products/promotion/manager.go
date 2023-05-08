@@ -26,13 +26,13 @@ func (h *Handler) Bind(context *fiber.Ctx) (*PromotionCode, error) {
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Coupon.Valid {
-		m.Coupon, err = h.r.Coupon().Retrive(context.Context(), model.Coupon.UUID)
+		m.Coupon, err = h.r.Coupon().Retrive(context, model.Coupon.UUID)
 		if err != nil {
 			return nil, err
 		}

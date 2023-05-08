@@ -28,25 +28,25 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Quote, error) {
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Invoice.Valid {
-		m.Invoice, err = h.r.Invoice().Retrive(context.Context(), model.Invoice.UUID)
+		m.Invoice, err = h.r.Invoice().Retrive(context, model.Invoice.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Subscription.Valid {
-		m.Subscription, err = h.r.Subscription().Retrive(context.Context(), model.Subscription.UUID)
+		m.Subscription, err = h.r.Subscription().Retrive(context, model.Subscription.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.SubscriptionSchedule.Valid {
-		m.SubscriptionSchedule, err = h.r.SubscriptionSchedule().Retrive(context.Context(), model.SubscriptionSchedule.UUID)
+		m.SubscriptionSchedule, err = h.r.SubscriptionSchedule().Retrive(context, model.SubscriptionSchedule.UUID)
 		if err != nil {
 			return nil, err
 		}

@@ -1,7 +1,6 @@
 package invoiceItem
 
 import (
-	"context"
 	"time"
 
 	"github.com/driver005/gateway/billing/invoice"
@@ -34,31 +33,31 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Invoiceitem, error) {
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Invoice.Valid {
-		m.Invoice, err = h.r.Invoice().Retrive(context.Context(), model.Invoice.UUID)
+		m.Invoice, err = h.r.Invoice().Retrive(context, model.Invoice.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Price.Valid {
-		m.Price, err = h.r.Price().Retrive(context.Context(), model.Price.UUID)
+		m.Price, err = h.r.Price().Retrive(context, model.Price.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Subscription.Valid {
-		m.Subscription, err = h.r.Subscription().Retrive(context.Context(), model.Subscription.UUID)
+		m.Subscription, err = h.r.Subscription().Retrive(context, model.Subscription.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.SubscriptionItem.Valid {
-		m.SubscriptionItem, err = h.r.SubscriptionItem().Retrive(context.Context(), model.SubscriptionItem.UUID)
+		m.SubscriptionItem, err = h.r.SubscriptionItem().Retrive(context, model.SubscriptionItem.UUID)
 		if err != nil {
 			return nil, err
 		}
@@ -67,7 +66,7 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Invoiceitem, error) {
 	return &m, nil
 }
 
-func (h *Handler) Manage(ctx context.Context, m *Invoiceitem) {
+func (h *Handler) Manage(ctx *fiber.Ctx, m *Invoiceitem) {
 	i := invoice.Invoice{
 		AmountDue:            m.Price.UnitAmount,
 		AmountPaid:           m.Price.UnitAmount,

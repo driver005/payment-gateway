@@ -26,13 +26,13 @@ func (h *Handler) Bind(context *fiber.Ctx) (*SubscriptionItem, error) {
 	}
 
 	if model.Price.Valid {
-		m.Price, err = h.r.Price().Retrive(context.Context(), model.Price.UUID)
+		m.Price, err = h.r.Price().Retrive(context, model.Price.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Subscription.Valid {
-		m.Subscription, err = h.r.Subscription().Retrive(context.Context(), model.Subscription.UUID)
+		m.Subscription, err = h.r.Subscription().Retrive(context, model.Subscription.UUID)
 		if err != nil {
 			return nil, err
 		}

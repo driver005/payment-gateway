@@ -26,13 +26,13 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Dispute, error) {
 	}
 
 	if model.Charge.Valid {
-		m.Charge, err = h.r.Charge().Retrive(context.Context(), model.Charge.UUID)
+		m.Charge, err = h.r.Charge().Retrive(context, model.Charge.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.PaymentIntent.Valid {
-		m.PaymentIntent, err = h.r.PaymentIntent().Retrive(context.Context(), model.PaymentIntent.UUID)
+		m.PaymentIntent, err = h.r.PaymentIntent().Retrive(context, model.PaymentIntent.UUID)
 		if err != nil {
 			return nil, err
 		}

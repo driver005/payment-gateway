@@ -1,28 +1,30 @@
 package utils
 
 import (
-	"context"
-
 	"github.com/driver005/database"
 	"github.com/driver005/database/clause"
+	"github.com/driver005/gateway/sql"
 	"github.com/fatih/structs"
+	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 )
 
-func Retrive[T any](s *Handler, ctx context.Context, Id uuid.UUID) (*T, error) {
+func Retrive[T any](s *Handler, ctx *fiber.Ctx, Id uuid.UUID) (*T, error) {
 	var m T
+	var t T
 
-	if err := s.r.Manager(ctx).Preload(clause.Associations).Where("id = ?", Id).First(&m).Error; err != nil {
+	if err := s.r.Manager(ctx.Context()).Model(&t).Scopes(sql.FilterByQuery(ctx, sql.ALL)).Preload(clause.Associations).Where("id = ?", Id).First(&m).Error; err != nil {
 		return nil, err
 	}
 
 	return &m, nil
 }
 
-func List[T any](s *Handler, ctx context.Context, Offset int, Size int) ([]T, *int64, error) {
+func List[T any](s *Handler, ctx *fiber.Ctx, Offset int, Size int) ([]T, *int64, error) {
 	var m = make([]T, 0)
+	var t T
 
-	r := s.r.Manager(ctx).Preload(clause.Associations).Offset(Offset).Limit(Size).Order("id").Find(&m)
+	r := s.r.Manager(ctx.Context()).Model(&t).Scopes(sql.FilterByQuery(ctx, sql.ALL)).Preload(clause.Associations).Offset(Offset).Limit(Size).Order("id").Find(&m)
 	if r.Error != nil {
 		return nil, nil, r.Error
 	}
@@ -30,15 +32,15 @@ func List[T any](s *Handler, ctx context.Context, Offset int, Size int) ([]T, *i
 	return m, &r.RowsAffected, nil
 }
 
-func Create[T any](s *Handler, ctx context.Context, m *T) (*T, error) {
-	if err := s.r.Manager(ctx).Session(&database.Session{FullSaveAssociations: true}).Save(&m).Error; err != nil {
+func Create[T any](s *Handler, ctx *fiber.Ctx, m *T) (*T, error) {
+	if err := s.r.Manager(ctx.Context()).Session(&database.Session{FullSaveAssociations: true}).Save(&m).Error; err != nil {
 		return nil, err
 	}
 
 	return m, nil
 }
 
-func Update[T any](s *Handler, ctx context.Context, m T) (*T, error) {
+func Update[T any](s *Handler, ctx *fiber.Ctx, m T) (*T, error) {
 	var o *T
 
 	new := structs.New(m)
@@ -56,21 +58,21 @@ func Update[T any](s *Handler, ctx context.Context, m T) (*T, error) {
 	}
 
 	newIdName.Set(oldIdValue)
-	if err := s.r.Manager(ctx).Model(&o).Updates(&m).Error; err != nil {
+	if err := s.r.Manager(ctx.Context()).Model(&o).Updates(&m).Error; err != nil {
 		return nil, err
 	}
 
 	return &m, nil
 }
 
-func Upsert[T any](s *Handler, ctx context.Context, m *T) (*T, error) {
-	res := s.r.Manager(ctx).Clauses(clause.OnConflict{UpdateAll: true}).Create(&m)
+func Upsert[T any](s *Handler, ctx *fiber.Ctx, m *T) (*T, error) {
+	res := s.r.Manager(ctx.Context()).Clauses(clause.OnConflict{UpdateAll: true}).Create(&m)
 	return m, res.Error
 }
 
-func Delete[T any](s *Handler, ctx context.Context, Id uuid.UUID) error {
+func Delete[T any](s *Handler, ctx *fiber.Ctx, Id uuid.UUID) error {
 	var m T
-	if err := s.r.Manager(ctx).Where("id = ?", Id).Delete(&m).Error; err != nil {
+	if err := s.r.Manager(ctx.Context()).Where("id = ?", Id).Delete(&m).Error; err != nil {
 		return err
 	}
 

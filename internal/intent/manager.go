@@ -48,14 +48,14 @@ func (h *Handler) Bind(context *fiber.Ctx, isPayable bool) (*PaymentIntent, erro
 	}
 
 	if model.PaymentMethod.Valid {
-		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context.Context(), model.PaymentMethod.UUID)
+		m.PaymentMethod, err = h.r.PaymentMethod().Retrive(context, model.PaymentMethod.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
@@ -209,7 +209,7 @@ func (h *Handler) Bind(context *fiber.Ctx, isPayable bool) (*PaymentIntent, erro
 		}
 	}
 
-	r, err := h.Upsert(context.Context(), &m)
+	r, err := h.Upsert(context, &m)
 	if err != nil {
 		return nil, err
 	}

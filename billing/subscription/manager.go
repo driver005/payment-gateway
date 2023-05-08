@@ -29,31 +29,31 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Subscription, error) {
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.DefaultPaymentMethod.Valid {
-		m.DefaultPaymentMethod, err = h.r.PaymentMethod().Retrive(context.Context(), model.DefaultPaymentMethod.UUID)
+		m.DefaultPaymentMethod, err = h.r.PaymentMethod().Retrive(context, model.DefaultPaymentMethod.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.PendingSetupIntent.Valid {
-		m.PendingSetupIntent, err = h.r.SetupIntent().Retrive(context.Context(), model.PendingSetupIntent.UUID)
+		m.PendingSetupIntent, err = h.r.SetupIntent().Retrive(context, model.PendingSetupIntent.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Price.Valid {
-		m.Price, err = h.r.Price().Retrive(context.Context(), model.Price.UUID)
+		m.Price, err = h.r.Price().Retrive(context, model.Price.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Schedule.Valid {
-		m.Schedule, err = h.r.SubscriptionSchedule().Retrive(context.Context(), model.Schedule.UUID)
+		m.Schedule, err = h.r.SubscriptionSchedule().Retrive(context, model.Schedule.UUID)
 		if err != nil {
 			return nil, err
 		}

@@ -26,13 +26,13 @@ func (h *Handler) Bind(context *fiber.Ctx) (*LineItem, error) {
 	}
 
 	if model.Product.Valid {
-		m.Product, err = h.r.Product().Retrive(context.Context(), model.Product.UUID)
+		m.Product, err = h.r.Product().Retrive(context, model.Product.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.Price.Valid {
-		m.Price, err = h.r.Price().Retrive(context.Context(), model.Price.UUID)
+		m.Price, err = h.r.Price().Retrive(context, model.Price.UUID)
 		if err != nil {
 			return nil, err
 		}

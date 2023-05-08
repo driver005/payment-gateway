@@ -28,14 +28,14 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Card, error) {
 	}
 
 	if model.Account.Valid {
-		m.Account, err = utils.Retrive[account.Account](h.r.Utils(), context.Context(), model.Account.UUID)
+		m.Account, err = utils.Retrive[account.Account](h.r.Utils(), context, model.Account.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 
 	if model.Customer.Valid {
-		m.Customer, err = h.r.Customer().Retrive(context.Context(), model.Customer.UUID)
+		m.Customer, err = h.r.Customer().Retrive(context, model.Customer.UUID)
 		if err != nil {
 			return nil, err
 		}

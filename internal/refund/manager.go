@@ -28,25 +28,25 @@ func (h *Handler) Bind(context *fiber.Ctx) (*Refund, error) {
 	}
 
 	if model.Charge.Valid {
-		m.Charge, err = h.r.Charge().Retrive(context.Context(), model.Charge.UUID)
+		m.Charge, err = h.r.Charge().Retrive(context, model.Charge.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.PaymentIntent.Valid {
-		m.PaymentIntent, err = h.r.PaymentIntent().Retrive(context.Context(), model.PaymentIntent.UUID)
+		m.PaymentIntent, err = h.r.PaymentIntent().Retrive(context, model.PaymentIntent.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.BalanceTransaction.Valid {
-		m.BalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context.Context(), model.BalanceTransaction.UUID)
+		m.BalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context, model.BalanceTransaction.UUID)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if model.FailureBalanceTransaction.Valid {
-		m.FailureBalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context.Context(), model.FailureBalanceTransaction.UUID)
+		m.FailureBalanceTransaction, err = h.r.Balance().RetriveBalanceTransaction(context, model.FailureBalanceTransaction.UUID)
 		if err != nil {
 			return nil, err
 		}

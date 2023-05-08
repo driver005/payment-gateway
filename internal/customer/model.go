@@ -31,13 +31,13 @@ type Customer struct {
 	// CashBalance          *CashBalance                     `json:"cash_balance,omitempty"`
 	Currency    string `json:"currency,omitempty"`
 	Delinquent  bool   `json:"delinquent,omitempty"`
-	Description string `json:"description,omitempty"`
+	Description string `json:"description,omitempty" filter:"searchable"`
 	// Discount             *Discount                        `json:"discount,omitempty"`
-	Email                string                                  `json:"email,omitempty"`
+	Email                string                                  `json:"email,omitempty" filter:"searchable"`
 	InvoiceCreditBalance core.JSONB                              `json:"invoice_credit_balance,omitempty"`
 	InvoicePrefix        string                                  `json:"invoice_prefix,omitempty"`
 	InvoiceSettings      *settings.InvoiceSettingCustomerSetting `json:"invoice_settings,omitempty" database:"foreignKey:id"`
-	Name                 string                                  `json:"name,omitempty"`
+	Name                 string                                  `json:"name,omitempty" filter:"searchable"`
 	NextInvoiceSequence  int                                     `json:"next_invoice_sequence,omitempty"`
 	Phone                string                                  `json:"phone,omitempty"`
 	PreferredLocales     pq.StringArray                          `json:"preferred_locales,omitempty" database:"type:varchar(64)[]"`

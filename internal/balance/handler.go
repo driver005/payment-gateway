@@ -32,7 +32,7 @@ func (h *Handler) RouteGetBalance(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := h.RetriveBalance(context.Context(), Id)
+	m, err := h.RetriveBalance(context, Id)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -61,7 +61,7 @@ func (h *Handler) RouteGetBalanceTransaction(context *fiber.Ctx) error {
 		})
 	}
 
-	m, err := h.RetriveBalanceTransaction(context.Context(), Id)
+	m, err := h.RetriveBalanceTransaction(context, Id)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
@@ -96,7 +96,7 @@ func (h *Handler) RouteListBalanceTransaction(context *fiber.Ctx) error {
 
 	offset := (page - 1) * pageSize
 
-	m, n, err := h.ListBalanceTransaction(context.Context(), offset, pageSize)
+	m, n, err := h.ListBalanceTransaction(context, offset, pageSize)
 	if err != nil {
 		return context.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"message": err.Error(),
